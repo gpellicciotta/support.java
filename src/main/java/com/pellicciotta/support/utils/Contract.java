@@ -33,7 +33,7 @@ public final class Contract {
    */
   public static void isTrue(boolean condition) {
     if (!condition) {
-      throw new IllegalArgumentException("Condition must not be true");
+      throw new IllegalArgumentException("Condition must be true");
     }
   }
 
