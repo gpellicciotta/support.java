@@ -4,6 +4,7 @@ package com.pellicciotta.support.utils;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *  A collection of precondition checks.
@@ -776,42 +777,28 @@ public final class Contract {
   }
 
   /**
-   * Checks an argument against the given values. Passes if the first value equals {@code arg}; a {@code null}
-   * {@code arg} passes only if the values contain {@code null}. A non-null {@code arg} that does not equal the
-   * first value causes an exception even if a later value matches; an empty array always passes.
+   * Verifies that an argument equals one of the given values. A {@code null} {@code arg} is accepted only if the
+   * values contain {@code null}.
    *
+   * @param <T> The type of the argument and the values.
    * @param arg The argument to check.
-   * @param validValues The values to compare against.
-   * @throws IllegalArgumentException if the check fails.
+   * @param validValues The values {@code arg} must equal one of; an empty array accepts nothing.
+   * @throws IllegalArgumentException if {@code arg} equals none of the values.
    */
   public static <T> void isIn(T arg, T... validValues) {
-    if (arg == null) {
-      for (T iv : validValues) {
-        if (iv == null) {
-          return ;
-        }
-      }
-      throw new IllegalArgumentException("Argument must not be null");
-    }
-    else {
-      boolean first = true;
-      StringBuilder sb = new StringBuilder();
-      for (T iv : validValues) {
-        if (arg.equals(iv)) {
-          return ;
-        }
-        if (first) {
-          first = false;
-        }
-        else {
-          sb.append(", ");
-        }
-        sb.append("'");
-        sb.append(iv.toString());
-        sb.append("'");
-        throw new IllegalArgumentException("Argument must not equal to one of " + iv);
+    for (T v : validValues) {
+      if (Objects.equals(arg, v)) {
+        return;
       }
     }
+    StringBuilder sb = new StringBuilder();
+    for (T v : validValues) {
+      if (sb.length() > 0) {
+        sb.append(", ");
+      }
+      sb.append(v == null ? "null" : "'" + v + "'");
+    }
+    throw new IllegalArgumentException("Argument " + (arg == null ? "null" : "'" + arg + "'") + " must be one of [" + sb + "]");
   }
 
   /**

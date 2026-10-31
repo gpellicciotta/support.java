@@ -41,4 +41,19 @@ public class ContractTest {
     assertThrows(IllegalArgumentException.class, () -> Contract.isIn(5.5, new double[] {1.0, 2.0}));
     assertThrows(IllegalArgumentException.class, () -> Contract.isIn(1, new int[0]));
   }
+
+  @Test
+  public void isInAcceptsObjectsEqualToAnyOfTheValuesNotJustTheFirst() {
+    assertDoesNotThrow(() -> Contract.isIn("a", "a", "b"));
+    assertDoesNotThrow(() -> Contract.isIn("b", "a", "b"));
+    assertDoesNotThrow(() -> Contract.isIn(null, "a", null));
+  }
+
+  @Test
+  public void isInRejectsObjectsEqualToNoneOfTheValues() {
+    IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> Contract.isIn("z", "a", "b"));
+    assertEquals("Argument 'z' must be one of ['a', 'b']", e.getMessage());
+    assertThrows(IllegalArgumentException.class, () -> Contract.isIn(null, "a", "b"));
+    assertThrows(IllegalArgumentException.class, () -> Contract.isIn("a", new String[0]));
+  }
 }
