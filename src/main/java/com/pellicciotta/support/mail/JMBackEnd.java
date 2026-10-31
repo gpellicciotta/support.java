@@ -80,30 +80,38 @@ public class JMBackEnd extends MailBackEndBase {
   }
 
   /**
-   * Connects to the configured mail server with explicit credentials. Uses the {@code smtps} protocol when
-   * {@code password} is non-null and {@code smtp} otherwise, and sets the matching {@code mail.*} JVM system
-   * properties as a side effect. Replaces any existing session and transport.
+   * Describes a connection attempt for the debug log. The password itself is never included.
    *
-   * @param user User name for authentication.
-   * @param password Password for authentication.
+   * @param user The user name; may be {@code null}.
+   * @param password The password; may be {@code null}.
+   * @return A log-safe description.
+   */
+  static String describeConnectAttempt(String user, String password) {
+    return "Trying to connect with user '" + user + "' and " + (password == null ? "no password" : "a password");
+  }
+
+  /**
+   * Connects to the configured mail server with explicit credentials. Uses the {@code smtps} protocol when
+   * {@code password} is non-null and {@code smtp} otherwise. The mail settings are held in session-local
+   * properties layered over the JVM system properties, so neither they nor the password are published JVM-wide.
+   * Replaces any existing session and transport.
+   *
+   * @param user User name for authentication; may be {@code null}.
+   * @param password Password for authentication; may be {@code null}.
    * @throws MessagingException If the transport cannot be obtained or the connection fails.
    */
   public void connect(String user, String password) throws MessagingException {
-    log.debug("Trying to connect with user '%s' and password '%s'...", user, password);
+    log.debug("%s...", describeConnectAttempt(user, password));
     String mailProtocol = password != null ? "smtps" : "smtp";
-    Properties mailProps = System.getProperties();
-    if (log.isDebugEnabled()) {
-      mailProps.setProperty("mail.debug", "true");
-    }
-    else {
-      mailProps.setProperty("mail.debug", "false");
-    }
+    Properties mailProps = new Properties(System.getProperties());
+    mailProps.setProperty("mail.debug", Boolean.toString(log.isDebugEnabled()));
     mailProps.setProperty("mail." + mailProtocol + ".starttls.enable", "true");
     mailProps.setProperty("mail." + mailProtocol + ".auth", "true");
     mailProps.setProperty("mail." + mailProtocol + ".host", this.config.getHost());
     mailProps.setProperty("mail." + mailProtocol + ".port", "" + this.config.getPort());
-    mailProps.setProperty("mail." + mailProtocol + ".user", user);
-    mailProps.setProperty("mail." + mailProtocol + ".password", password);
+    if (user != null) {
+      mailProps.setProperty("mail." + mailProtocol + ".user", user);
+    }
 
     this.session = Session.getInstance(mailProps, null);
     this.connection = this.session.getTransport(mailProtocol);
