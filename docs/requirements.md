@@ -7,8 +7,7 @@ Functional and technical requirements for the `support.java` project.
 ## High-Level Goals
 - Provide a general-purpose Java support library, usable in most Java projects, with as few third-party
   dependencies as possible so downstream consumers aren't burdened by transitive dependencies.
-- Serve as the shared foundation consumed by other single-process apps with an embedded HTTP server:
-  `pellicciotta-counters`, `pellicciotta-auth`, `pellicciotta-todos`.
+- Serve as the shared foundation consumed by other single-process apps with an embedded HTTP server: `counters`, `auth`, `todos`.
 - Publish releases as a Maven package (group `com.pellicciotta`, artifact `support.java`) on GitHub Packages.
 
 ---

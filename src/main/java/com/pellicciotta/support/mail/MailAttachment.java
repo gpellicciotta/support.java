@@ -86,7 +86,7 @@ public class MailAttachment {
   **/
   @Override
   public String toString() {
-    return String.format("[attachment '%s' (mime-type: %s)]", this.name, this.mimeType);
+    return String.format("[attachment '%s' (mime-type: %s)]", this.getName(), this.mimeType);
   }
 
   // </editor-fold>
