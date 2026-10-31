@@ -15,4 +15,11 @@ public class ContractTest {
     assertEquals("Condition must be true", e.getMessage());
     assertDoesNotThrow(() -> Contract.isTrue(true));
   }
+
+  @Test
+  public void isFalseWithDescriptionRejectsTrueWithAccurateMessage() {
+    IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> Contract.isFalse("x is empty", true));
+    assertEquals("Condition 'x is empty' must be false", e.getMessage());
+    assertDoesNotThrow(() -> Contract.isFalse("x is empty", false));
+  }
 }

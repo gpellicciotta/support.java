@@ -46,7 +46,7 @@ public final class Contract {
    */
   public static void isFalse(String conditionDescription, boolean condition) {
     if (condition) {
-      throw new IllegalArgumentException("Condition '" + conditionDescription + "' must be true");
+      throw new IllegalArgumentException("Condition '" + conditionDescription + "' must be false");
     }
   }
 
