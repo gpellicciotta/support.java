@@ -1,20 +1,34 @@
-# Ignore Gradle project-specific cache directory
-.gradle
-.idea/workspace.xml
+# Gradle
+.gradle/
+build/
+out/
 
-# Ignore output directories
-build
-/bin/
-/intellij-bin/
-/lib/
+# Compiled class files
+*.class
+bin/
 
-# Ignore env files
+# Local environment secrets
 .env
 **/*.env
 
-# Ignore log files
-logs/
-**/*.log 
+# Python
+__pycache__/
+*.pyc
+
+# IDE/editor
+# Shared IntelliJ config is checked in; only volatile per-user/local files are ignored.
+.idea/workspace.xml
+.idea/dataSources.local.xml
+.idea/shelf/
+.idea/sonarlint/
+# Share portable VS Code settings; ignore other editor-local files.
+**/.vscode/*
+!**/.vscode/settings.json
+*.iml
 
 # Task worktrees (git worktree add ./work/Tnnnn-slug)
-/work/
+work/
+
+# Logs
+*.log
+log/

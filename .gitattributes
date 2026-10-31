@@ -1,5 +1,24 @@
 * text=auto eol=lf
+
+# Windows scripts use CRLF; Unix scripts use LF.
 *.bat text eol=crlf
+*.cmd text eol=crlf
+*.sh text eol=lf
 gradlew.bat text eol=crlf
 gradlew text eol=lf
-gradle/wrapper/gradle-wrapper.jar binary
+
+# Binary assets must not undergo text conversion, diffing, or merging.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.docx binary
+*.jar binary
+*.war binary
+*.class binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary

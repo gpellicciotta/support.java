@@ -10,9 +10,8 @@ public final class Info
   private Info() {}
 
   static {
-    NAME = valueOrDefault(Info.class.getPackage().getSpecificationVersion(), "support.java");
-    PRETTY_NAME = valueOrDefault(Info.class.getPackage().getImplementationTitle(), "Pellicciotta Support/Java");
-    VERSION = valueOrDefault(Info.class.getPackage().getImplementationVersion(), "0.0.999-pre");
+    NAME = valueOrDefault(Info.class.getPackage().getImplementationTitle(), "support.java");
+    VERSION = valueOrDefault(Info.class.getPackage().getImplementationVersion(), "0.0.0+unknown");
     AUTHOR = valueOrDefault(Info.class.getPackage().getImplementationVendor(), "Giovanni Pellicciotta");
     COPYRIGHT = valueOrDefault(Info.class.getPackage().getSpecificationVendor(), "Copyright (c) Giovanni Pellicciotta");
     DESCRIPTION = valueOrDefault(Info.class.getPackage().getSpecificationTitle(), "A general-purpose Java support library");
@@ -24,7 +23,6 @@ public final class Info
   }
 
   public static final String NAME;
-  public static final String PRETTY_NAME;
   public static final String VERSION;
   public static final String AUTHOR;
   public static final String COPYRIGHT;
