@@ -15,7 +15,7 @@ def releasedVersion = releaseVersion.replaceAll(/-pre$/, '')
 def releaseTag = "v${releasedVersion}"
 def changelogFile = file('CHANGELOG.md')
 def propertiesFile = file('gradle.properties')
-def mainBranch = 'master'
+def mainBranch = 'main'
 def nextPreVersion = {
   def parts = releasedVersion.split(/\./)
   "${parts[0]}.${parts[1]}.${parts[2].toInteger() + 1}-pre"

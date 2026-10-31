@@ -88,7 +88,7 @@ def action_release(args: argparse.Namespace) -> int:
         print(f"**[ERROR]**: version {version} has no -pre suffix; nothing to release", file=sys.stderr)
         return EXIT_ERROR
     released = version.removesuffix("-pre")
-    print(f"OUTBOUND: releases v{released}: publishes to GitHub Packages, pushes master and the tag, creates a GitHub Release.")
+    print(f"OUTBOUND: releases v{released}: publishes to GitHub Packages, pushes main and the tag, creates a GitHub Release.")
     if not args.yes and input(f"Type 'release v{released}' to proceed: ").strip() != f"release v{released}":
         print("aborted", file=sys.stderr)
         return EXIT_ERROR
@@ -118,7 +118,7 @@ def print_help(verbose: bool) -> None:
     if verbose:
         print("\nDetails:")
         print("  check/build  Gradle's build runs spotlessCheck, checkstyle, tests, javadoc, and jar tasks - exactly what CI runs.")
-        print("  release      Needs a clean master pushed to origin with green CI, the gh CLI logged in, and GitHub Packages")
+        print("  release      Needs a clean main pushed to origin with green CI, the gh CLI logged in, and GitHub Packages")
         print("               credentials (github.username/github.token in ~/.gradle/gradle.properties or GITHUB_USERNAME/GITHUB_TOKEN).")
         print("               Steps: build, verify, mark released, publish, tag, push, GitHub Release, open the next -pre version.")
     print("\nExit codes:")

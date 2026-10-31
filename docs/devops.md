@@ -95,8 +95,8 @@ python scripts/devops.py release             # asks for a typed confirmation, th
 The same pipeline runs directly as `.\gradlew.bat doFullRelease -PreleaseConfirmed=yes`. Without that property it
 refuses to start, because it publishes packages and pushes to origin. In order, it runs:
 - `checkReleasePreconditions` — full `build`; then fails unless the confirmation was given, the working tree is
-  clean, the branch is `master`, `version` ends in `-pre`, `CHANGELOG.md` has the matching heading, `gh` is
-  logged in, HEAD equals `origin/master`, and CI is green for HEAD (it waits up to 15 minutes for a running build).
+  clean, the branch is `main`, `version` ends in `-pre`, `CHANGELOG.md` has the matching heading, `gh` is
+  logged in, HEAD equals `origin/main`, and CI is green for HEAD (it waits up to 15 minutes for a running build).
 - `finalizeRelease` — strips `-pre` from `gradle.properties`, marks the heading `[released: {{date}}]`, commits.
 - `publishReleaseArtifacts` — publishes to GitHub Packages in a nested Gradle run, so it uses the released version.
 - `tagAndPushRelease` — tags `v{{version}}`, pushes the branch and the tag.

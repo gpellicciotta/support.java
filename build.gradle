@@ -134,7 +134,7 @@ publishing {
         licenses {
           license {
             name = 'MIT License'
-            url = "https://github.com/${githubRepo}/blob/master/LICENSE.md"
+            url = "https://github.com/${githubRepo}/blob/main/LICENSE.md"
           }
         }
         developers {
