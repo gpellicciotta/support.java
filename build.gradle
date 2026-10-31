@@ -156,3 +156,6 @@ publishing {
     }
   }
 }
+
+// doFullRelease and its supporting tasks - see gradle/release.gradle and docs/devops.md, section "Release Process".
+apply from: "$rootDir/gradle/release.gradle"

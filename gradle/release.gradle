@@ -1,0 +1,186 @@
+import groovy.json.JsonSlurper
+
+// doFullRelease: end-to-end release pipeline for this library (see docs/devops.md, section "Release Process").
+// Split into small, independently runnable tasks rather than one monolithic task, so a failed release can be
+// diagnosed and resumed at the right step.
+//
+// The pipeline publishes to a shared package repository and pushes to origin, so it refuses to start without
+// -PreleaseConfirmed=yes (scripts/devops.py release asks for that confirmation and passes it along).
+//
+// Publishing runs in a nested Gradle invocation, because the release version (without -pre) is only written to
+// gradle.properties during this run, after this invocation has already resolved project.version.
+
+def releaseVersion = project.version.toString()
+def releasedVersion = releaseVersion.replaceAll(/-pre$/, '')
+def releaseTag = "v${releasedVersion}"
+def changelogFile = file('CHANGELOG.md')
+def propertiesFile = file('gradle.properties')
+def mainBranch = 'master'
+def nextPreVersion = {
+  def parts = releasedVersion.split(/\./)
+  "${parts[0]}.${parts[1]}.${parts[2].toInteger() + 1}-pre"
+}()
+
+def runCommand = { List<String> cmd ->
+  // .toString() each element: ProcessBuilder requires real java.lang.String entries, and a GString (e.g. from
+  // "...${var}..." interpolation) fails ProcessBuilder's internal toArray(String[]) with an ArrayStoreException.
+  def process = new ProcessBuilder(cmd.collect { it.toString() })
+      .directory(projectDir)
+      .redirectErrorStream(true)
+      .start()
+  def output = process.inputStream.text
+  def exitCode = process.waitFor()
+  if (exitCode != 0) {
+    throw new GradleException("Command failed (exit ${exitCode}): ${cmd.join(' ')}\n${output}")
+  }
+  return output.trim()
+}
+
+// Read and write text files with LF line endings in memory but the file's own line endings on disk:
+def readLf = { File f -> f.getText('UTF-8').replace('\r\n', '\n') }
+def writeLike = { File f, String lfText ->
+  def crlf = f.getText('UTF-8').contains('\r\n')
+  f.setText(crlf ? lfText.replace('\n', '\r\n') : lfText, 'UTF-8')
+}
+
+def extractChangelogSection = { String changelogText, String version ->
+  def matcher = (changelogText =~ /(?ms)^## v${java.util.regex.Pattern.quote(version)}[^\n]*\n(.*?)(?=\n---\n|\n## |\z)/)
+  return matcher.find() ? matcher.group(1).trim() : "Release v${version}."
+}
+
+tasks.register('checkReleasePreconditions') {
+  group = 'release'
+  description = 'Verifies confirmation, clean tree, branch, changelog heading, pushed HEAD, and green CI before releasing.'
+  dependsOn 'build'
+  doLast {
+    if (project.findProperty('releaseConfirmed') != 'yes') {
+      throw new GradleException('Releasing publishes packages and pushes to origin; pass -PreleaseConfirmed=yes (or use scripts/devops.py release).')
+    }
+    def status = runCommand(['git', 'status', '--porcelain'])
+    if (!status.isEmpty()) {
+      throw new GradleException("Working tree has uncommitted changes; commit them before releasing:\n${status}")
+    }
+    def branch = runCommand(['git', 'branch', '--show-current'])
+    if (branch != mainBranch) {
+      throw new GradleException("Releases are cut from '${mainBranch}', not '${branch}'.")
+    }
+    if (!releaseVersion.endsWith('-pre')) {
+      throw new GradleException("gradle.properties version '${releaseVersion}' has no '-pre' suffix; nothing to release.")
+    }
+    if (!(readLf(changelogFile) =~ /(?m)^## v${java.util.regex.Pattern.quote(releaseVersion)}\s*$/).find()) {
+      throw new GradleException("CHANGELOG.md has no un-released '## v${releaseVersion}' heading.")
+    }
+    runCommand(['gh', 'auth', 'status'])
+    runCommand(['git', 'fetch', 'origin', mainBranch])
+    def head = runCommand(['git', 'rev-parse', 'HEAD'])
+    if (head != runCommand(['git', 'rev-parse', "origin/${mainBranch}"])) {
+      throw new GradleException("HEAD is not identical to origin/${mainBranch}; push (or pull) first so CI has run on the exact commit.")
+    }
+    def deadline = System.currentTimeMillis() + 15 * 60 * 1000
+    while (true) {
+      def runs = new JsonSlurper().parseText(runCommand(['gh', 'run', 'list', '--commit', head, '--json', 'status,conclusion,name']))
+      if (runs.isEmpty()) {
+        throw new GradleException("No CI run found for ${head}.")
+      }
+      if (runs.every { it.status == 'completed' }) {
+        if (runs.any { it.conclusion != 'success' }) {
+          throw new GradleException("CI is not green for ${head}: ${runs}")
+        }
+        break
+      }
+      if (System.currentTimeMillis() > deadline) {
+        throw new GradleException("CI still running for ${head} after 15 minutes; re-run later.")
+      }
+      logger.lifecycle('CI still running; checking again in 20 seconds')
+      Thread.sleep(20000)
+    }
+  }
+}
+
+tasks.register('finalizeRelease') {
+  group = 'release'
+  description = 'Strips -pre from gradle.properties, marks the CHANGELOG heading released with today\'s date, and commits.'
+  dependsOn 'checkReleasePreconditions'
+  doLast {
+    def releasedDate = new Date().format('yyyy-MM-dd')
+    def changelog = readLf(changelogFile)
+    def updated = changelog.replaceFirst(/(?m)^## v${java.util.regex.Pattern.quote(releaseVersion)}\s*$/, "## v${releasedVersion} [released: ${releasedDate}]")
+    if (updated == changelog) {
+      throw new GradleException("Could not find '## v${releaseVersion}' heading to update in CHANGELOG.md.")
+    }
+    writeLike(changelogFile, updated)
+    def props = readLf(propertiesFile)
+    def updatedProps = props.replaceFirst(/(?m)^version=.*$/, "version=${releasedVersion}")
+    if (updatedProps == props) {
+      throw new GradleException("Could not find 'version=' line to update in gradle.properties.")
+    }
+    writeLike(propertiesFile, updatedProps)
+    runCommand(['git', 'commit', '-am', "Marked version ${releasedVersion} as released."])
+  }
+}
+
+tasks.register('publishReleaseArtifacts') {
+  group = 'release'
+  description = 'Publishes the released version to GitHub Packages in a nested Gradle run.'
+  dependsOn 'finalizeRelease'
+  doLast {
+    def gradlew = file(System.getProperty('os.name').toLowerCase().contains('win') ? 'gradlew.bat' : 'gradlew').absolutePath
+    logger.lifecycle(runCommand([gradlew, '--console=plain', 'publishMavenPublicationToGithubPackagesRepository']))
+  }
+}
+
+tasks.register('tagAndPushRelease') {
+  group = 'release'
+  description = 'Tags the release commit as v<version> and pushes the branch and tag to origin.'
+  dependsOn 'publishReleaseArtifacts'
+  doLast {
+    runCommand(['git', 'tag', '-a', releaseTag, '-m', "Release ${releaseTag}"])
+    runCommand(['git', 'push', 'origin', 'HEAD'])
+    runCommand(['git', 'push', 'origin', releaseTag])
+  }
+}
+
+tasks.register('createGithubRelease') {
+  group = 'release'
+  description = 'Creates a GitHub release for the new tag via the gh CLI, using the CHANGELOG section as notes.'
+  dependsOn 'tagAndPushRelease'
+  doLast {
+    def notesFile = File.createTempFile('release-notes-', '.md')
+    notesFile.text = extractChangelogSection(readLf(changelogFile), releasedVersion)
+    try {
+      runCommand(['gh', 'release', 'create', releaseTag, '--title', releaseTag, '--notes-file', notesFile.path])
+    } finally {
+      notesFile.delete()
+    }
+  }
+}
+
+tasks.register('openNextPreRelease') {
+  group = 'release'
+  description = 'Bumps gradle.properties and opens a new CHANGELOG.md heading for the next patch -pre version, then commits and pushes.'
+  dependsOn 'createGithubRelease'
+  doLast {
+    def props = readLf(propertiesFile)
+    def updatedProps = props.replaceFirst(/(?m)^version=.*$/, "version=${nextPreVersion}")
+    if (updatedProps == props) {
+      throw new GradleException("Could not find 'version=' line to update in gradle.properties.")
+    }
+    writeLike(propertiesFile, updatedProps)
+
+    def changelog = readLf(changelogFile)
+    def updated = changelog.replaceFirst(/(?m)^---\n\n/, "---\n\n## v${nextPreVersion}\n\n---\n\n")
+    if (updated == changelog) {
+      throw new GradleException("Could not find '---' separator to insert the new heading into CHANGELOG.md.")
+    }
+    writeLike(changelogFile, updated)
+
+    runCommand(['git', 'commit', '-am', "Opened v${nextPreVersion} for further development."])
+    runCommand(['git', 'push', 'origin', 'HEAD'])
+  }
+}
+
+tasks.register('doFullRelease') {
+  group = 'release'
+  description = 'End-to-end release: verify, mark released, publish to GitHub Packages, tag, push, create the GitHub release, and open the next -pre version.'
+  dependsOn 'openNextPreRelease'
+}
