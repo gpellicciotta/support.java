@@ -14,8 +14,7 @@ import com.pellicciotta.support.logging.Log;
 import com.pellicciotta.support.logging.LogService;
 import com.pellicciotta.support.utils.CollectionUtils;
 
-public class CharsetsGenerator extends BasicApp<CharsetsGeneratorConfig>
-{
+public class CharsetsGenerator extends BasicApp<CharsetsGeneratorConfig> {
   // <editor-fold desc="Command-line Entry-Point">
 
   /**

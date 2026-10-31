@@ -9,8 +9,7 @@ import java.util.function.Predicate;
 /**
  *  An iterator that iterates over another, while applying a {@link Predicate}..
  */
-public class FilteringIterator<E> implements Iterator<E>
-{
+public class FilteringIterator<E> implements Iterator<E> {
   /**
    *  Create a new iterator that will apply the given filter to the source iterator.
    *

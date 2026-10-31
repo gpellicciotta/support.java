@@ -9,8 +9,7 @@ import org.w3c.dom.Element;
  *
  *  @param <T> The native type to encode from/to.
  */
-public interface StringCodec<T>
-{
+public interface StringCodec<T> {
   /**
    *  Decode a {@link String} into a native value.
    *

@@ -10,8 +10,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  DB connectivity configuration {@link SettingsGroup}.
  */
-public class DbConfig extends SettingsGroup
-{
+public class DbConfig extends SettingsGroup {
   /**
    *  Create a default DB settings group.
    *

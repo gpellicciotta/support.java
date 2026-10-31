@@ -9,8 +9,7 @@ import java.util.function.Function;
 /**
  *  An iterator that transforms the elements provided by an underlying {@link Iterator}.
  */
-public class TransformingIterator<S, T> implements Iterator<T>
-{
+public class TransformingIterator<S, T> implements Iterator<T> {
   // <editor-fold desc="Construction">
 
   /**

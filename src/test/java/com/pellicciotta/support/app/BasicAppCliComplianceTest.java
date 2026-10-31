@@ -20,16 +20,29 @@ import static org.junit.jupiter.api.Assertions.*;
  *  Verifies general-guidelines.md CLI compliance of {@link BasicApp}'s built-in <code>version</code>/<code>help</code>
  *  actions and <code>--verbose</code> handling, as exercised by every tool built on top of it.
  */
-public class BasicAppCliComplianceTest
-{
+public class BasicAppCliComplianceTest {
   private static class SampleApp extends BasicApp<BasicConfig> {
-    @Override public String getName() { return "sample"; }
-    @Override public Version getVersion() { return new Version(1, 2, 3, null, new String[0]); }
-    @Override public String getPrettyName() { return "Sample App"; }
-    @Override public String getDescription() { return "A sample app used for testing"; }
-    @Override protected BasicConfig getInitialConfiguration() { return new BasicConfig(); }
-    @Override protected Log getAppLog() { return LogService.getBackEnd().getLog("sample"); }
-    @Override protected String getCommandLinePrefix() { return "java -cp [CLASSPATH] tools sample"; }
+    @Override public String getName() {
+      return "sample";
+    }
+    @Override public Version getVersion() {
+      return new Version(1, 2, 3, null, new String[0]);
+    }
+    @Override public String getPrettyName() {
+      return "Sample App";
+    }
+    @Override public String getDescription() {
+      return "A sample app used for testing";
+    }
+    @Override protected BasicConfig getInitialConfiguration() {
+      return new BasicConfig();
+    }
+    @Override protected Log getAppLog() {
+      return LogService.getBackEnd().getLog("sample");
+    }
+    @Override protected String getCommandLinePrefix() {
+      return "java -cp [CLASSPATH] tools sample";
+    }
   }
 
   private ByteArrayOutputStream capturedOut;

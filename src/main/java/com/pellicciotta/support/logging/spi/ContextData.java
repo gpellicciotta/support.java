@@ -9,8 +9,7 @@ import com.pellicciotta.support.logging.ContextDataItem;
 /**
  *  A read-only collection of {@code ContextDataItem}s.
  */
-public class ContextData implements Iterable<ContextDataItem>
-{
+public class ContextData implements Iterable<ContextDataItem> {
   /**
    *  Construct a new, empty and read-only collection of context data items.
    */

@@ -8,8 +8,7 @@ import java.util.Collection;
 /**
  *  A collection of checks.
  */
-public abstract class Checks
-{
+public abstract class Checks {
 
   /** Prevent instantiation */
   private Checks() { }

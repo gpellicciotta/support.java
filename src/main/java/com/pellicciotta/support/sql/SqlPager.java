@@ -7,8 +7,7 @@ package com.pellicciotta.support.sql;
  *
  *  @param <T> The type of elements to page through.
  */
-public interface SqlPager<T>
-{
+public interface SqlPager<T> {
   /**
    *  @return The currently used page-size.
    */

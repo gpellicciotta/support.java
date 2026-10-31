@@ -5,8 +5,7 @@ package com.pellicciotta.support.exceptions;
 /**
  *  A {@link RuntimeException} that indicates the active user doesn't have permission to perform a certain action or cannot proof his identity.
  */
-public class AuthException extends RuntimeExceptionBase
-{
+public class AuthException extends RuntimeExceptionBase {
   // <editor-fold desc="Construction">
 
   /**

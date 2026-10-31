@@ -25,8 +25,7 @@ import com.sun.net.httpserver.HttpServer;
  *  for paths it doesn't own, e.g. via {@link HttpRoute}'s own method/path matching. A request nothing handles
  *  gets a plain 404.</p>
  */
-public final class JdkHttpServerWebServer implements WebServer
-{
+public final class JdkHttpServerWebServer implements WebServer {
   /**
    *  @param port The TCP port to listen on.
    */

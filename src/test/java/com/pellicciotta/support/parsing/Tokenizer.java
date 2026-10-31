@@ -13,8 +13,7 @@ import com.pellicciotta.support.utils.Contract;
  *  A tokenizer implementation based on an ordered list of {@link TokenMatcher}s.
  *  A tokenizer breaks a character sequences into a stream of tokens.
  */
-public class Tokenizer
-{
+public class Tokenizer {
   /**
    *  Create a tokenizer based on the given list of matchers.
    *

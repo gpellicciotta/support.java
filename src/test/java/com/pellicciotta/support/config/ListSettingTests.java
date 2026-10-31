@@ -15,8 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ListSettingTests
-{
+public class ListSettingTests {
   @Test
   public void testListSettingUsage() {
     ListSetting<String> stringListSetting = new StandaloneListSetting<String>(String.class, "string", "A list of strings",

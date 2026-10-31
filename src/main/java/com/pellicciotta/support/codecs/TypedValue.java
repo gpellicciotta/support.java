@@ -7,8 +7,7 @@ package com.pellicciotta.support.codecs;
  *
  *  @param <T> The native type to set/get.
  */
-public interface TypedValue<T>
-{
+public interface TypedValue<T> {
   /**
    *  Get the value.
    *

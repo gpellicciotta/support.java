@@ -14,8 +14,7 @@ import com.pellicciotta.support.text.TextBuilder;
  *  A tree is really a tree node with the possibility of adding/removing newChild nodes. Child nodes
  *  know their parent and index within their parent.</p>
  */
-public abstract class Tree<T extends Tree<T>>
-{
+public abstract class Tree<T extends Tree<T>> {
   // <editor-fold desc="Construction">
 
   /**
@@ -212,7 +211,8 @@ public abstract class Tree<T extends Tree<T>>
   public int getAncestorCount() {
     if (this.parent != null) {
       return 1 + this.parent.getAncestorCount();
-    } else {
+    }
+    else {
       return 0;
     }
   }
@@ -595,7 +595,8 @@ public abstract class Tree<T extends Tree<T>>
       this.toTreeString(tw);
       tw.close();
       return sw.toString();
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       assert false; // We don't expect to ever get here
       return ""; //
     }
@@ -611,7 +612,8 @@ public abstract class Tree<T extends Tree<T>>
   public void toTreeString(Writer w) throws IOException {
     if (w instanceof TextWriter) {
       this.toTreeString((TextWriter) w);
-    } else {
+    }
+    else {
       TextWriter tw = new TextWriter(w);
       this.toTreeString(tw);
       tw.flush();

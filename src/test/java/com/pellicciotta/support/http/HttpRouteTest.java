@@ -7,8 +7,7 @@ import java.io.Writer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class HttpRouteTest
-{
+public class HttpRouteTest {
   @Test
   public void testMethodMismatchDoesNotHandle() throws Exception {
     HttpRoute route = HttpRoutes.route(HttpMethod.GET, "/foo", (req, resp) -> resp.setStatus(200));

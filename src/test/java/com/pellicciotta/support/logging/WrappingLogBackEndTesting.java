@@ -6,8 +6,7 @@ import com.pellicciotta.support.logging.spi.*;
 import com.pellicciotta.support.logging.stdout.StdoutBasedLogBackEnd;
 import org.junit.jupiter.api.*;
 
-public class WrappingLogBackEndTesting
-{
+public class WrappingLogBackEndTesting {
   @BeforeAll
   public static void setup() {
     StdoutBasedLogBackEnd lb = new StdoutBasedLogBackEnd();

@@ -9,8 +9,7 @@ import com.pellicciotta.support.codecs.StringCodec;
  *
  *  @param <T> The type of native value held by this setting.
  */
-public class StandaloneSetting<T> extends Setting<T>
-{
+public class StandaloneSetting<T> extends Setting<T> {
   /**
    *  Create a standalone setting with the given properties and no default value.
    *

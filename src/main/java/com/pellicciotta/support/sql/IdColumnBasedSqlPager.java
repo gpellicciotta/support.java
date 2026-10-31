@@ -17,8 +17,7 @@ import com.pellicciotta.support.utils.*;
  *  <p>
  *  The implementation assumes that bookmarks are a serialized form of <c>ID</c> column value.</p>
  */
-class IdColumnBasedSqlPager<T> implements SqlPager<T>
-{
+class IdColumnBasedSqlPager<T> implements SqlPager<T> {
   // <editor-fold desc="Construction">
 
   /**

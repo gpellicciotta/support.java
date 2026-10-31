@@ -4,8 +4,7 @@ package com.pellicciotta.support.diff;
 
 import com.pellicciotta.support.text.TextBuilder;
 
-final class ExtendedEditCommand extends EditCommand
-{
+final class ExtendedEditCommand extends EditCommand {
   public ExtendedEditCommand(EditType type, int startA, int endA, int startB, int endB, Object val) {
     super(type, startA, endA, startB, endB);
     this.val = val;

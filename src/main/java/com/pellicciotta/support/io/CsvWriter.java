@@ -21,8 +21,7 @@ import com.pellicciotta.support.utils.StringConversionUtils;
  *   <li><a href="https://tools.ietf.org/html/rfc4180">RFC41800</a></li>
  *   <li><a href="http://super-csv.github.io/super-csv/csv_specification.html">CSV Specification</a></li></ul>
  */
-public class CsvWriter
-{
+public class CsvWriter {
   // TODO: implementation idea: have special header with types of individual fields, so that on read, we can already parse back into correct type
 
   // <editor-fold desc="Defaults">
@@ -160,17 +159,21 @@ public class CsvWriter
         if (c == this.quote) { // Double for escaping
           escapedField.append(c);
           escapedField.append(c);
-        } else if (c == '\r') {
+        }
+        else if (c == '\r') {
           escapedField.append("\\r");
-        } else if (c == '\n') {
+        }
+        else if (c == '\n') {
           escapedField.append("\\n");
-        } else {
+        }
+        else {
           escapedField.append(c);
         }
       }
       escapedField.append(this.quote);
       return escapedField.toString();
-    } else {
+    }
+    else {
       return fieldValue;
     }
   }

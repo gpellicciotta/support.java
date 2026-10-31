@@ -14,8 +14,7 @@ import com.pellicciotta.support.utils.*;
  *  <p>
  *  Names and validation based on http://en.wikipedia.org/wiki/Email_address.</p>
 **/
-public class MailAddress
-{
+public class MailAddress {
   // <editor-fold desc="Constants">
 
   public static final int MAX_LOCAL_PART_LENGTH  =  64;

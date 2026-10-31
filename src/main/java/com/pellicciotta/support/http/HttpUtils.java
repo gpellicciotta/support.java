@@ -17,8 +17,7 @@ import com.pellicciotta.support.utils.*;
 /**
  *  A set of utility methods for working with typical HTTP-related data or performing typical operations.
  */
-public final class HttpUtils
-{
+public final class HttpUtils {
   /** Prevent instantiation. */
   private HttpUtils() {  }
 

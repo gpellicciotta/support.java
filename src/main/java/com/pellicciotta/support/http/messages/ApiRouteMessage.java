@@ -11,8 +11,7 @@ import java.util.Set;
 /**
  *  Describes a single {@link HttpRoute} for inclusion in an {@link ApiInfoMessage}.
  */
-public class ApiRouteMessage
-{
+public class ApiRouteMessage {
   public ApiRouteMessage(HttpRoute route) {
     Contract.isNotNull(route);
     this.method = route.getMethod();

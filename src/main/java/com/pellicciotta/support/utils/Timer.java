@@ -7,8 +7,7 @@ import java.util.function.Consumer;
 /**
  * A time measurement facility.
  */
-public class Timer implements AutoCloseable
-{
+public class Timer implements AutoCloseable {
   // <editor-fold desc="Factory">
 
   /**
@@ -170,10 +169,12 @@ public class Timer implements AutoCloseable
     if (this.stopTime == -1L) {
       if (this.startTime == -1L) {
         return 0L;
-      } else {
+      }
+      else {
         return (System.currentTimeMillis() - this.startTime);
       }
-    } else {
+    }
+    else {
       return (this.stopTime - this.startTime);
     }
   }

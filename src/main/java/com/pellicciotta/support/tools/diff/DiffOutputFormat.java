@@ -5,8 +5,7 @@ package com.pellicciotta.support.tools.diff;
 /**
  * Output types.
  */
-public enum DiffOutputFormat
-{
+public enum DiffOutputFormat {
   UNIFIED_DIFF,
   JSON_SES,
   JSON_LCS,

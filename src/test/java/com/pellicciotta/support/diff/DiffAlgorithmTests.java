@@ -14,8 +14,7 @@ import com.pellicciotta.support.utils.Random;
 import com.pellicciotta.support.utils.Timer;
 import org.junit.jupiter.api.*;
 
-public class DiffAlgorithmTests
-{
+public class DiffAlgorithmTests {
   // <editor-fold desc="Test Setup">
 
   // DEBUG was the default; only turn it back on locally when investigating a specific failure.
@@ -582,8 +581,7 @@ public class DiffAlgorithmTests
     }
   }
 
-  static class DiffItem<T> extends Item
-  {
+  static class DiffItem<T> extends Item {
     DiffItem(T[] seq, int index) {
       super(index);
       Contract.isNotNull("seq", seq);

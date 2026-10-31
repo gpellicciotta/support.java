@@ -22,8 +22,7 @@ import org.junit.jupiter.api.Test;
  *  v1: Making configuration available indirectly, based on annotations.
  *      When you're only interested in getting the values, and there is no need for much meta-info.
  */
-public class AppConfig
-{
+public class AppConfig {
   enum Action {
     RUN,
     DO_SOMETHING,

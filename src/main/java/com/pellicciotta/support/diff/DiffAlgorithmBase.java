@@ -17,8 +17,7 @@ import static com.pellicciotta.support.diff.DiffUtils.ENABLE_LOGGING;
  *
  *  Note that the algorithm has been adapted to work with zero-based indexes.
  */
-public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T>
-{
+public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T> {
   protected boolean calculationsDone;
   protected final List<MatchPair> cachedLcs = new ArrayList<>();
   protected final List<EditCommand> cachedEs = new ArrayList<>();
@@ -167,7 +166,8 @@ public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T>
       if (ENABLE_LOGGING) {
         if (bSeqEnd == bSeqStart) {
           this.log.debug("Edge case found: A and B are identical");
-        } else {
+        }
+        else {
           this.log.debug("Edge case found: A is fully matched: deleting (rest of) B: [%d,%d]", bSeqStart, bSeqEnd - 1);
         }
       }

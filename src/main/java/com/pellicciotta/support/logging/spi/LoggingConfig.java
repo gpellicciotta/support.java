@@ -14,8 +14,7 @@ import java.util.*;
 /**
  *  Logging configuration {@link SettingsGroup}.
  */
-public class LoggingConfig extends SettingsGroup
-{
+public class LoggingConfig extends SettingsGroup {
   public LoggingConfig() {
     super("logging", "Logging back-end settings");
     SettingsFactory create = new SettingsFactory();

@@ -17,8 +17,7 @@ import com.pellicciotta.support.utils.Pair;
  *  backing implementation today (on top of {@code com.sun.net.httpserver.HttpExchange}), but nothing in this
  *  interface is tied to it.
  */
-public interface Request
-{
+public interface Request {
   /** @return The HTTP method, e.g. <code>"GET"</code>. */
   String getMethod();
 

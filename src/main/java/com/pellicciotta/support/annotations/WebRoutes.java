@@ -18,8 +18,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Retention(RUNTIME)
 @Target(METHOD)
-public @interface WebRoutes
-{
+public @interface WebRoutes {
   /**
    *  @return The {@link WebRoute}s this method is associated with.
    */

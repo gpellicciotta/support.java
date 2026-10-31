@@ -9,8 +9,7 @@ import com.pellicciotta.support.logging.spi.LoggerConfig;
 
 import java.util.Collections;
 
-public class LoggingConfig extends SettingsGroup
-{
+public class LoggingConfig extends SettingsGroup {
   public LoggingConfig() {
     super("logging", "Logging configuration");
     SettingsFactory create = new SettingsFactory();

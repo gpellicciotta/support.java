@@ -6,8 +6,7 @@ package com.pellicciotta.support.codecs;
  *  The {@link SettingType} both implies the type of value a setting is attached to,
  *  and the way this value type is encoded/decoded to/from <c>String</c>.
  */
-public enum SettingType
-{
+public enum SettingType {
   /** For a setting whose type should get determined automatically based on the value type. */
   AUTO,
   /** For values of type <c>string</c> with no encoding/decoding except for parameter value expansion. */

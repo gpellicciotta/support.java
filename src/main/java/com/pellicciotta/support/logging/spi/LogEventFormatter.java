@@ -5,8 +5,7 @@ package com.pellicciotta.support.logging.spi;
 /**
  *  For formatting a {@link LogEvent}s into a {@link String} representation.
  */
-public interface LogEventFormatter
-{
+public interface LogEventFormatter {
   /**
    *  Configure the formatter.
    *

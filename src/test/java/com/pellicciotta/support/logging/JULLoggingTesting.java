@@ -6,8 +6,7 @@ import com.pellicciotta.support.logging.jul.JULBasedLogBackEnd;
 import com.pellicciotta.support.logging.spi.LogBackEnd;
 import org.junit.jupiter.api.*;
 
-public class JULLoggingTesting
-{
+public class JULLoggingTesting {
   @BeforeAll
   public static void setup() {
     LogBackEnd noop = new JULBasedLogBackEnd();

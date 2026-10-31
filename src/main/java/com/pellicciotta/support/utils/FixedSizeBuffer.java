@@ -11,8 +11,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  *  <p>
  *  This buffer is safe to use from multiple threads.</p>
  */
-public class FixedSizeBuffer<T> implements Iterable<T>
-{
+public class FixedSizeBuffer<T> implements Iterable<T> {
   public FixedSizeBuffer(int capacity) {
     this.capacity = capacity;
     this.buffer = new ConcurrentLinkedDeque<>();

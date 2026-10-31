@@ -12,8 +12,7 @@ import java.util.concurrent.Callable;
  * This interface is designed largely the follow the Map interface, but omitting certain operations and adding the
  * <code>get(K, Callable&lt;? extends V&gt;)</code> and <code>getCapacity()</code> methods.
  */
-public interface Cache<K, V>
-{
+public interface Cache<K, V> {
   // <editor-fold desc="Information Providing Operations"/>
 
   /**

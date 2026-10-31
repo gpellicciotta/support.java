@@ -5,8 +5,7 @@ package com.pellicciotta.support.config.v1;
 import com.pellicciotta.support.annotations.ConfigSetting;
 import com.pellicciotta.support.config.*;
 
-public class WebConfig
-{
+public class WebConfig {
   @ConfigSetting(name="http-port", description="Port at which the webserver will be listening for HTTP requests")
   private int httpPort = 80;
   @ConfigSetting(name="https-port", description="Port at which the webserver will be listening for HTTPS requests")

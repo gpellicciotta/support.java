@@ -34,7 +34,7 @@ service.
 [devops.py](../scripts/devops.py) is the single entry point for typical operations:
 ```bash
 python scripts/devops.py help --verbose       # every action, option, and exit code
-python scripts/devops.py check                # what CI runs: Spotless, tests, jars (gradlew build)
+python scripts/devops.py check                # what CI runs: Spotless, Checkstyle, tests, jars (gradlew build)
 python scripts/devops.py test --tests "com.pellicciotta.support.text.TokenizerTest"
 python scripts/devops.py versions             # gradle.properties and CHANGELOG.md must agree
 python scripts/devops.py release --dry-run    # preview the release pipeline
@@ -46,7 +46,7 @@ CI runs `devops.py check`, so a local `check` passing means CI will pass.
 # Compile main sources only
 .\gradlew.bat compileJava
 
-# Full compile, format check, test, and jar/javadoc-jar/sources-jar assembly
+# Full compile, format and style checks, test, and jar/javadoc-jar/sources-jar assembly
 .\gradlew.bat build
 
 # Run all tests (streams stdout live per test - see testLogging in build.gradle)
@@ -118,5 +118,5 @@ versions. The publication, POM metadata, and repository are configured in [build
 ## Continuous Integration
 The GitHub Actions workflow in [ci.yml](../.github/workflows/ci.yml) triggers on push and pull requests, executing:
 - Java JDK 25 setup (Temurin distribution).
-- `python3 scripts/devops.py check` (formatting, compilation, unit and integration testing, and packaging).
+- `python3 scripts/devops.py check` (formatting, style, compilation, unit and integration testing, and packaging).
   GitHub-hosted `ubuntu-latest` runners ship Docker, so the Testcontainers-backed `SqlPagingTest` runs in CI too.

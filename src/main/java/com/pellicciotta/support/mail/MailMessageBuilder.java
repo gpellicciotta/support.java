@@ -14,8 +14,7 @@ import com.pellicciotta.support.utils.FileUtils;
 /**
  *  A builder of {@link MailMessage}s that are ready for sending.
  */
-public class MailMessageBuilder implements AutoCloseable
-{
+public class MailMessageBuilder implements AutoCloseable {
   // <editor-fold desc="Construction">
 
   public MailMessageBuilder() { }

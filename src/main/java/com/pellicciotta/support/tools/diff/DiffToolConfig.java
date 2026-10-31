@@ -10,8 +10,7 @@ import com.pellicciotta.support.config.*;
 import com.pellicciotta.support.diff.StandardDiffAlgorithms;
 import com.pellicciotta.support.utils.CollectionUtils;
 
-class DiffToolConfig extends BasicConfig
-{
+class DiffToolConfig extends BasicConfig {
   public DiffToolConfig() {
     super();
     List<ConfigElement> configElements = new ArrayList<>();

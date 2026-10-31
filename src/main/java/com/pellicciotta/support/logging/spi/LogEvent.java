@@ -8,8 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  *  All the data that fits together and needs to be send to the log destination(s).
  */
-public class LogEvent
-{
+public class LogEvent {
   private static final AtomicLong globalSequenceNumber = new AtomicLong(0);
 
   public LogEvent(long threadId, Instant logTime, String logName, int logLevel, String message, Object[] msgParams, ContextData ctx, Throwable cause) {
@@ -68,11 +67,15 @@ public class LogEvent
 
   private final String message;
 
-  public String getMessage() { return this.message; }
+  public String getMessage() {
+    return this.message;
+  }
 
   private final Object[] params;
 
-  public Object[] getParams() { return this.params; }
+  public Object[] getParams() {
+    return this.params;
+  }
 
   private final ContextData contextData;
 

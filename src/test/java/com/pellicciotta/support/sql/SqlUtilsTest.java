@@ -13,8 +13,7 @@ import org.junit.jupiter.api.Test;
 import static com.pellicciotta.support.sql.SqlSyntaxType.*;
 import static com.pellicciotta.support.sql.SqlSyntaxUtils.*;
 
-public class SqlUtilsTest
-{
+public class SqlUtilsTest {
   @Test
   public void testBasicClauseParsing() throws Exception {
     String sqlText = "Select count(*)FROM foo.bar  /* A\nmulti-line\nblock-comment */     WHERE A > ? and (C + D / E * F < :c-val) -- A line comment too\nORDER BY \"A\" ASC, `b` DESC, [c] ASC LIMIT 7";

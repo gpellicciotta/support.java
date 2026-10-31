@@ -12,8 +12,7 @@ import com.pellicciotta.support.utils.Contract;
  *  @param <T> The type of elements in the sequences. This type should implement {@link #equals(Object)} and {@link #hashCode()} properly.
  *             This means that T must be a reference type (and hence not be a primitive type).
  */
-public abstract class DiffAlgorithm<T>
-{
+public abstract class DiffAlgorithm<T> {
   protected DiffAlgorithm() { }
 
   /**
@@ -133,5 +132,7 @@ public abstract class DiffAlgorithm<T>
    *  @return The name of this algorithm.
    */
   @Override
-  public String toString() { return this.name(); }
+  public String toString() {
+    return this.name();
+  }
 }

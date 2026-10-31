@@ -9,8 +9,7 @@ import com.pellicciotta.support.logging.Span;
  *  The back-end that needs to be able to create and manage {@link Log} and {@link Span} objects,
  *  while routing messages to their final destinations.
  */
-public abstract class LogBackEnd implements AutoCloseable
-{
+public abstract class LogBackEnd implements AutoCloseable {
   /**
    *  Configure the back-end.
    *

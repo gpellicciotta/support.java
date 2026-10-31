@@ -19,8 +19,7 @@ import com.pellicciotta.support.utils.Contract;
  *  The implementation assumes that bookmarks are a serialized form of <c>ORDER BY</c> column values and that
  *  queries can be built where the concrete column values can be filled.</p>
  */
-class ColumnValuesBasedSqlPager<T> implements SqlPager<T>
-{
+class ColumnValuesBasedSqlPager<T> implements SqlPager<T> {
   // <editor-fold desc="Construction">
 
   /**

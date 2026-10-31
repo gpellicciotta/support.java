@@ -5,8 +5,7 @@ import com.pellicciotta.support.exceptions.RuntimeExceptionBase;
 /**
  *  Exception thrown when a pool operation fails.
  */
-public class PoolException extends RuntimeExceptionBase
-{
+public class PoolException extends RuntimeExceptionBase {
   // <editor-fold desc="Construction">
 
   /**

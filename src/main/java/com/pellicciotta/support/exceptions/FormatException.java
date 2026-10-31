@@ -7,8 +7,7 @@ import com.pellicciotta.support.utils.CollectionUtils;
 /**
  * Base class for all exceptions thrown when a value or file data doesn't have the expected format.
  */
-public class FormatException extends RuntimeExceptionBase
-{
+public class FormatException extends RuntimeExceptionBase {
   // <editor-fold desc="Construction">
 
   /**

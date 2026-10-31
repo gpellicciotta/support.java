@@ -10,8 +10,7 @@ package com.pellicciotta.support.http;
  *  processing is needed, while this interface merely represent the processing itself.</p>
  */
 @FunctionalInterface
-public interface HttpRequestProcessor
-{
+public interface HttpRequestProcessor {
   /**
    *  Process the request and fill the response.
    *

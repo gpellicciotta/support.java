@@ -8,8 +8,7 @@ import com.pellicciotta.support.logging.spi.*;
 /**
  *  A {@link LogBackEnd} that simply discards all log messages.
  */
-public class NoopLogBackEnd extends LogBackEndBase
-{
+public class NoopLogBackEnd extends LogBackEndBase {
   public NoopLogBackEnd() { }
 
   @Override

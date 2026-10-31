@@ -112,8 +112,7 @@ import org.w3c.dom.*;
  *   task.configure(xmlConfig);
  * </pre>
  */
-public class XmlBasedObjectConfigurator
-{
+public class XmlBasedObjectConfigurator {
   // <editor-fold desc="Construction">
 
   /**
@@ -215,8 +214,7 @@ public class XmlBasedObjectConfigurator
     return this.errors.isEmpty();
   }
 
-  private void configureObject(Object object, Element config) throws Exception
-  {
+  private void configureObject(Object object, Element config) throws Exception {
     Method[] methods = object.getClass().getDeclaredMethods();
     // First check whether the object has a configure(Element) method and if so, call it (since it's the general fallback mechanism):
     for (Method m : methods) {

@@ -11,8 +11,7 @@ import com.pellicciotta.support.sql.SqlPager;
  *
  *  @param <T> The type of query results.
  */
-public interface PagingResult<T>
-{
+public interface PagingResult<T> {
   /**
    * @return The start bookmark that can be used in {@link SqlPager#moveToPageBefore(String)}.
    *         Can be <c>null</c> if this is the first page according to the base SQL query's order.

@@ -13,8 +13,7 @@ import com.pellicciotta.support.utils.StringConversionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoggingConfig
-{
+public class LoggingConfig {
   @ConfigSetting(name="level", description="Minimal log level", stringCodec=StandardStringCodecs.LogLevel.class)
   private int level;
   @ConfigSetting(name="prefix", description="Prefix for log messages")

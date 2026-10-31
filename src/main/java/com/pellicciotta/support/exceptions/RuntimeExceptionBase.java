@@ -5,8 +5,7 @@ package com.pellicciotta.support.exceptions;
 /**
  *  Base class providing the generally needed constructors that allow for {@link String#format}-style messages with parameters.
  */
-public abstract class RuntimeExceptionBase extends RuntimeException
-{
+public abstract class RuntimeExceptionBase extends RuntimeException {
   /**
    *  Constructs a new runtime exception with the specified detail message.
    *  The cause is not initialized, and may subsequently be initialized by a call to {@link #initCause}.

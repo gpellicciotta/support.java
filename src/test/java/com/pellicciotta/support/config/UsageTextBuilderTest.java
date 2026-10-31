@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 /**
  *  Unit-tests for the {@link UsageTextBuilder} class.
  */
-public class UsageTextBuilderTest
-{
+public class UsageTextBuilderTest {
   static final String NL = EnvironmentUtils.getLineSeparator();
 
   @Test

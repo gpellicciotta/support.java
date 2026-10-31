@@ -9,8 +9,7 @@ import java.util.*;
  *
  *  @param <T> The type of elements in the sequences or iterators being compared.
  */
-public class CollectingDiffProcessor<T> implements DiffProcessor<T>
-{
+public class CollectingDiffProcessor<T> implements DiffProcessor<T> {
   public CollectingDiffProcessor() { }
 
   private final List<MatchPair> matches = new ArrayList<>();

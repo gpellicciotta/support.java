@@ -15,8 +15,7 @@ import java.lang.reflect.Constructor;
  *  This {@link MailService} should be configured once at the very start of an application, and henceforth only used
  *  to send {@link MailMessage} objects.</p>
  */
-public final class MailService
-{
+public final class MailService {
   // <editor-fold desc="Configuration">
 
   /** Prevent instantiation */

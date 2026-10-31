@@ -17,8 +17,7 @@ import com.pellicciotta.support.utils.*;
  *  Provides a custom text log formatter whose default output format complies with logging guidelines for
  *  logging to file.
  */
-public class TextFormatter extends java.util.logging.SimpleFormatter
-{
+public class TextFormatter extends java.util.logging.SimpleFormatter {
   // <editor-fold desc="Defaults">
 
   public static final String DEFAULT_ERROR_LEVEL_PREFIX   = "**[ERROR]**";
@@ -471,11 +470,13 @@ public class TextFormatter extends java.util.logging.SimpleFormatter
           if ("".equals(paramValue)) {             // Replace by nothing
             m.appendReplacement(sb, ""); // The replacement treats $ and \ specially, that's why we append separately
             sb.append(backslashes);
-          } else if (paramFormat == null) {
+          }
+          else if (paramFormat == null) {
             m.appendReplacement(sb, ""); // The replacement treats $ and \ specially, that's why we append separately
             sb.append(backslashes);
             sb.append(paramValue);
-          } else {
+          }
+          else {
             String repl = String.format("%" + paramFormat, paramValue);
             m.appendReplacement(sb, ""); // The replacement treats $ and \ specially, that's why we append separately
             sb.append(backslashes);
@@ -533,9 +534,11 @@ public class TextFormatter extends java.util.logging.SimpleFormatter
     String prefix = this.debugLevelPrefix;
     if (logLevel >= Level.SEVERE.intValue()) {
       prefix = this.errorLevelPrefix;
-    } else if (logLevel >= Level.WARNING.intValue()) {
+    }
+    else if (logLevel >= Level.WARNING.intValue()) {
       return this.warningLevelPrefix;
-    } else if (logLevel >= Level.INFO.intValue()) {
+    }
+    else if (logLevel >= Level.INFO.intValue()) {
       return this.infoLevelPrefix;
     }
     return prefix;

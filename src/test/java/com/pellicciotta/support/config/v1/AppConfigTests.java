@@ -17,8 +17,7 @@ import org.junit.jupiter.api.Test;
 /**
  *  v1: Making configuration available indirectly, based on annotations
  */
-public class AppConfigTests
-{
+public class AppConfigTests {
   @Test
   public void testDefaults() throws Exception {
     AppConfig appCfg = new AppConfig();

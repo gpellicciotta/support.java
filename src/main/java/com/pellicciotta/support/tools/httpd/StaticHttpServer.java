@@ -13,8 +13,7 @@ import com.pellicciotta.support.logging.LogService;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
-public class StaticHttpServer extends BasicApp<StaticHttpServerConfig>
-{
+public class StaticHttpServer extends BasicApp<StaticHttpServerConfig> {
   // <editor-fold desc="Command-line Entry-Point">
 
   /**

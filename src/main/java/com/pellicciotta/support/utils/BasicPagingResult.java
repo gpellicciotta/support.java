@@ -7,8 +7,7 @@ import java.util.List;
 /**
  * Simple immutable {@link PagingResult} implementation.
  */
-public class BasicPagingResult<T> implements PagingResult<T>
-{
+public class BasicPagingResult<T> implements PagingResult<T> {
   /**
    *  Create a {@link PagingResult} giving the provided start and end bookmarks.
    *

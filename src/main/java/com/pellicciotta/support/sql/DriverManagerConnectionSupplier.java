@@ -12,8 +12,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  Provides connections based on an underlying {@link DriverManager} and JDBC URL template.
  */
-public class DriverManagerConnectionSupplier implements Supplier<Connection>
-{
+public class DriverManagerConnectionSupplier implements Supplier<Connection> {
   /**
    *  Create a supplier that will create new connections every time {@link #get()} is requested.
    *  Connections will be created via the {@link DriverManager#getConnection(String)} method.

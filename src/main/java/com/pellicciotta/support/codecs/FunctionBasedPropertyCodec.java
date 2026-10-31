@@ -8,8 +8,7 @@ import java.util.function.Function;
 /**
  *  An {@link PropertyCodec} implementation based on two provided functions.
  */
-public class FunctionBasedPropertyCodec<T> implements PropertyCodec<T>
-{
+public class FunctionBasedPropertyCodec<T> implements PropertyCodec<T> {
   /**
    *  Create a new codec that will use the provided functions.
    *

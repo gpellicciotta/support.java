@@ -9,8 +9,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  Utilities for working with command line arguments.
  */
-public final class CommandLineUtils
-{
+public final class CommandLineUtils {
   /** Prevent instantiation */
   private CommandLineUtils() { }
 

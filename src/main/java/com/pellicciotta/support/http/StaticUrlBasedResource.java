@@ -6,8 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-class StaticUrlBasedResource implements Resource
-{
+class StaticUrlBasedResource implements Resource {
   public StaticUrlBasedResource(URL url, long lastModified, String mimeType, int contentLength) {
     assert url != null;
     this.url = url;

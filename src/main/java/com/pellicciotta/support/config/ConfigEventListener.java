@@ -9,8 +9,7 @@ package com.pellicciotta.support.config;
  *  only those <code>onXxx</code> methods that are needed.
  *  </p>
  */
-public class ConfigEventListener
-{
+public class ConfigEventListener {
   /**
    * Invoked immediately before a {@link Config#loadFrom} operation starts.
    */

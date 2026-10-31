@@ -11,8 +11,7 @@ import com.pellicciotta.support.logging.LogService;
 /**
  *  Web-server configuration {@link SettingsGroup}.
  */
-public class WebServerConfig extends SettingsGroup
-{
+public class WebServerConfig extends SettingsGroup {
   /**
    *  Create a default web server settings group.
    */

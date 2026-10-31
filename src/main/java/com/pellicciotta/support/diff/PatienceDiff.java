@@ -10,8 +10,7 @@ import static com.pellicciotta.support.diff.DiffUtils.ENABLE_LOGGING;
 /**
  *  Based on: https://bramcohen.livejournal.com/73318.html
  */
-public class PatienceDiff<T> extends DiffAlgorithmBase<T>
-{
+public class PatienceDiff<T> extends DiffAlgorithmBase<T> {
   public PatienceDiff(DiffAlgorithm<T> fallback) {
     this.fallback = (fallback != null) ? fallback : new MyersLinearSpaceDiff<>();
   }
@@ -150,8 +149,7 @@ public class PatienceDiff<T> extends DiffAlgorithmBase<T>
     return subSeq;
   }
 
-  private static class Match
-  {
+  private static class Match {
     Match(int aIndex, int bIndex, String d) {
       this.aIndex = aIndex;
       this.bIndex = bIndex;
@@ -173,8 +171,7 @@ public class PatienceDiff<T> extends DiffAlgorithmBase<T>
     }
   }
 
-  private static class ItemInfo
-  {
+  private static class ItemInfo {
     ItemInfo(int aIndex, int bIndex) {
       this.aIndex = aIndex;
       this.aCount = 0;

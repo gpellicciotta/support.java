@@ -16,8 +16,7 @@ import com.pellicciotta.support.logging.LogService;
 /**
  * A better {@link java.util.Random}.
  */
-public final class Random
-{
+public final class Random {
   /** Prevent instantiation */
   private Random() { }
 

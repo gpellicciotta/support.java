@@ -5,8 +5,7 @@ package com.pellicciotta.support.http;
 import java.io.IOException;
 import java.io.InputStream;
 
-interface Resource
-{
+interface Resource {
   /**
    * @return The mime-type for the resource.
    */

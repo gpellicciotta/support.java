@@ -16,8 +16,7 @@ import com.pellicciotta.support.exceptions.FormatException;
 /**
  *  A value type consisting of two element: a salt and a password hash that was calculated by that salt.
  */
-public final class SaltedPasswordHash
-{
+public final class SaltedPasswordHash {
   // <editor-fold desc="Construction">
 
   /**
@@ -82,8 +81,12 @@ public final class SaltedPasswordHash
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || this.getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
     SaltedPasswordHash that = (SaltedPasswordHash) o;
     return Arrays.equals(this.salt, that.salt) &&
            Arrays.equals(this.passwordHash, that.passwordHash);

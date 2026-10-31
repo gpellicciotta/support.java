@@ -14,8 +14,7 @@ import org.w3c.dom.Element;
  *  <p>
  *  Each element has a name, a description and relations to its parent and/or children.</p>
  */
-public abstract class ConfigElement
-{
+public abstract class ConfigElement {
   // <editor-fold desc="Construction">
 
   protected ConfigElement(String name, String description) {

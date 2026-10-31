@@ -9,8 +9,7 @@ import org.w3c.dom.Element;
  *
  *  @param <T> The native type to encode from/to.
  */
-public interface XmlCodec<T>
-{
+public interface XmlCodec<T> {
   /**
    *  Decode an XML element into a native value.
    *

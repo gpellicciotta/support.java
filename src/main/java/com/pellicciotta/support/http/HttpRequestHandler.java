@@ -9,8 +9,7 @@ package com.pellicciotta.support.http;
  *  interface can indicate whether further processing is needed or not.</p>
  */
 @FunctionalInterface
-public interface HttpRequestHandler
-{
+public interface HttpRequestHandler {
   /**
    *  Inspect the request and handle it completely or partially.
    *  <p>

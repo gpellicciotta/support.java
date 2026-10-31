@@ -7,8 +7,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import com.pellicciotta.support.logging.*;
 
-public class SpanBase implements Span
-{
+public class SpanBase implements Span {
   // <editor-fold desc="Construction">
 
   protected SpanBase(String name, SpanBase parentSpan, LogBase log) {

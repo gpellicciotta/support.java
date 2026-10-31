@@ -12,8 +12,7 @@ import static com.pellicciotta.support.sql.SqlSyntaxType.*;
 /**
  *  The syntax for a single SQL statement with capabilities to recognize and normalize both named and unnamed parameters.
  */
-class SqlStatementSyntax
-{
+class SqlStatementSyntax {
   /** Create a new SQL statement syntax, while normalizing it and checking for named and unnamed parameters. */
   SqlStatementSyntax(String rawSyntax) {
     Contract.isNotNull("rawSyntax", rawSyntax);
@@ -35,14 +34,18 @@ class SqlStatementSyntax
         CollectionUtils.getOrAddDefault(paramPositions, paramName, new ArrayList<>())
                        .add(paramPos);
         updatedSqlText.append("?");
-      } else if (POSITIONAL_PARAMETER.equals(token.getSyntaxType())) {
+      }
+      else if (POSITIONAL_PARAMETER.equals(token.getSyntaxType())) {
         paramPos += 1;
         updatedSqlText.append("?");
-      } else if (WHITESPACE.equals(token.getSyntaxType())) {
+      }
+      else if (WHITESPACE.equals(token.getSyntaxType())) {
         updatedSqlText.append(" ");
-      } else if (KEYWORD.equals(token.getSyntaxType())) {
+      }
+      else if (KEYWORD.equals(token.getSyntaxType())) {
         updatedSqlText.append(tokenText.toUpperCase());
-      } else {
+      }
+      else {
         updatedSqlText.append(tokenText);
       }
     }

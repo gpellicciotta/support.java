@@ -6,8 +6,7 @@ import com.pellicciotta.support.logging.Log;
 import com.pellicciotta.support.logging.LogService;
 import org.junit.jupiter.api.*;
 
-public class HttpUtilsTest
-{
+public class HttpUtilsTest {
   @Test
   public void testCombinePaths() {
     Assertions.assertEquals("/", HttpUtils.combinePaths(null, null));

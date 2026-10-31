@@ -15,8 +15,7 @@ import java.util.Arrays;
  *
  *  <p>Inspiration from: <a href="http://stackoverflow.com/questions/2860943/how-can-i-hash-a-password-in-java">Stackoverflow</a></p>
  */
-public final class PasswordUtils
-{
+public final class PasswordUtils {
   // Prevent instantiation
   private PasswordUtils() { }
 

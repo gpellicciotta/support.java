@@ -17,8 +17,7 @@ import com.pellicciotta.support.utils.*;
  *       class to model a paper and pen.
  *       The paper has fixed dimensions (max line size and 1 position per character), while the pen ensures a certain layout (via indentation, wrapping, and prefixing).</li></ol>
  */
-public class TextWriter extends Writer
-{
+public class TextWriter extends Writer {
   // <editor-fold desc="Support Types">
 
   /**
@@ -380,9 +379,11 @@ public class TextWriter extends Writer
   public synchronized void setNextOutputColumn(int newNextOutputColumn, boolean onNewLineIfNeeded) throws IOException {
     if (newNextOutputColumn == this.nextOutputColumn) {
       return;
-    } else if (newNextOutputColumn >= this.nextOutputColumn) {
+    }
+    else if (newNextOutputColumn >= this.nextOutputColumn) {
       this.write(StringUtils.makeSpacesString(newNextOutputColumn - this.nextOutputColumn));
-    } else if (onNewLineIfNeeded) {
+    }
+    else if (onNewLineIfNeeded) {
       // Temporarily disable prefix and indentation
       int oldIndentation = this.indentation;
       this.indentation = 0;
@@ -428,7 +429,8 @@ public class TextWriter extends Writer
       if (firstLine || (this.repeatPrefix == null)) {
         this.actualWriter.write(this.prefix);
         this.nextOutputColumn += this.prefix.length();
-      } else {
+      }
+      else {
         this.actualWriter.write(this.repeatPrefix);
         this.nextOutputColumn += this.repeatPrefix.length();
       }
@@ -439,17 +441,20 @@ public class TextWriter extends Writer
     if ((this.nextOutputColumn + line.length()) <= this.maxLineSize) {
       this.actualWriter.write(line);
       this.nextOutputColumn += line.length();
-    } else if (this.textTooLongAction == TextTooLongAction.TRUNCATE) {
+    }
+    else if (this.textTooLongAction == TextTooLongAction.TRUNCATE) {
       if (this.nextOutputColumn >= this.maxLineSize) {
         // Do nothing as we have already truncated the line previously
-      } else {
+      }
+      else {
         String[] lineParts = this.splitLine(line);
         String truncatedLine = lineParts[0] + this.truncateSuffix;
         this.actualWriter.write(truncatedLine);
         this.nextOutputColumn += truncatedLine.length();
         this.nextOutputColumn = Math.max(this.nextOutputColumn, this.maxLineSize);
       }
-    } else { // Wrapping
+    }
+    else { // Wrapping
       String[] lineParts = this.splitLine(line);
       // Finish current line
       this.actualWriter.write(lineParts[0]);
@@ -460,7 +465,8 @@ public class TextWriter extends Writer
       if (this.indentPrefix) {
         this.addIndent();
         this.addPrefix(false);
-      } else {
+      }
+      else {
         this.addPrefix(false);
         this.addIndent();
       }
@@ -497,7 +503,8 @@ public class TextWriter extends Writer
         if (this.indentPrefix) {
           this.addIndent();
           this.addPrefix(i == 0);
-        } else {
+        }
+        else {
           this.addPrefix(i == 0);
           this.addIndent();
         }
@@ -527,7 +534,8 @@ public class TextWriter extends Writer
   public synchronized void write(String messageOrFormat, Object... details) throws IOException {
     if (details.length > 0) {
       this.doWrite(String.format(messageOrFormat, details));
-    } else {
+    }
+    else {
       this.doWrite(messageOrFormat);
     }
   }
@@ -543,7 +551,8 @@ public class TextWriter extends Writer
   public synchronized void writeln(String messageOrFormat, Object... details) throws IOException {
     if (details.length > 0) {
       this.write(messageOrFormat + EnvironmentUtils.getLineSeparator(), details);
-    } else {
+    }
+    else {
       this.doWrite(messageOrFormat + EnvironmentUtils.getLineSeparator());
     }
   }

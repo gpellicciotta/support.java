@@ -17,8 +17,7 @@ import com.pellicciotta.support.utils.*;
 /**
  *  Class providing support for the building and execution of SQL statements more conveniently.
  */
-public class SqlExecutor implements AutoCloseable
-{
+public class SqlExecutor implements AutoCloseable {
   private static final Log log = LogService.fromCurrentClass();
 
   /**
@@ -338,7 +337,8 @@ public class SqlExecutor implements AutoCloseable
       catch (Exception e) {
         if (allowDropFailures && sqlStmt.toLowerCase().startsWith("drop ")) {
           log.warning("'%s' failed to execute, but this is being ignored: %s", sqlStmt, e);
-        } else {
+        }
+        else {
           throw new SqlRuntimeException(e);
         }
       }

@@ -6,8 +6,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  * Abstract base class for Cache implementation that provides additional statistics gathering methods.
  */
-public abstract class AbstractCache<K, V> implements Cache<K, V>
-{
+public abstract class AbstractCache<K, V> implements Cache<K, V> {
   // <editor-fold desc="Construction">
 
   /**

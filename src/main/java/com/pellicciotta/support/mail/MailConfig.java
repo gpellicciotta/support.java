@@ -9,8 +9,7 @@ import com.pellicciotta.support.logging.stdout.StdoutBasedLogBackEnd;
 /**
  *  Mail configuration {@link SettingsGroup}.
  */
-public class MailConfig extends SettingsGroup
-{
+public class MailConfig extends SettingsGroup {
   public MailConfig() {
     super("mail", "Mail back-end settings");
     SettingsFactory create = new SettingsFactory();

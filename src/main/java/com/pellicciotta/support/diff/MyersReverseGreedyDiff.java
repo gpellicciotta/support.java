@@ -13,8 +13,7 @@ import com.pellicciotta.support.utils.CollectionUtils;
  *
  *  Note that the algorithm has been adapted to work with zero-based indexes.
  */
-public class MyersReverseGreedyDiff<T> extends DiffAlgorithmBase<T>
-{
+public class MyersReverseGreedyDiff<T> extends DiffAlgorithmBase<T> {
   @Override
   public String name() {
     return "myers reverse greedy diff";

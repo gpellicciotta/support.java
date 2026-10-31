@@ -23,8 +23,7 @@ import java.nio.file.StandardOpenOption;
  *  is configured, this back-end silently discards log events rather than failing, since {@link #configure} also
  *  runs with a fresh default {@link LoggingConfig} as part of the no-arg constructor chain.</p>
  */
-public class FileBasedLogBackEnd extends LogBackEndBase
-{
+public class FileBasedLogBackEnd extends LogBackEndBase {
   /**
    *  Create a logging back-end with default (i.e. unconfigured, not writing anywhere yet) configuration.
    */

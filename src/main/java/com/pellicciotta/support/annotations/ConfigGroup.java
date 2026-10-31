@@ -11,8 +11,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @Inherited
-public @interface ConfigGroup
-{
+public @interface ConfigGroup {
   /** The simple name of the settings group. */
   String name();
 

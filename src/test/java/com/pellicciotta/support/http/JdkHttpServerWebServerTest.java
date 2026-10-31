@@ -31,8 +31,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-public class JdkHttpServerWebServerTest
-{
+public class JdkHttpServerWebServerTest {
   private JdkHttpServerWebServer server;
   private int port;
   private final HttpClient client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();

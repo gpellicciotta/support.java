@@ -8,8 +8,7 @@ import com.pellicciotta.support.logging.noop.NoopLogBackEnd;
 import com.pellicciotta.support.logging.spi.LogBackEnd;
 import org.junit.jupiter.api.*;
 
-public class NoopLoggingTesting
-{
+public class NoopLoggingTesting {
   @BeforeAll
   public static void setup() {
     LogBackEnd noop = new NoopLogBackEnd();

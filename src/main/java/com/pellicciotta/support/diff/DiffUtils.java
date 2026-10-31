@@ -7,8 +7,7 @@ import java.util.*;
 /**
  *  Utilities for calculating LCS or SES, and also for representing them.
  */
-public final class DiffUtils
-{
+public final class DiffUtils {
   // <editor-fold desc="Internal Support Routines">
 
   private DiffUtils() { }

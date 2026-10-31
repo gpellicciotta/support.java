@@ -9,8 +9,7 @@ import com.pellicciotta.support.text.*;
 /**
  *  Class capable of generating SQL text from tokens and/or AST nodes and/or generate-expressions.
  */
-class SqlGenerator
-{
+class SqlGenerator {
   /**
    *  Create a SQL generator.
    */

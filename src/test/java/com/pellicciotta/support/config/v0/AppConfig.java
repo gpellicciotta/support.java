@@ -16,8 +16,7 @@ import java.util.regex.Pattern;
  *  v0: Implementing all configuration as direct sub-classes of Config, Setting and SettingsGroup.
  *      When you want full control and also access to all available meta-info.
  */
-public class AppConfig extends Config
-{
+public class AppConfig extends Config {
   private static enum Action {
     RUN,
     DO_SOMETHING,

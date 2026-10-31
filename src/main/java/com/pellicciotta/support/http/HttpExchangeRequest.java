@@ -13,8 +13,7 @@ import com.sun.net.httpserver.HttpExchange;
 /**
  *  A {@link Request} backed by a {@link HttpExchange} from the JDK's built-in {@code com.sun.net.httpserver.HttpServer}.
  */
-final class HttpExchangeRequest implements Request
-{
+final class HttpExchangeRequest implements Request {
   HttpExchangeRequest(HttpExchange exchange) {
     assert exchange != null;
     this.exchange = exchange;

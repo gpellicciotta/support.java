@@ -15,8 +15,7 @@ import static com.pellicciotta.support.sql.SqlSyntaxType.OPERATOR;
 /**
  *  Utilities for working with and altering SQL syntax.
  */
-public final class SqlSyntaxUtils
-{
+public final class SqlSyntaxUtils {
   private SqlSyntaxUtils() {  }
 
   /**

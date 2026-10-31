@@ -15,8 +15,7 @@ import com.pellicciotta.support.http.HttpMethod;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Repeatable(WebRoutes.class)
-public @interface WebRoute
-{
+public @interface WebRoute {
   /**
    *  The HTTP method that needs to match.
    */

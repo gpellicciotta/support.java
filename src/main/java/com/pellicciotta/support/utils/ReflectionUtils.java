@@ -25,8 +25,7 @@ import com.pellicciotta.support.logging.LogService;
 /**
  * Reflection-related utility methods.
  */
-public final class ReflectionUtils
-{
+public final class ReflectionUtils {
   private static Log log = LogService.fromCurrentClass();
 
   /** Ensure this class cannot be instantiated. */
@@ -137,14 +136,16 @@ public final class ReflectionUtils
           }
         }
       }
-    } else if (file.getName().toLowerCase().endsWith(".jar")) {
+    }
+    else if (file.getName().toLowerCase().endsWith(".jar")) {
       for (Class<?> cls : listClassesInJar(file, classFilter, classLoader)) {
         if (!foundClasses.contains(cls)) {
           classes.add(cls);
           foundClasses.add(cls);
         }
       }
-    } else if (file.getName().toLowerCase().endsWith(".class")) {
+    }
+    else if (file.getName().toLowerCase().endsWith(".class")) {
       String className = determineClassName(root, file);
       Class<?> cls = loadClass(className, classLoader);
       if ((cls != null) && classFilter.test(cls) && !foundClasses.contains(cls)) {
@@ -392,7 +393,8 @@ public final class ReflectionUtils
             log.debug("Found class '%s' in directory '%s'", cls.getName(), file);
           }
         }
-      } else if (file.getName().endsWith(".class")) {
+      }
+      else if (file.getName().endsWith(".class")) {
         String className = packageName + '.' + file.getName().substring(0, file.getName().length() - 6);
         Class<?> cls = loadClass(className, classLoader);
         if ((cls != null) && classFilter.test(cls) && !foundClasses.contains(cls)) {
@@ -412,7 +414,8 @@ public final class ReflectionUtils
       @SuppressWarnings("unused")
       String clsName = cls.getCanonicalName(); // Because this can lead to MalformedClassName, in which case we want to discard this class
       return cls;
-    } catch (Throwable e) {
+    }
+    catch (Throwable e) {
       log.debug("Failed to load class '%s': %s", className, e);
       return null;
     }
@@ -533,26 +536,31 @@ public final class ReflectionUtils
       if (resource.getProtocol().equals("file")) {
         try {
           lastModified = new File(resource.toURI()).lastModified();
-        } catch (URISyntaxException ignored) {
+        }
+        catch (URISyntaxException ignored) {
           // Empty on purpose
         }
-      } else if (resource.getProtocol().equals("jar")) {
+      }
+      else if (resource.getProtocol().equals("jar")) {
         String path = resource.getPath();
         lastModified = new File(path.substring(5 /* skip protocol */, path.indexOf("!"))).lastModified();
-      } else if (resource.getProtocol().equals("zip")) {
+      }
+      else if (resource.getProtocol().equals("zip")) {
         String path = resource.getPath();
         File jarFileOnDisk = new File(path.substring(0, path.indexOf("!")));
         try (JarFile jf = new JarFile(jarFileOnDisk)) {
           ZipEntry ze = jf.getEntry(path.substring(path.indexOf("!") + 2)); // Skip the ! and the /
           lastModified = ze.getTime();
-        } catch (IOException | RuntimeException ignored) {
+        }
+        catch (IOException | RuntimeException ignored) {
           // Empty on purpose
         }
       }
     }
     if (lastModified != -1) {
       return Instant.ofEpochMilli(lastModified);
-    } else {
+    }
+    else {
       return null;
     }
   }

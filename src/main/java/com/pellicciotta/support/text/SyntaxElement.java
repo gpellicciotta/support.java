@@ -9,8 +9,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  The common interface for all elements that can be categorized according to a {@link SyntaxType}.
  */
-public interface SyntaxElement
-{
+public interface SyntaxElement {
   /**
    *  Type of syntax represented by the current element.
    */

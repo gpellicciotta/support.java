@@ -11,8 +11,7 @@ import com.pellicciotta.support.text.TextBuilder;
 /**
  * A collection of String related utility methods.
  */
-public final class StringUtils
-{
+public final class StringUtils {
   /** Prevent instantiation */
   private StringUtils() { }
 
@@ -114,7 +113,8 @@ public final class StringUtils
       if (sourceString.substring(c, c + originalValue.length()).equals(originalValue)) {
         result.append(replacementValue);
         c += originalValue.length() - 1;
-      } else {
+      }
+      else {
         result.append(sourceString.charAt(c));
       }
     }
@@ -173,7 +173,8 @@ public final class StringUtils
         default:
           if (Character.isISOControl(ch) || (Character.isWhitespace(ch) && (ch != ' '))) {
             chars.append(String.format("\\u%04x", (int) ch));
-          } else {
+          }
+          else {
             chars.append(ch);
           }
       }
@@ -655,13 +656,15 @@ public final class StringUtils
         expandedText.append(ch);
         origIndexes.add(i);
         logicalInsertIdx += 1;
-      } else if (logicalInsertIdx >= maxTabStopIdx) { // Beyond last applicable tab stop: tabs expand to n spaces
+      }
+      else if (logicalInsertIdx >= maxTabStopIdx) { // Beyond last applicable tab stop: tabs expand to n spaces
         for (int j = 0; j < tabSize; j++) {
           expandedText.append(' ');
           origIndexes.add(i);
           logicalInsertIdx += 1;
         }
-      } else { // Find applicable tabStop
+      }
+      else { // Find applicable tabStop
         int tabStopIdx = -1;
         for (int j = lastUsedTabStopIdx + 1; j < tabStops.length; j++) {
           if (logicalInsertIdx < tabStops[j]) {
@@ -829,7 +832,8 @@ public final class StringUtils
       current = formatString.charAt(i);
       if ((current != '{') && (current != '}')) {
         skipBrace = false;
-      } else if (current == '{') {
+      }
+      else if (current == '{') {
         if (skipBrace && (previous == current)) {
           skipBrace = false;
           continue; // Don't add current brace and don't attempt to parse format parameter.
@@ -837,7 +841,8 @@ public final class StringUtils
         String formatParameter = parseStringFormatParameter(formatString, i);
         if (formatParameter == null) {
           skipBrace = true;
-        } else {
+        }
+        else {
           skipBrace = false;
           String parameterName = formatParameter.substring(1, formatParameter.length() - 1);
           String replacement = replacements.getProperty(parameterName);
@@ -847,7 +852,8 @@ public final class StringUtils
             continue; // Don't add current brace any more
           }
         }
-      } else if (current == '}') {
+      }
+      else if (current == '}') {
         if (skipBrace && (previous == current)) {
           skipBrace = false;
           continue; // Don't add current brace.
@@ -941,7 +947,8 @@ public final class StringUtils
       current = formatString.charAt(i);
       if ((current != '{') && (current != '}')) {
         skipBrace = false;
-      } else if (current == '{') {
+      }
+      else if (current == '{') {
         if (skipBrace && (previous == current)) {
           skipBrace = false;
           continue; // Don't add current brace and don't attempt to parse format parameter.
@@ -949,7 +956,8 @@ public final class StringUtils
         String formatParameter = parseIntFormatParameter(formatString, i);
         if (formatParameter == null) {
           skipBrace = true;
-        } else {
+        }
+        else {
           skipBrace = false;
           try {
             int index = Integer.parseInt(formatParameter.substring(1, formatParameter.length() - 1));
@@ -959,11 +967,13 @@ public final class StringUtils
               i += formatParameter.length() - 1;
               continue; // Don't add current brace
             }
-          } catch (NumberFormatException nfe) {
+          }
+          catch (NumberFormatException nfe) {
             // Ignore and continue normal processing
           }
         }
-      } else if (current == '}') {
+      }
+      else if (current == '}') {
         if (skipBrace && (previous == current)) {
           skipBrace = false;
           continue; // Don't add current brace.
@@ -1338,7 +1348,8 @@ public final class StringUtils
         }
         if (rowSuffix == null) {
           sb.append(colVal);
-        } else {
+        }
+        else {
           sb.append(StringUtils.padRight(colVal, colWidths[lastColIdx]));
           sb.append(rowSuffix);
         }
@@ -1388,7 +1399,8 @@ public final class StringUtils
           char ch = numberStr.charAt(numberStrIndex);
           lineBuffers[digitPos].setCharAt(number - startNumber, ch);
         }
-      } else {
+      }
+      else {
         int numberStrIndex = numberStr.length() - 1;
         char ch = numberStr.charAt(numberStrIndex);
         lineBuffers[0].setCharAt(number - startNumber, ch);
@@ -1450,8 +1462,7 @@ public final class StringUtils
    * @throws IllegalArgumentException When bytesPerLine is negative or zero.
    * @throws IllegalArgumentException When bytePattern doesn't contain the substring "{hex}".
    */
-  public static String[] makeHexRepresentation(byte[] buffer, int bytesPerLine, String prefixPattern, String bytePattern)
-  {
+  public static String[] makeHexRepresentation(byte[] buffer, int bytesPerLine, String prefixPattern, String bytePattern) {
     return makeHexRepresentation(buffer, 0, buffer.length, bytesPerLine, prefixPattern, bytePattern);
   }
 
@@ -1929,7 +1940,8 @@ public final class StringUtils
       char c = (char) b;
       if (isPrintable(c)) {
         rep.append(c);
-      } else {
+      }
+      else {
         rep.append(unprintableChar);
       }
     }

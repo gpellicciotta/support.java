@@ -5,8 +5,7 @@ package com.pellicciotta.support.utils;
 import com.pellicciotta.support.logging.LogService;
 import static com.pellicciotta.support.utils.Random.*;
 
-public class RandomUtilsTest
-{
+public class RandomUtilsTest {
   public static void main(String[] args) {
     for (int i = 0; i < 1000; i++) {
       int len = intInRange(5, 25);

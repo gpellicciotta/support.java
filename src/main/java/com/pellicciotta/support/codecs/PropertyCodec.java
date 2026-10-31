@@ -9,8 +9,7 @@ import java.util.Map;
  *
  *  @param <T> The native type to encode from/to.
  */
-public interface PropertyCodec<T>
-{
+public interface PropertyCodec<T> {
   /**
    *  Decode one or multiple name/value pairs into a native value.
    *

@@ -20,8 +20,7 @@ import com.pellicciotta.support.utils.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class LoggingConfigTests
-{
+public class LoggingConfigTests {
   @Test
   public void testLoggingConfig() throws Exception {
     LoggingConfig logging = new LoggingConfig();

@@ -16,8 +16,7 @@ import com.pellicciotta.support.utils.StringUtils;
 /**
  *  Factory methods for building {@link HttpRoute}s, either directly or from {@link WebRoute}-annotated methods.
  */
-public final class HttpRoutes
-{
+public final class HttpRoutes {
   /** Prevent instantiation. */
   private HttpRoutes() { }
 

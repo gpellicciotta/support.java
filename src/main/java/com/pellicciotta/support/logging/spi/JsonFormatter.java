@@ -15,8 +15,7 @@ import com.pellicciotta.support.utils.*;
 /**
  *  For logging {@link LogEvent}s as structured JSON objects, themselves provided as a single {@link String}.
  */
-public class JsonFormatter extends LogEventFormatterBase
-{
+public class JsonFormatter extends LogEventFormatterBase {
   // <editor-fold desc="Construction">
 
   /**
@@ -26,7 +25,9 @@ public class JsonFormatter extends LogEventFormatterBase
    *   <li>Include full stack trace information.</li>
    *   <li>Include all context data.</li></ul>
    */
-  public JsonFormatter() { this(true, true); }
+  public JsonFormatter() {
+    this(true, true);
+  }
 
   /**
    * Construct a formatter that is initialized with the specified properties.

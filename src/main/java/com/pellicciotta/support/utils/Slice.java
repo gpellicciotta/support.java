@@ -11,8 +11,7 @@ import java.util.List;
  *  @param <T> The sequence or collection of elements this span refers to.
  *  @param <E> The type of elements in the source collection and hence also in the span.
  */
-public abstract class Slice<T, E> implements Iterable<E>
-{
+public abstract class Slice<T, E> implements Iterable<E> {
   // <editor-fold desc="Construction">
 
   /**
@@ -55,12 +54,16 @@ public abstract class Slice<T, E> implements Iterable<E>
   /**
    * @return One beyond the last element index covered by this span. If equal to the start index, there are effectively zero elements covered by this span.
    */
-  public int getEndIndex() { return this.endIndex; }
+  public int getEndIndex() {
+    return this.endIndex;
+  }
 
   /**
    * @return The number of elements covered by this span.
    */
-  public int getLength() { return this.endIndex - this.startIndex; };
+  public int getLength() {
+    return this.endIndex - this.startIndex;
+  }
 
   // </editor-fold>
   // <editor-fold desc="Element Access">

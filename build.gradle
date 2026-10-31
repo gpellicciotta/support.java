@@ -2,6 +2,7 @@ plugins {
   id 'java-library'
   id 'maven-publish'
   id 'application'
+  id 'checkstyle'
   alias(libs.plugins.spotless)
 }
 
@@ -47,6 +48,12 @@ javadoc {
 
 application {
   mainClass = 'com.pellicciotta.support.Info'
+}
+
+// Style rules Spotless cannot enforce (braces, Javadoc, package-info) - see config/checkstyle/checkstyle.xml.
+checkstyle {
+  toolVersion = libs.versions.checkstyle.get()
+  maxWarnings = 0
 }
 
 test {

@@ -10,8 +10,7 @@ import com.pellicciotta.support.utils.*;
 /**
  *  A mail attachment: a file to be sent with the mail message.
 **/
-public class MailAttachment
-{
+public class MailAttachment {
   // <editor-fold desc="Construction">
 
   public MailAttachment(File file) {
@@ -44,13 +43,11 @@ public class MailAttachment
     return this.file.getName();
   }
 
-  public File getFile()
-  {
+  public File getFile() {
     return this.file;
   }
 
-  public String getMimeType()
-  {
+  public String getMimeType() {
     return this.mimeType;
   }
 

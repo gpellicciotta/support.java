@@ -10,8 +10,7 @@ import com.pellicciotta.support.codecs.TypedValue;
  *
  *  @param <T> The type of native value represented by this setting.
  */
-public class AttachedSetting<T> extends Setting<T>
-{
+public class AttachedSetting<T> extends Setting<T> {
   /**
    *  Create an attached setting with the given properties and no default value.
    *

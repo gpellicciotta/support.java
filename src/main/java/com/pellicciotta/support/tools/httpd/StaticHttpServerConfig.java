@@ -12,8 +12,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-class StaticHttpServerConfig extends BasicConfig
-{
+class StaticHttpServerConfig extends BasicConfig {
   public StaticHttpServerConfig() {
     super();
     List<ConfigElement> configElements = new ArrayList<>();

@@ -11,8 +11,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  A parser base-class designed to work together with a {@link Tokenizer}.
  */
-public class Parser
-{
+public class Parser {
   /**
    *  Create a parser based on the given list of matchers.
    *

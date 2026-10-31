@@ -16,8 +16,7 @@ import org.testcontainers.mariadb.MariaDBContainer;
 import static com.pellicciotta.support.utils.DateTimeUtils.*;
 
 @Testcontainers(disabledWithoutDocker = true)
-public class SqlPagingTest
-{
+public class SqlPagingTest {
   @Container
   static final MariaDBContainer MARIADB = new MariaDBContainer("mariadb:11.4")
       .withDatabaseName("test")
@@ -67,8 +66,7 @@ public class SqlPagingTest
 
   private SqlExecutor sql;
 
-  public static class Score
-  {
+  public static class Score {
     public Score(long id, String game, String player, long score, Date achievementTime) {
       this.id = id;
       this.game = game;
@@ -99,8 +97,12 @@ public class SqlPagingTest
 
     @Override
     public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || this.getClass() != o.getClass()) return false;
+      if (this == o) {
+        return true;
+      }
+      if (o == null || this.getClass() != o.getClass()) {
+        return false;
+      }
       Score score1 = (Score) o;
       return this.id == score1.id &&
           this.score == score1.score &&

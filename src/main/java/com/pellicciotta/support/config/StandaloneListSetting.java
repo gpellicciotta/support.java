@@ -14,8 +14,7 @@ import com.pellicciotta.support.codecs.XmlCodec;
  *
  *  @param <T> The type of elementary native values held by this setting.
  */
-public class StandaloneListSetting<T> extends ListSetting<T>
-{
+public class StandaloneListSetting<T> extends ListSetting<T> {
   /**
    *  Create a standalone list setting with the given properties and no default value.
    *

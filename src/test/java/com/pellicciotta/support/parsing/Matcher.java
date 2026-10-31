@@ -8,8 +8,7 @@ package com.pellicciotta.support.parsing;
  *  @param <T> The type of input elements.
  */
 @FunctionalInterface
-public interface Matcher<T>
-{
+public interface Matcher<T> {
   /**
    *  Try to match one or more items from the input stream.
    *

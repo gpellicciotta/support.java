@@ -18,8 +18,7 @@ import com.pellicciotta.support.utils.DateTimeUtils;
 @Retention(RetentionPolicy.SOURCE)
 @Target({ ElementType.PACKAGE, ElementType.TYPE, ElementType.ANNOTATION_TYPE, ElementType.METHOD,
           ElementType.CONSTRUCTOR, ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.PARAMETER })
-public @interface Generated
-{
+public @interface Generated {
   /**
    * @return The value element MUST have the name of the code generator.
    */

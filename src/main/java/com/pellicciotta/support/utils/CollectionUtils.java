@@ -9,8 +9,7 @@ import java.util.stream.Collectors;
 /**
  * A set of collections related utility methods.
  */
-public final class CollectionUtils
-{
+public final class CollectionUtils {
   /** Prevent instantiation */
   private CollectionUtils() { }
 
@@ -1202,13 +1201,16 @@ public final class CollectionUtils
           for (int i = from; i <= to; i++) {
             intVals.add(i);
           }
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
           throw new IllegalArgumentException("The range '" + valSpec + "' contains an invalid number");
         }
-      } else {
+      }
+      else {
         try {
           intVals.add(Integer.parseInt(valSpec));
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
           throw new IllegalArgumentException("The value '" + valSpec + "' is not a valid number");
         }
       }
@@ -1532,11 +1534,14 @@ public final class CollectionUtils
       T element = array[i];
       if (element instanceof Map) {
         str.append(toString((Map<?, ?>) element, prefix, elemSep, suffix, " => "));
-      } else if (element instanceof Set) {
+      }
+      else if (element instanceof Set) {
         str.append(toString((Set<?>) element, prefix, elemSep, suffix));
-      } else if (element instanceof Collection) {
+      }
+      else if (element instanceof Collection) {
         str.append(toString((Collection<?>) element, prefix, elemSep, suffix));
-      } else {
+      }
+      else {
         str.append(element);
       }
       if (i < (array.length - 1)) {
@@ -1588,11 +1593,14 @@ public final class CollectionUtils
       T element = array[i];
       if (element instanceof Map) {
         str.append(toString((Map<?, ?>) element, prefix, elemSep, suffix, " => "));
-      } else if (element instanceof Set) {
+      }
+      else if (element instanceof Set) {
         str.append(toString((Set<?>) element, prefix, elemSep, suffix));
-      } else if (element instanceof Collection) {
+      }
+      else if (element instanceof Collection) {
         str.append(toString((Collection<?>) element, prefix, elemSep, suffix));
-      } else {
+      }
+      else {
         str.append(element);
       }
       if (i < (array.length - 1)) {
@@ -1637,11 +1645,14 @@ public final class CollectionUtils
       Object element = it.next();
       if (element instanceof Map) {
         str.append(toString((Map) element, prefix, elemSep, suffix, " => "));
-      } else if (element instanceof Set) {
+      }
+      else if (element instanceof Set) {
         str.append(toString((Set<?>) element, prefix, elemSep, suffix));
-      } else if (element instanceof Collection) {
+      }
+      else if (element instanceof Collection) {
         str.append(toString((Collection) element, prefix, elemSep, suffix));
-      } else {
+      }
+      else {
         str.append(element);
       }
       if (it.hasNext()) {
@@ -1685,11 +1696,14 @@ public final class CollectionUtils
       Object element = it.next();
       if (element instanceof Map) {
         str.append(toString((Map<?, ?>) element, prefix, elemSep, suffix, " => "));
-      } else if (element instanceof Set) {
+      }
+      else if (element instanceof Set) {
         str.append(toString((Set<?>) element, prefix, elemSep, suffix));
-      } else if (element instanceof Collection) {
+      }
+      else if (element instanceof Collection) {
         str.append(toString((Collection<?>) element, prefix, elemSep, suffix));
-      } else {
+      }
+      else {
         str.append(element);
       }
       if (it.hasNext()) {
@@ -1738,11 +1752,14 @@ public final class CollectionUtils
       Object element = map.get(key);
       if (element instanceof Map) {
         str.append(toString((Map<?, ?>) element, prefix, elemSep, suffix, keyValSep));
-      } else if (element instanceof Set) {
+      }
+      else if (element instanceof Set) {
         str.append(toString((Set<?>) element, prefix, elemSep, suffix));
-      } else if (element instanceof Collection) {
+      }
+      else if (element instanceof Collection) {
         str.append(toString((Collection<?>) element, prefix, elemSep, suffix));
-      } else {
+      }
+      else {
         str.append(element);
       }
       if (it.hasNext()) {

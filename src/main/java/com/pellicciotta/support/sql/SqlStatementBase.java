@@ -21,8 +21,7 @@ import com.pellicciotta.support.utils.StringConversionUtils;
  *  simple wrapper that ensures throwning unchecked {@link SqlRuntimeException} instead of the
  *  checked {@link SQLException}.</p>
  */
-public class SqlStatementBase implements PreparedStatement
-{
+public class SqlStatementBase implements PreparedStatement {
   // <editor-fold desc="Construction">
 
   protected SqlStatementBase(PreparedStatement wrapped) {

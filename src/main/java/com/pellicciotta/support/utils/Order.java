@@ -5,8 +5,7 @@ package com.pellicciotta.support.utils;
 /**
  *  The direction to order items in.
  */
-public enum Order
-{
+public enum Order {
   /** Ascending order. */
   ASC,
 

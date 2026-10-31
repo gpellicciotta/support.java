@@ -10,8 +10,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  A tokenizer implementation based on an ordered list of {@link TokenMatcher}s.
  */
-public class Tokenizer
-{
+public class Tokenizer {
   /**
    *  Create a tokenizer based on the given list of matchers.
    *

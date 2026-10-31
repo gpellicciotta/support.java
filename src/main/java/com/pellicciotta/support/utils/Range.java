@@ -7,8 +7,7 @@ import com.pellicciotta.support.app.Version;
 /**
  * A generic pair representing a start and end point in a sequence.
  */
-public class Range<T extends Comparable<T>> implements Comparable<Range<T>>
-{
+public class Range<T extends Comparable<T>> implements Comparable<Range<T>> {
   // <editor-fold desc="Construction">
 
   /**

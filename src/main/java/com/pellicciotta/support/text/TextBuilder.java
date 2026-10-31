@@ -10,8 +10,7 @@ import com.pellicciotta.support.utils.*;
 /**
  *  A fluent API for building multi-line blocks of text.
  */
-public final class TextBuilder
-{
+public final class TextBuilder {
   // <editor-fold desc="Support Types">
 
   /**

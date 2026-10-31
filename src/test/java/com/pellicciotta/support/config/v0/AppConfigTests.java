@@ -21,8 +21,7 @@ import org.w3c.dom.Element;
 /**
  *  v0: Implementing all configuration as direct sub-classes of Config, Setting and SettingsGroup.
  */
-public class AppConfigTests
-{
+public class AppConfigTests {
   @Test
   public void testDefaults() {
     AppConfig cfg = new AppConfig();

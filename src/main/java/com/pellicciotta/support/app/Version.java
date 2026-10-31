@@ -19,8 +19,7 @@ import com.pellicciotta.support.utils.StringUtils;
  *  <p>
  *  Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.</p>
  */
-public class Version implements Comparable<Version>
-{
+public class Version implements Comparable<Version> {
   // <editor-fold desc="Construction">
 
   /**
@@ -237,8 +236,12 @@ public class Version implements Comparable<Version>
    */
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Version)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Version)) {
+      return false;
+    }
     Version otherVersion = (Version) o;
     return this.compareTo(otherVersion) == 0;
   }

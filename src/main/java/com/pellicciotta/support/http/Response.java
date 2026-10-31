@@ -17,8 +17,7 @@ import java.nio.charset.StandardCharsets;
  *  {@link #getOutputStream()}/{@link #getWriter()} — once the body starts being written, they can no longer
  *  be changed.</p>
  */
-public interface Response
-{
+public interface Response {
   /** Set the HTTP status code to send, e.g. <code>200</code>. Defaults to <code>200</code> if never called. */
   void setStatus(int statusCode);
 

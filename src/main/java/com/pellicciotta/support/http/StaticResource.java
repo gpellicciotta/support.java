@@ -4,8 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-class StaticResource implements Resource
-{
+class StaticResource implements Resource {
   public StaticResource(byte[] content, long lastModifiedTime, String mimeType) throws IOException {
     assert content != null;
     assert mimeType != null;

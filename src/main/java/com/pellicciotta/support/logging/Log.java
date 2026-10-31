@@ -7,8 +7,7 @@ package com.pellicciotta.support.logging;
  *  <p>
  *  This interface is meant for consumption only.</p>
  */
-public interface Log extends AutoCloseable
-{
+public interface Log extends AutoCloseable {
   // <editor-fold desc="Properties">
 
   /** @return The name of this log. */

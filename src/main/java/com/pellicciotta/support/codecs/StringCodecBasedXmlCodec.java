@@ -9,8 +9,7 @@ import org.w3c.dom.Element;
  *  An {@link XmlCodec} that will simply use an {@link StringCodec} to transform that native value to/from a {@link String}
  *  representation, which is used as the XML element value. The property name will the provided name.
  */
-public final class StringCodecBasedXmlCodec<T> implements XmlCodec<T>
-{
+public final class StringCodecBasedXmlCodec<T> implements XmlCodec<T> {
   /**
    *  Create a new codec that will use the provided name and codec.
    *

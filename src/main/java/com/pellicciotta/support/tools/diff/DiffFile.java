@@ -12,8 +12,7 @@ import com.pellicciotta.support.utils.FileUtils;
 /**
  *  Information about one particular file participating in a diff operation.
  */
-class DiffFile
-{
+class DiffFile {
   public DiffFile(File file, DiffToolConfig config) throws IOException {
     this.file = file;
     this.lastModifiedTime = new Date(this.file.lastModified());

@@ -8,8 +8,7 @@ import com.pellicciotta.support.logging.LogService;
 /**
  *  Dummy no-op implementation
 **/
-public class DummyBackEnd extends MailBackEndBase
-{
+public class DummyBackEnd extends MailBackEndBase {
   private static final Log log = LogService.fromCurrentClass();
 
   @Override

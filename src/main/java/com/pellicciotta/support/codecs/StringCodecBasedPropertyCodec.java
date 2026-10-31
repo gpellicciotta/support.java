@@ -8,8 +8,7 @@ import java.util.Map;
  *  A {@link PropertyCodec} that will simply use an {@link StringCodec} to transform a native value to/from a {@link String}
  *  representation, which is used as the property value. The property name will the provided name.
  */
-public final class StringCodecBasedPropertyCodec<T> implements PropertyCodec<T>
-{
+public final class StringCodecBasedPropertyCodec<T> implements PropertyCodec<T> {
   /**
    *  Create a new codec that will use the provided name and codec.
    *

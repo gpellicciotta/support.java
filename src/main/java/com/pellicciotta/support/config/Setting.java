@@ -26,8 +26,7 @@ import org.w3c.dom.Element;
  *
  *  @param <T> The native type of the setting's value.
  */
-public abstract class Setting<T> extends ConfigElement
-{
+public abstract class Setting<T> extends ConfigElement {
   // <editor-fold desc="Construction">
 
   /**
@@ -59,7 +58,9 @@ public abstract class Setting<T> extends ConfigElement
   // <editor-fold desc="ConfigElement Overrides">
 
   @Override
-  protected boolean isElementary() { return true; }
+  protected boolean isElementary() {
+    return true;
+  }
 
   // </editor-fold>
   // <editor-fold desc="Value Operations">

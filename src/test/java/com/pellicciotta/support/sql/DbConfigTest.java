@@ -6,8 +6,7 @@ import com.pellicciotta.support.config.Config;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class DbConfigTest
-{
+public class DbConfigTest {
   @Test
   public void testDefaults() {
     DbConfig db = new DbConfig("auth");

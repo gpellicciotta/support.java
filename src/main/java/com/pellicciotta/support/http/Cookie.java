@@ -11,8 +11,7 @@ import com.pellicciotta.support.utils.Contract;
  *  A plain, container-agnostic representation of an HTTP cookie: parsed from an incoming <code>Cookie</code>
  *  request header, or built here and serialized into an outgoing <code>Set-Cookie</code> response header.
  */
-public final class Cookie
-{
+public final class Cookie {
   public Cookie(String name, String value) {
     Contract.isNotNull("name", name);
     this.name = name;
@@ -27,26 +26,52 @@ public final class Cookie
   private boolean secure;
   private boolean httpOnly;
 
-  public String getName() { return this.name; }
+  public String getName() {
+    return this.name;
+  }
 
-  public String getValue() { return this.value; }
-  public Cookie setValue(String value) { this.value = value; return this; }
+  public String getValue() {
+    return this.value;
+  }
+  public Cookie setValue(String value) {
+    this.value = value; return this;
+  }
 
   /** @return The max age in seconds, {@code -1} meaning "session cookie" (no explicit expiry) and {@code 0} meaning "expire immediately". */
-  public int getMaxAge() { return this.maxAge; }
-  public Cookie setMaxAge(int maxAgeInSeconds) { this.maxAge = maxAgeInSeconds; return this; }
+  public int getMaxAge() {
+    return this.maxAge;
+  }
+  public Cookie setMaxAge(int maxAgeInSeconds) {
+    this.maxAge = maxAgeInSeconds; return this;
+  }
 
-  public String getPath() { return this.path; }
-  public Cookie setPath(String path) { this.path = path; return this; }
+  public String getPath() {
+    return this.path;
+  }
+  public Cookie setPath(String path) {
+    this.path = path; return this;
+  }
 
-  public String getDomain() { return this.domain; }
-  public Cookie setDomain(String domain) { this.domain = domain; return this; }
+  public String getDomain() {
+    return this.domain;
+  }
+  public Cookie setDomain(String domain) {
+    this.domain = domain; return this;
+  }
 
-  public boolean isSecure() { return this.secure; }
-  public Cookie setSecure(boolean secure) { this.secure = secure; return this; }
+  public boolean isSecure() {
+    return this.secure;
+  }
+  public Cookie setSecure(boolean secure) {
+    this.secure = secure; return this;
+  }
 
-  public boolean isHttpOnly() { return this.httpOnly; }
-  public Cookie setHttpOnly(boolean httpOnly) { this.httpOnly = httpOnly; return this; }
+  public boolean isHttpOnly() {
+    return this.httpOnly;
+  }
+  public Cookie setHttpOnly(boolean httpOnly) {
+    this.httpOnly = httpOnly; return this;
+  }
 
   // <editor-fold desc="Factory Methods">
 

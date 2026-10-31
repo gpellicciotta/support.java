@@ -13,8 +13,7 @@ import java.util.regex.Pattern;
 /**
  * Class providing http to information about the current runtime environment.
  */
-public abstract class EnvironmentUtils
-{
+public abstract class EnvironmentUtils {
   /** Prevent instantiation */
   private EnvironmentUtils() { }
 

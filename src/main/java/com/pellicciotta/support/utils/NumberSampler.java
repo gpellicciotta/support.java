@@ -5,8 +5,7 @@ package com.pellicciotta.support.utils;
 /**
  *  Class providing number sample management functionality.
  */
-public class NumberSampler
-{
+public class NumberSampler {
   // <editor-fold desc="Construction">
 
   /**
@@ -36,7 +35,8 @@ public class NumberSampler
   public double getMinSampleValue() {
     if (Double.isNaN(this.minSampleValue)) {
       return 0L;
-    } else {
+    }
+    else {
       return this.minSampleValue;
     }
   }
@@ -49,7 +49,8 @@ public class NumberSampler
   public double getMaxSampleValue() {
     if (Double.isNaN(this.maxSampleValue)) {
       return 0L;
-    } else {
+    }
+    else {
       return this.maxSampleValue;
     }
   }
@@ -78,7 +79,8 @@ public class NumberSampler
   public double getAverageSampleValue() {
     if (this.sampleCount > 0) {
       return this.sumOfSampleValues / (double) this.sampleCount;
-    } else {
+    }
+    else {
       return 0.0d;
     }
   }

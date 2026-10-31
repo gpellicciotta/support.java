@@ -7,8 +7,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  Generic {@code status}/{@code message} REST response envelope.
  */
-public class ResultMessage
-{
+public class ResultMessage {
   public ResultMessage(String status, String message) {
     Contract.isNotNull(status);
     Contract.isNotNull(message);

@@ -9,8 +9,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  An edit region is a sequence of {@link EditCommand}s that cover/affect continuous regions of items in both sequence.
  */
-public class EditRegion
-{
+public class EditRegion {
   /**
    * @param commands A non-empty series of commands that must affect contiguous regions in both sequences.
    */

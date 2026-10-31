@@ -6,8 +6,7 @@ package com.pellicciotta.support.parsing;
  *  Functional interface to be implemented by types that can participate in a matching part of a {@link CharSequence}.
  */
 @FunctionalInterface
-public interface CharSequenceMatcher
-{
+public interface CharSequenceMatcher {
   /**
    *  Try to match a substring starting at startIndex.
    *

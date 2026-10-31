@@ -15,8 +15,7 @@ import com.pellicciotta.support.utils.StringUtils;
 /**
  *  Start a command-line tool by matching its name to its implementing code.
  */
-public final class ToolDispatcher
-{
+public final class ToolDispatcher {
   private static class Tool {
     public Tool(Class<? extends BasicApp> appClass) throws Exception {
       this.toolClass = appClass;

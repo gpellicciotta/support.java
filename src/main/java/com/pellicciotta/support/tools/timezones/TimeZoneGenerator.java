@@ -13,8 +13,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-public class TimeZoneGenerator extends BasicApp<TimeZoneGeneratorConfig>
-{
+public class TimeZoneGenerator extends BasicApp<TimeZoneGeneratorConfig> {
   // <editor-fold desc="Command-line Entry-Point">
 
   /**

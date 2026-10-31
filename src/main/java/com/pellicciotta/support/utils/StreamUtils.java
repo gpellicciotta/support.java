@@ -10,8 +10,7 @@ import java.io.*;
 /**
  *  A collection of stream-related utility methods.
  */
-public final class StreamUtils
-{
+public final class StreamUtils {
   /** Prevent instantiation */
   private StreamUtils() { }
 
@@ -206,7 +205,8 @@ public final class StreamUtils
       if (is != null) {
         is.close();
       }
-    } catch (IOException ex) { // silently ignore
+    }
+    catch (IOException ex) { // silently ignore
       log.warning("Closing input stream failed silently: %s", ex);
     }
   }
@@ -221,7 +221,8 @@ public final class StreamUtils
       if (os != null) {
         os.close();
       }
-    } catch (IOException ex) { // silently ignore
+    }
+    catch (IOException ex) { // silently ignore
       log.warning("Closing output stream failed silently: %s", ex);
     }
   }
@@ -236,7 +237,8 @@ public final class StreamUtils
       if (reader != null) {
         reader.close();
       }
-    } catch (IOException ex) { // silently ignore
+    }
+    catch (IOException ex) { // silently ignore
       log.warning("Closing reader failed silently: %s", ex);
     }
   }
@@ -251,7 +253,8 @@ public final class StreamUtils
       if (writer != null) {
         writer.close();
       }
-    } catch (IOException ex) { // silently ignore
+    }
+    catch (IOException ex) { // silently ignore
       log.warning("Closing writer failed silently: %s", ex);
     }
   }

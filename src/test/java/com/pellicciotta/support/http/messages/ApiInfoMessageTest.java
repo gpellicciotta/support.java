@@ -8,8 +8,7 @@ import org.junit.jupiter.api.*;
 import java.util.List;
 import java.util.Set;
 
-public class ApiInfoMessageTest
-{
+public class ApiInfoMessageTest {
   @Test
   public void testApiVersionMessageFields() {
     ApiVersionMessage msg = new ApiVersionMessage("1.2.3");

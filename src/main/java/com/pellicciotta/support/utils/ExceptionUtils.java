@@ -11,8 +11,7 @@ import com.pellicciotta.support.text.TextBuilder;
 /**
  * A collection of Exception related utility methods.
  */
-public final class ExceptionUtils
-{
+public final class ExceptionUtils {
   /** Prevent instantiation */
   private ExceptionUtils() {}
 

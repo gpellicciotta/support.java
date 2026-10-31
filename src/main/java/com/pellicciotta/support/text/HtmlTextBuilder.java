@@ -10,8 +10,7 @@ import com.pellicciotta.support.utils.*;
 /**
  *  Class for building HTML text.
  */
-public final class HtmlTextBuilder
-{
+public final class HtmlTextBuilder {
   // <editor-fold desc="Support Types">
 
   public interface Tag extends AutoCloseable {

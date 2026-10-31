@@ -5,8 +5,7 @@ package com.pellicciotta.support.http;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class WebServerConfigTest
-{
+public class WebServerConfigTest {
   @Test
   public void testDefaults() {
     WebServerConfig config = new WebServerConfig();

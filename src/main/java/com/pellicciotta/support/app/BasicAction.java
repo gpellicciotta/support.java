@@ -5,8 +5,7 @@ package com.pellicciotta.support.app;
 import com.pellicciotta.support.config.CommandLine;
 import com.pellicciotta.support.utils.CollectionUtils;
 
-public abstract class BasicAction<T extends BasicConfig>
-{
+public abstract class BasicAction<T extends BasicConfig> {
   public BasicAction(String name, String description) {
     this.name = name;
     this.aliasNames = new String[0];

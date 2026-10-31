@@ -11,8 +11,7 @@ import static com.pellicciotta.support.diff.DiffUtils.ENABLE_LOGGING;
  *  Based on: https://bramcohen.livejournal.com/73318.html
  *  Basically find the most unique common item and divide the sequences based on that item' match-pair.
  */
-public class HistogramDiff<T> extends DiffAlgorithmBase<T>
-{
+public class HistogramDiff<T> extends DiffAlgorithmBase<T> {
   public HistogramDiff() { }
 
   @Override
@@ -77,8 +76,7 @@ public class HistogramDiff<T> extends DiffAlgorithmBase<T>
     }
   }
 
-  private static class ItemInfo
-  {
+  private static class ItemInfo {
     ItemInfo(int aIndex, int bIndex) {
       this.aIndex = aIndex;
       this.aCount = 0;

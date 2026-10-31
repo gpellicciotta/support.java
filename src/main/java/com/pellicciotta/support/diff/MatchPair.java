@@ -7,8 +7,7 @@ import java.util.Objects;
 /**
  *  A pair of indexes indicating a matching item in 2 sequences.
  */
-public class MatchPair
-{
+public class MatchPair {
   public MatchPair(int indexA, int indexB) {
     this.indexA = indexA;
     this.indexB = indexB;
@@ -34,8 +33,12 @@ public class MatchPair
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof MatchPair)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof MatchPair)) {
+      return false;
+    }
     MatchPair matchPair = (MatchPair) o;
     return this.indexA == matchPair.indexA && this.indexB == matchPair.indexB;
   }

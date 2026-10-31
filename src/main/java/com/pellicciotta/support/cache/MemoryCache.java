@@ -13,8 +13,7 @@ import java.util.concurrent.Callable;
 /**
  * Cache that has no formal capacity but that stores its values as {@link SoftReference}s, hereby delegating cache eviction to the GC.
  */
-public class MemoryCache<K, V> extends AbstractCache<K, V>
-{
+public class MemoryCache<K, V> extends AbstractCache<K, V> {
   // <editor-fold desc="Construction">
 
   /**
@@ -95,7 +94,8 @@ public class MemoryCache<K, V> extends AbstractCache<K, V>
     }
     if (value != null) {
       this.recordHit();
-    } else {
+    }
+    else {
       this.recordMiss();
     }
     return value;

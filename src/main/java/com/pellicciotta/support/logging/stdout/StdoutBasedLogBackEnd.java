@@ -13,8 +13,7 @@ import java.lang.reflect.Constructor;
 /**
  *  A {@link LogBackEnd} that writes log message to stdout/stderr. Default min. log-level is {@link LogLevel#INFO}.
  */
-public class StdoutBasedLogBackEnd extends LogBackEndBase
-{
+public class StdoutBasedLogBackEnd extends LogBackEndBase {
   /**
    *  Create a logging back-end with default configuration.
    */

@@ -8,8 +8,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  The combination of a SQL statement, a version and a comment.
  */
-public class VersionedSqlStatement
-{
+public class VersionedSqlStatement {
   // <editor-fold desc="Construction">
 
   public VersionedSqlStatement(Version version, String comment, String sqlStatement) {

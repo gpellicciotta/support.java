@@ -10,8 +10,7 @@ import com.pellicciotta.support.utils.Slice;
 /**
  *  A syntax node represents a syntactic construct that is represented within a certain slice of {@link SyntaxToken}s.
  */
-public class SyntaxNode extends Slice<List<SyntaxToken>, SyntaxToken> implements SyntaxElement
-{
+public class SyntaxNode extends Slice<List<SyntaxToken>, SyntaxToken> implements SyntaxElement {
   public SyntaxNode(SyntaxType nodeType, List<SyntaxToken> source, int startIdx, int endIdx) {
     super(source, startIdx, endIdx);
     this.nodeType = nodeType;

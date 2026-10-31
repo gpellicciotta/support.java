@@ -12,8 +12,7 @@ import java.util.Objects;
  *    Keep: not really an 'edit' command, but makes it clear to keep one or more corresponding items from sequences A and B
  *  </ul>
  */
-public class EditCommand
-{
+public class EditCommand {
   EditCommand(EditType type, int startA, int endA, int startB, int endB) {
     this.type = type;
     this.startInA = startA;
@@ -46,8 +45,12 @@ public class EditCommand
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof EditCommand)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof EditCommand)) {
+      return false;
+    }
     EditCommand that = (EditCommand) o;
     return this.startInA == that.startInA && this.endInA == that.endInA && this.startInB == that.startInB && this.endInB == that.endInB && this.type == that.type;
   }

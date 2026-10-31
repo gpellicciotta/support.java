@@ -7,8 +7,7 @@ package com.pellicciotta.support.text;
  */
 @FunctionalInterface
 public
-interface TokenMatcher
-{
+interface TokenMatcher {
   // IDEA: or have a separate MatchContext with members 'source', 'currentOffset' but also '[get|set]CurrentState' and 'addToken()' ?
 
   /**

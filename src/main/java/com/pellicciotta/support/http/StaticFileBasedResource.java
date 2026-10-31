@@ -2,8 +2,7 @@ package com.pellicciotta.support.http;
 
 import java.io.*;
 
-class StaticFileBasedResource implements Resource
-{
+class StaticFileBasedResource implements Resource {
   public StaticFileBasedResource(File file, String mimeType) {
     assert file != null;
     assert mimeType != null;

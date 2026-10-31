@@ -5,8 +5,7 @@ package com.pellicciotta.support.exceptions;
 /**
  * An unchecked {@link RuntimeException} subclass for configuration issues.
  */
-public class ConfigurationException extends RuntimeExceptionBase
-{
+public class ConfigurationException extends RuntimeExceptionBase {
   // <editor-fold desc="Construction">
 
   /**
@@ -61,8 +60,7 @@ public class ConfigurationException extends RuntimeExceptionBase
   /**
    *  @return The name of the element whose configuration failed, leading to this exception.
    */
-  public String getConfigurationElement()
-  {
+  public String getConfigurationElement() {
     return this.configElement;
   }
 
@@ -71,8 +69,7 @@ public class ConfigurationException extends RuntimeExceptionBase
   /**
    *  @return The value that let to this exception. Can be null, signifying the absense of a specific erroneous value.
    */
-  public Object getConfigurationValue()
-  {
+  public Object getConfigurationValue() {
     return this.configValue;
   }
 

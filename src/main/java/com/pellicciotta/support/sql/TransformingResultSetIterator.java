@@ -13,8 +13,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  An iterator that transforms the elements provided by an underlying {@link java.sql.ResultSet}.
  */
-public class TransformingResultSetIterator<T, R extends ResultSet> implements Iterator<T>, AutoCloseable
-{
+public class TransformingResultSetIterator<T, R extends ResultSet> implements Iterator<T>, AutoCloseable {
   // <editor-fold desc="Construction">
 
   /**
@@ -31,7 +30,8 @@ public class TransformingResultSetIterator<T, R extends ResultSet> implements It
     try {
       if (this.source.next()) {
         this.nextElement = this.transform.apply(this.source);
-      } else {
+      }
+      else {
         this.nextElement = null;
         this.source.close();
       }

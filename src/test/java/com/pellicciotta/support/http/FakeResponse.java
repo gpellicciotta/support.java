@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /** A minimal, in-memory {@link Response} test double, used instead of standing up a real {@code HttpExchange}. */
-class FakeResponse implements Response
-{
+class FakeResponse implements Response {
   private int statusCode = 200;
   private int contentLength = -1;
   private final Map<String, String> headers = new HashMap<>();

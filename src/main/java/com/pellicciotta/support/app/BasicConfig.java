@@ -14,8 +14,7 @@ import java.text.ParseException;
 /**
  *  A basic configuration containing logging settings and remembering the last command-line it was loaded from.
  */
-public class BasicConfig extends Config
-{
+public class BasicConfig extends Config {
   /**
    *  Create a default configuration.
    */

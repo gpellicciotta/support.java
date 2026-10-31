@@ -5,8 +5,7 @@ package com.pellicciotta.support.logging.spi;
 import com.pellicciotta.support.logging.ContextDataItem;
 import com.pellicciotta.support.logging.jul.JULBasedLog;
 
-public class ContextDataItemBase implements ContextDataItem
-{
+public class ContextDataItemBase implements ContextDataItem {
   public ContextDataItemBase(String name, Object value, LogBackEnd backEnd) {
     assert name != null;
     assert backEnd != null;

@@ -14,8 +14,7 @@ import com.pellicciotta.support.logging.jul.JULBasedLog;
 /**
  *  Base class for implementing a {@link Log}.
  */
-public class LogBase implements Log
-{
+public class LogBase implements Log {
   // <editor-fold desc="Construction">
 
   protected LogBase(String name, int minLevel, LogBackEnd backEnd) {

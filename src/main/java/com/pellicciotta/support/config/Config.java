@@ -23,8 +23,7 @@ import org.w3c.dom.Element;
  *  It offers easy access to all individual {@link Setting}s, while also providing <code>load</code> and <code>save</code>
  *  operations that operate on all {@link Setting}s together.</p>
  */
-public class Config
-{
+public class Config {
   // <editor-fold desc="Construction">
 
   public Config(ConfigElement... elements) {
@@ -315,7 +314,8 @@ public class Config
       }
       // Override with direct command line props:
       this.loadFrom(cli.getCombinedPropertyValues(true));
-    } finally {
+    }
+    finally {
       this.fireLoadEnded();
     }
     if (cli.hasPropertyValue("save-config-file")) {
@@ -557,7 +557,8 @@ public class Config
         tb.appendLine();
         if (el != null) {
           el.addTo(tb);
-        } else {
+        }
+        else {
           tb.append("%s", el);
         }
       }

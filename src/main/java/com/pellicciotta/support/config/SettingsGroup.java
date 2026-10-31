@@ -11,8 +11,7 @@ import org.w3c.dom.Element;
 /**
  *  A group of {@link Setting}s and other {@link SettingsGroup}s.
  */
-public class SettingsGroup<T extends SettingsGroup> extends ConfigElement
-{
+public class SettingsGroup<T extends SettingsGroup> extends ConfigElement {
   // <editor-fold desc="Construction">
 
   protected SettingsGroup(String name, String description, boolean autoDiscoverChildElements) throws Exception {
@@ -33,7 +32,9 @@ public class SettingsGroup<T extends SettingsGroup> extends ConfigElement
   // <editor-fold desc="ConfigElement Overrides">
 
   @Override
-  protected boolean isElementary() { return false; }
+  protected boolean isElementary() {
+    return false;
+  }
 
   // </editor-fold>
   // <editor-fold desc="SettingsGroup Interface">

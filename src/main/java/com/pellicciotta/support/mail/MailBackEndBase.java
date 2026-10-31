@@ -17,8 +17,7 @@ import java.util.concurrent.ConcurrentMap;
  *  <p>
  *  Implementing classes must ensure to remain thread-safe.</p>
  */
-public abstract class MailBackEndBase implements MailBackEnd
-{
+public abstract class MailBackEndBase implements MailBackEnd {
   // <editor-fold desc="Construction">
 
   protected MailBackEndBase() {

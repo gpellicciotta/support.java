@@ -5,8 +5,7 @@ package com.pellicciotta.support.utils;
 /**
  *  Class providing time sample management functionality.
  */
-public class TimeSampler
-{
+public class TimeSampler {
   // <editor-fold desc="Construction">
 
   /**
@@ -36,7 +35,8 @@ public class TimeSampler
   public long getMinTime() {
     if (this.minTime == Long.MAX_VALUE) {
       return 0L;
-    } else {
+    }
+    else {
       return this.minTime;
     }
   }
@@ -49,7 +49,8 @@ public class TimeSampler
   public long getMaxTime() {
     if (this.maxTime == Long.MIN_VALUE) {
       return 0L;
-    } else {
+    }
+    else {
       return this.maxTime;
     }
   }
@@ -78,7 +79,8 @@ public class TimeSampler
   public double getAverageTime() {
     if (this.sampleCount > 0) {
       return (double) this.totalTime / (double) this.sampleCount;
-    } else {
+    }
+    else {
       return 0.0d;
     }
   }

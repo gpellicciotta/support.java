@@ -6,8 +6,7 @@ package com.pellicciotta.support.logging.spi;
  *  Enumeration of how context data items can get associated,
  *  which translates to where and when they will have effect.
  */
-public enum ContextDataItemScope
-{
+public enum ContextDataItemScope {
   /**
    *  Association with a particular Log instance.
    *

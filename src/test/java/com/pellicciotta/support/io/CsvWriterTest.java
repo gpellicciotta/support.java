@@ -11,8 +11,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
 
-public class CsvWriterTest
-{
+public class CsvWriterTest {
   enum Colors {
     MARINE_BLUE,
     DARK_GRAY

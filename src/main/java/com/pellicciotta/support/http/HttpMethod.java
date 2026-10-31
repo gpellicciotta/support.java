@@ -5,8 +5,7 @@ package com.pellicciotta.support.http;
 /**
  *  HTTP methods.
  */
-public enum HttpMethod
-{
+public enum HttpMethod {
   /** HTTP HEAD */
   HEAD,
   /** HTTP GET */

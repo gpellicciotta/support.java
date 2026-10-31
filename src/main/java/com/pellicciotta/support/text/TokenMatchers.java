@@ -12,8 +12,7 @@ import com.pellicciotta.support.utils.Pair;
 /**
  *  A factory for commonly needed {@link TokenMatcher} implementations.
  */
-public final class TokenMatchers
-{
+public final class TokenMatchers {
   private TokenMatchers() { }
 
   /**

@@ -16,8 +16,7 @@ import com.pellicciotta.support.utils.StringConversionUtils;
  *  <p>
  *  The inner classes exist for use in the {@link com.pellicciotta.support.annotations.ConfigSetting} annotation.</p>
  */
-public final class StandardStringCodecs
-{
+public final class StandardStringCodecs {
   /** Prevent instantiation */
   StandardStringCodecs() {  }
 

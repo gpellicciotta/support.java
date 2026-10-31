@@ -20,8 +20,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.mail.*;
 
-public class MailBackEndTest
-{
+public class MailBackEndTest {
   private static final Log log = LogService.fromCurrentClass();
 
   private static File getFileFromURL(String resourcePath) {
@@ -30,9 +29,11 @@ public class MailBackEndTest
     File file = null;
     try {
       file = new File(url.toURI());
-    } catch (URISyntaxException e) {
+    }
+    catch (URISyntaxException e) {
       file = new File(url.getPath());
-    } finally {
+    }
+    finally {
       return file;
     }
   }

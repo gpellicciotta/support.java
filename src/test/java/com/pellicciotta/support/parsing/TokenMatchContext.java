@@ -13,8 +13,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  Context to match in and also publish the results of matching tokens from a character sequence.
  */
-public class TokenMatchContext // implements MatchContext<Character, SyntaxToken>
-{
+public class TokenMatchContext { // implements MatchContext<Character, SyntaxToken>
   private static class State {
     CharSequence input;
     int inputStartIndex;
@@ -60,12 +59,16 @@ public class TokenMatchContext // implements MatchContext<Character, SyntaxToken
   /**
    * @return The (absolute) index in the original input sequence that forms the first element considered for matching.
    */
-  public int getStartIndex() { return this.inputStartIndex; }
+  public int getStartIndex() {
+    return this.inputStartIndex;
+  }
 
   /**
    * @return The number of elements in the input sequence that are considered for matching.
    */
-  public int getLength() { return this.inputLength; }
+  public int getLength() {
+    return this.inputLength;
+  }
 
   private int currentOffset;
 

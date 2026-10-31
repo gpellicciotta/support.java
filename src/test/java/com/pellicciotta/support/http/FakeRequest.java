@@ -12,8 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 /** A minimal, in-memory {@link Request} test double, used instead of standing up a real {@code HttpExchange}. */
-class FakeRequest implements Request
-{
+class FakeRequest implements Request {
   FakeRequest(String method, String requestURI) {
     this.method = method;
     this.requestURI = requestURI;

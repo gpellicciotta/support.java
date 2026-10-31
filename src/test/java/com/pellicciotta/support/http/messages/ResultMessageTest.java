@@ -4,8 +4,7 @@ package com.pellicciotta.support.http.messages;
 
 import org.junit.jupiter.api.*;
 
-public class ResultMessageTest
-{
+public class ResultMessageTest {
   @Test
   public void testFields() {
     ResultMessage msg = new ResultMessage("status", "message");

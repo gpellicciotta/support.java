@@ -15,8 +15,7 @@ import com.pellicciotta.support.utils.Contract;
  *   <li><a href="https://tools.ietf.org/html/rfc4180">RFC41800</a></li>
  *   <li><a href="http://super-csv.github.io/super-csv/csv_specification.html">CSV Specification</a></li></ul>
  */
-public class CsvReader
-{
+public class CsvReader {
   // <editor-fold desc="Defaults">
 
   /** The default field delimiter */
@@ -69,7 +68,8 @@ public class CsvReader
     this.quote = quote;
     if (dataSource instanceof BufferedReader) {
       this.dataSource = (BufferedReader) dataSource;
-    } else {
+    }
+    else {
       this.dataSource = new BufferedReader(dataSource);
     }
   }
@@ -156,7 +156,8 @@ public class CsvReader
       char c = line.charAt(i);
       if (c == this.delimiter) { // Empty ;;
         fields.add("");
-      } else if (c == this.quote) { // Quoted field
+      }
+      else if (c == this.quote) { // Quoted field
         char quote = c;
         StringBuilder field = new StringBuilder();
         int j = i + 1;
@@ -168,32 +169,39 @@ public class CsvReader
               if (nextC == 'n') {
                 field.append('\n');
                 j = j + 1;
-              } else if (nextC == 'r') {
+              }
+              else if (nextC == 'r') {
                 field.append('\r');
                 j = j + 1;
-              } else { // No special escape: add the escape char
+              }
+              else { // No special escape: add the escape char
                 field.append(c);
               }
             }
-          } else if (c == quote) {
+          }
+          else if (c == quote) {
             if ((j + 1) < lineLength) {
               char nextC = line.charAt(j + 1);
               if (nextC == quote) { // Doubled quote, so don't add the escape char itself
                 field.append(nextC);
                 j = j + 1;
-              } else if (nextC == this.delimiter) {
+              }
+              else if (nextC == this.delimiter) {
                 break; // Not escaped, so end of field
-              } else {
+              }
+              else {
                 field.append(c); // If not delimiter, keep quote as part of the value (although this should not happen!)
               }
             }
-          } else {
+          }
+          else {
             field.append(c);
           }
         }
         fields.add(field.toString());
         i = j + 1;
-      } else { // Normal, unquoted field
+      }
+      else { // Normal, unquoted field
         int j = i + 1;
         while ((j < lineLength) && (line.charAt(j) != this.delimiter)) {
           j++;

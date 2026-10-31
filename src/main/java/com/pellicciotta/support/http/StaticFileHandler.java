@@ -30,8 +30,7 @@ import java.util.zip.ZipEntry;
  *  Replaces the old {@code javax.servlet}-based {@code StaticServlet} — same behavior, no servlet container
  *  involved.
  */
-public class StaticFileHandler implements HttpRequestHandler
-{
+public class StaticFileHandler implements HttpRequestHandler {
   // Inspired by: http://bruno.defraine.net/StaticServlet.java
 
   /**

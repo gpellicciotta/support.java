@@ -15,8 +15,7 @@ import com.pellicciotta.support.utils.StringUtils;
 /**
  *  JUL utilities.
  */
-public final class JULUtils
-{
+public final class JULUtils {
   /** Prevent instantiation */
   private JULUtils() {}
 
@@ -36,15 +35,20 @@ public final class JULUtils
     // NOTE: the inconsistency in mapping to FINER and FINEST while not mapping to CONFIG is meant
     if (level == LogLevel.NONE) {
       return Level.OFF;
-    } else if (level >= LogLevel.ERROR) {
+    }
+    else if (level >= LogLevel.ERROR) {
       return Level.SEVERE;
-    } else if (level >= LogLevel.WARNING) {
+    }
+    else if (level >= LogLevel.WARNING) {
       return Level.WARNING;
-    } else if (level >= LogLevel.INFO) {
+    }
+    else if (level >= LogLevel.INFO) {
       return Level.INFO;
-    } else if (level >= LogLevel.DEBUG) {
+    }
+    else if (level >= LogLevel.DEBUG) {
       return Level.FINE;
-    } else {
+    }
+    else {
       return Level.FINEST;
     }
   }
@@ -100,8 +104,7 @@ public final class JULUtils
     return new LogEvent(threadId, logTime, logName, logLevel, logMessage, msgParams, ctx, cause);
   }
 
-  private static class ReroutingHandler extends Handler
-  {
+  private static class ReroutingHandler extends Handler {
     @Override
     public void publish(LogRecord record) {
       LogService.getBackEnd().onLogEvent(toLogEvent(record));

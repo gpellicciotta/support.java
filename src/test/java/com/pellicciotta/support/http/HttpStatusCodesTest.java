@@ -4,8 +4,7 @@ package com.pellicciotta.support.http;
 
 import org.junit.jupiter.api.*;
 
-public class HttpStatusCodesTest
-{
+public class HttpStatusCodesTest {
   @Test
   public void testConstantValues() {
     Assertions.assertEquals(200, HttpStatusCodes.SC_OK);

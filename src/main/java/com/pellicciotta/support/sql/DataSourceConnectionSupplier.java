@@ -12,8 +12,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  Provides connections based on an underlying {@link javax.sql.DataSource}.
  */
-public class DataSourceConnectionSupplier implements Supplier<Connection>
-{
+public class DataSourceConnectionSupplier implements Supplier<Connection> {
   /**
    *  Create a supplier that will create new connections every time {@link #get()} is requested.
    *  Connections will be created via the {@link DataSource#getConnection()} method.

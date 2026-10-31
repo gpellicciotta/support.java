@@ -6,8 +6,7 @@ import com.pellicciotta.support.logging.LogService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class PasswordTests
-{
+public class PasswordTests {
   @Test
   public void testSaltedHashEncodingAndDecoding() {
     testSaltingAndHashingFor(" ");

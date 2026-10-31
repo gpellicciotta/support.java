@@ -11,8 +11,7 @@ package com.pellicciotta.support.parsing;
  *  @param <T> The type of input elements.
  *  @param <R> The type of result elements.
  */
-public interface MatchContext<T, R>
-{
+public interface MatchContext<T, R> {
   // The original input items:
   int getStartIndex();
   int getLength();

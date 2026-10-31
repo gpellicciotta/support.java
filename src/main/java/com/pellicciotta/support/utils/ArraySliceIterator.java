@@ -8,8 +8,7 @@ import java.util.NoSuchElementException;
 /**
  *  An iterator that iterates over a slice of an underlying array.
  */
-public final class ArraySliceIterator<T> implements Iterator<T>
-{
+public final class ArraySliceIterator<T> implements Iterator<T> {
   // <editor-fold desc="Construction">
 
   /**

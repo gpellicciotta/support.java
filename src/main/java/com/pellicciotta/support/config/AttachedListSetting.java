@@ -15,8 +15,7 @@ import java.util.List;
  *
  *  @param <T> The type of native value represented by this setting.
  */
-public class AttachedListSetting<T> extends ListSetting<T>
-{
+public class AttachedListSetting<T> extends ListSetting<T> {
   /**
    *  Create an attached setting with the given properties and no default value.
    *

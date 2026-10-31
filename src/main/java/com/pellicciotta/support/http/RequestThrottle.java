@@ -27,8 +27,7 @@ import java.util.function.LongSupplier;
  *  opportunistic, request-triggered sweep rather than a dedicated background thread), so the map doesn't grow
  *  forever under real traffic from many distinct IPs.
  */
-public final class RequestThrottle
-{
+public final class RequestThrottle {
   private static final long IDLE_EVICTION_MILLIS = 60_000L;
   private static final long SWEEP_INTERVAL_MILLIS = 30_000L;
 
@@ -50,7 +49,9 @@ public final class RequestThrottle
   private final ConcurrentHashMap<String, Bucket> bucketsByIp = new ConcurrentHashMap<>();
   private final AtomicLong lastSweepMillis;
 
-  public int getMaxRequestsPerSecondPerIp() { return this.maxRequestsPerSecondPerIp; }
+  public int getMaxRequestsPerSecondPerIp() {
+    return this.maxRequestsPerSecondPerIp;
+  }
 
   /** @return {@code true} if a request from {@code clientIp} may proceed now, {@code false} if it should be throttled (HTTP 429). */
   public boolean allow(String clientIp) {
@@ -70,8 +71,7 @@ public final class RequestThrottle
   }
 
   /** One IP's token bucket. All state changes go through the {@code synchronized} {@link #tryConsume}, so it's safe under concurrent requests from the same IP. */
-  private static final class Bucket
-  {
+  private static final class Bucket {
     Bucket(int initialTokens, long now) {
       this.tokens = initialTokens;
       this.lastRefillMillis = now;

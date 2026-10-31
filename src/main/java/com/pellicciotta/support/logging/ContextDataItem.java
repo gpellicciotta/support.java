@@ -11,8 +11,7 @@ package com.pellicciotta.support.logging;
  *    <li>Associate a session ID with all log messages emitted from a specific {@link Log} object.</li>
  *  </ul>
  */
-public interface ContextDataItem extends AutoCloseable
-{
+public interface ContextDataItem extends AutoCloseable {
   /**
    * @return The name of this contextual data item.
    */

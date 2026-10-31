@@ -9,8 +9,7 @@ import com.pellicciotta.support.logging.LogService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class StringUtilsTests
-{
+public class StringUtilsTests {
   @Test
   public void testMakePairTableLinesDefault() {
     List<Pair<String, String>> vals = new ArrayList<>();

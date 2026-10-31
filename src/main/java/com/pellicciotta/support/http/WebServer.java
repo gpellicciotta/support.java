@@ -5,8 +5,7 @@ package com.pellicciotta.support.http;
 /**
  *  The high-level API for working with an HTTP web server.
  */
-public interface WebServer
-{
+public interface WebServer {
   /**
    *  Register middleware at the end of the current list.
    *  <p>

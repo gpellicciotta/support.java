@@ -6,11 +6,9 @@ import com.pellicciotta.support.http.HttpUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class HttpUtilsTests
-{
+public class HttpUtilsTests {
   @Test
-  public void testGetMimeType()
-  {
+  public void testGetMimeType() {
     Assertions.assertEquals("text/plain", HttpUtils.getMimeType("./foo.txt"));
     Assertions.assertEquals("application/javascript", HttpUtils.getMimeType("./foo.js"));
     Assertions.assertEquals("application/javascript", HttpUtils.getMimeType("./foo.mjs"));

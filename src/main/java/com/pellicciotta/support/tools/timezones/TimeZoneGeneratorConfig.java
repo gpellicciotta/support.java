@@ -12,6 +12,5 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-class TimeZoneGeneratorConfig extends BasicConfig
-{
+class TimeZoneGeneratorConfig extends BasicConfig {
 }

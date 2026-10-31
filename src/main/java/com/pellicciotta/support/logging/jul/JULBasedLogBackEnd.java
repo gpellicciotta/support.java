@@ -10,8 +10,7 @@ import com.pellicciotta.support.logging.spi.*;
 /**
  *  A {@link LogBackEnd} that really uses JUL.
  */
-public class JULBasedLogBackEnd extends LogBackEndBase
-{
+public class JULBasedLogBackEnd extends LogBackEndBase {
   public JULBasedLogBackEnd() { }
 
   @Override

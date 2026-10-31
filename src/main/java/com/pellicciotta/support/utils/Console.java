@@ -5,8 +5,7 @@ package com.pellicciotta.support.utils;
 /**
  *  Standard output/error related utilities.
  */
-public abstract class Console
-{
+public abstract class Console {
 
   /** Private to make this a static class. */
   private Console() { }

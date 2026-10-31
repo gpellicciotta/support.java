@@ -30,7 +30,8 @@ public abstract class ByteUtils {
     byte byteWithBitSet = (byte) ((byte) 1 << bit);
     if (on) {
       b = (byte) (b | byteWithBitSet);
-    } else {
+    }
+    else {
       byte byteWithBitUnset = (byte) ~byteWithBitSet;
       b = (byte) (b & byteWithBitUnset);
     }
@@ -432,8 +433,7 @@ public abstract class ByteUtils {
     }
     int byteCount = hexStr.length() / 2; // Each two hex digits will form one byte
     byte[] bytes = new byte[byteCount];
-    for (int i = 0; i < hexStr.length(); i += 2)
-    {
+    for (int i = 0; i < hexStr.length(); i += 2) {
       bytes[i / 2] = (byte) (Short.parseShort(hexStr.substring(i, i + 2), 16) & 0xff); // Using short since Byte cannot parse numbers above 127
     }
     return bytes;
@@ -482,8 +482,7 @@ public abstract class ByteUtils {
     }
     int byteCount = bitStr.length() / 8; // Each 8 bits will form one byte
     byte[] bytes = new byte[byteCount];
-    for (int i = 0; i < bitStr.length(); i += 8)
-    {
+    for (int i = 0; i < bitStr.length(); i += 8) {
       bytes[i / 8] = (byte)(Short.parseShort(bitStr.substring(i, i + 8), 2) & 0xff); // Using short since Byte cannot parse numbers above 127
     }
     return bytes;

@@ -12,8 +12,7 @@ import com.pellicciotta.support.utils.Slice;
  *  <p>
  *  Tokens can have zero-length, in which case they don't actually represent input characters but some implied entity at a given offset (e.g. <c>INDENT</c> token in python).</p>
  */
-public class SyntaxToken extends Slice<CharSequence, Character> implements SyntaxElement, Comparable<SyntaxToken>
-{
+public class SyntaxToken extends Slice<CharSequence, Character> implements SyntaxElement, Comparable<SyntaxToken> {
   public SyntaxToken(SyntaxType tokenType, CharSequence source, int offset, int length) {
     super(source, offset, offset + length);
     this.tokenType = tokenType;
@@ -84,7 +83,9 @@ public class SyntaxToken extends Slice<CharSequence, Character> implements Synta
       throw new IllegalArgumentException("Can only compare tokens that have the same source");
     }
     int cmp = Integer.compare(this.startIndex, o.startIndex);
-    if (cmp != 0) { return cmp; }
+    if (cmp != 0) {
+      return cmp;
+    }
     return Integer.compare(this.endIndex, o.endIndex);
   }
 

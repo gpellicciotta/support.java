@@ -7,8 +7,7 @@ import com.pellicciotta.support.text.SyntaxType;
 /**
  *  A token as produced by the {@link SqlTokenizer}.
  */
-final class SqlSyntaxType extends SyntaxType
-{
+final class SqlSyntaxType extends SyntaxType {
   // <editor-fold desc="Construction">
 
   private static int idGenerator = 1000;

@@ -6,8 +6,7 @@ package com.pellicciotta.support.http;
  *  Common HTTP status-code constants, named after the {@code javax.servlet.http.HttpServletResponse.SC_*}
  *  convention. Covers the subset actually used across this library's known consumers; extend as needed.
  */
-public final class HttpStatusCodes
-{
+public final class HttpStatusCodes {
   private HttpStatusCodes() { }
 
   public static final int SC_OK = 200;

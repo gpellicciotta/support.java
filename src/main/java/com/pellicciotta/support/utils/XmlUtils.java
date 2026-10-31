@@ -20,8 +20,7 @@ import org.xml.sax.InputSource;
 /**
  * A collection of XML related utility methods.
  */
-public abstract class XmlUtils
-{
+public abstract class XmlUtils {
   /** Prevent instantiation */
   private XmlUtils() { }
 
@@ -71,7 +70,8 @@ public abstract class XmlUtils
       DocumentBuilder builder = newSecureDocumentBuilderFactory().newDocumentBuilder();
       // Parse the file into a document
       return builder.parse(xmlSource);
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new IOException(e);
     }
   }
@@ -103,7 +103,8 @@ public abstract class XmlUtils
     try {
       DocumentBuilder builder = newSecureDocumentBuilderFactory().newDocumentBuilder();
       return builder.newDocument();
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new IOException(e);
     }
   }
@@ -125,17 +126,23 @@ public abstract class XmlUtils
       char ch = text.charAt(i);
       if (ch == '<') {
         sb.append("&lt;");
-      } else if (ch == '>') {
+      }
+      else if (ch == '>') {
         sb.append("&gt;");
-      } else if (ch == '&') {
+      }
+      else if (ch == '&') {
         sb.append("&amp;");
-      } else if (ch == '"') {
+      }
+      else if (ch == '"') {
         sb.append("&quot;");
-      } else if (ch == '\'') {
+      }
+      else if (ch == '\'') {
         sb.append("&apos;");
-      } else if (ch == '%') {
+      }
+      else if (ch == '%') {
         sb.append("&#37;");
-      } else {
+      }
+      else {
         sb.append(ch);
       }
     }
@@ -372,7 +379,8 @@ public abstract class XmlUtils
       transformer.transform(source, result);
       String xmlString = result.getWriter().toString();
       return xmlString;
-    } catch (Exception e) {
+    }
+    catch (Exception e) {
       throw new RuntimeException("Failed to transform XML element to string", e);
     }
   }

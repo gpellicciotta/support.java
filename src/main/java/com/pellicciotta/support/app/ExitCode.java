@@ -5,8 +5,7 @@ package com.pellicciotta.support.app;
 /**
  *  Standard application (i.e. process) exit codes.
  */
-public final class ExitCode
-{
+public final class ExitCode {
   /** Prevent instantiation */
   private ExitCode() { }
 

@@ -28,8 +28,7 @@ import com.pellicciotta.support.utils.Contract;
  *  <p>
  *  This {@link SqlScriptFileReader} class enables reading these types of upgrade script files.</p>
  */
-public class SqlScriptFileReader
-{
+public class SqlScriptFileReader {
   // <editor-fold desc="Construction">
 
   /**
@@ -153,7 +152,8 @@ public class SqlScriptFileReader
       if (curLineText.startsWith("--")) {
         // trace("-> comment line and ignored");
         ; // Normal comment line: ignore
-      } else {
+      }
+      else {
         // trace("-> statement line");
         // Non-comment line: add to current statement
         if (this.curVersion == null) { // No new part started yet
@@ -180,7 +180,8 @@ public class SqlScriptFileReader
       this.curVersion = new Version(versionStr);
       this.curStartLine = this.curLineNum + 1;
       this.curStmt = "";
-    } catch (FormatException e) {
+    }
+    catch (FormatException e) {
       throw new IOException(String.format("SQL version comment has an invalid version '%s'at line #%d in '%s': %s", versionStr, this.curLineNum, this.sqlScriptName, curLineText), e);
     }
   }
@@ -223,7 +224,8 @@ public class SqlScriptFileReader
         log.info("    SQL    : %s", part.getSqlStatement());
       }
       System.exit(0);
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       log.error("Reading failed: %s", e);
       System.exit(2);
     }

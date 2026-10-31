@@ -19,8 +19,7 @@ import java.util.stream.Collectors;
 /**
  *  Basic skeleton for implementing an app that can be started from the command-line.
  */
-public abstract class BasicApp<T extends BasicConfig>
-{
+public abstract class BasicApp<T extends BasicConfig> {
   // <editor-fold desc="Basic Information">
 
   public abstract String getName();

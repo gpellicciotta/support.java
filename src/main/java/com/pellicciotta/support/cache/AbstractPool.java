@@ -15,8 +15,7 @@ import com.pellicciotta.support.utils.DateTimeUtils;
  *
  * @param <R> The type of resources to be pooled.
  */
-public class AbstractPool<R extends PoolResource>
-{
+public class AbstractPool<R extends PoolResource> {
   public AbstractPool(int maxPoolSize, Supplier<R> factory) {
     Contract.isPositive("maxPoolSize", maxPoolSize);
     Contract.isNotNull("factory", factory);

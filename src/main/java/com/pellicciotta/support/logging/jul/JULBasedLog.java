@@ -15,8 +15,7 @@ import com.pellicciotta.support.utils.Contract;
  *  Adapts a standard {@link Logger} object to the {@link Log} interface,
  *  while taking care of {@link ContextDataItem} storage and management too.
  */
-public final class JULBasedLog implements Log
-{
+public final class JULBasedLog implements Log {
   // [Support Types]
 
   private class StandardContextDataItem implements ContextDataItem {

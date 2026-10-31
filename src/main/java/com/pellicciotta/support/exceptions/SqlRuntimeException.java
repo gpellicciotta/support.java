@@ -7,8 +7,7 @@ import java.sql.SQLException;
 /**
  *  A {@link RuntimeException} that can wrap a checked {@link SQLException} (note the case of <c>SQL</c>).
  */
-public class SqlRuntimeException extends RuntimeExceptionBase
-{
+public class SqlRuntimeException extends RuntimeExceptionBase {
   // <editor-fold desc="Construction">
 
   /**

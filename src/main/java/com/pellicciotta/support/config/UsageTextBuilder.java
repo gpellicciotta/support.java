@@ -30,8 +30,7 @@ import com.pellicciotta.support.utils.*;
  *  <p>
  *  Methods need to be invoked in correct order.</p>
  */
-public class UsageTextBuilder
-{
+public class UsageTextBuilder {
   /**
    *  Create a new usage text builder.
    */
@@ -275,7 +274,8 @@ public class UsageTextBuilder
         final String prefix = "Valid values: ";
         if (validValues.length() < (this.maxLineSize - prefix.length())) {
           this.tb.appendLine("%s%s", prefix, validValues);
-        } else {
+        }
+        else {
           this.tb.appendLine(prefix);
           try (TextBuilder.Group g = this.tb.start()) {
             this.tb.appendLine(validValues);
@@ -286,9 +286,11 @@ public class UsageTextBuilder
         final String prefix = "Default value: ";
         if (defaultValue == null) {
           this.tb.appendLine("%s<none>", prefix);
-        } else if (defaultValue.length() < (this.maxLineSize - prefix.length())) {
+        }
+        else if (defaultValue.length() < (this.maxLineSize - prefix.length())) {
           this.tb.appendLine("%s%s", prefix, defaultValue);
-        } else {
+        }
+        else {
           this.tb.appendLine(prefix);
           try (TextBuilder.Group g = this.tb.start()) {
             this.tb.appendLine(defaultValue);

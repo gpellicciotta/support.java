@@ -10,8 +10,7 @@ import java.util.regex.Pattern;
 /**
  *  A specific HTTP route with associated processor method as implementation of the {@link HttpRequestHandler} interface.
  */
-public final class HttpRoute implements HttpRequestHandler, Comparable<HttpRoute>
-{
+public final class HttpRoute implements HttpRequestHandler, Comparable<HttpRoute> {
   private static final Pattern GROUP_NAMES_PATTERN = Pattern.compile("[(]?[<]([a-zA-Z0-9]+)[>]");
 
   HttpRoute(HttpMethod method, String path, HttpRequestProcessor processor, Set<String> realms, String description) {

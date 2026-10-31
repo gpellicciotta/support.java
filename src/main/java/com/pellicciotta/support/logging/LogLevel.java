@@ -12,8 +12,7 @@ package com.pellicciotta.support.logging;
  *  While many logging APIs provide also a FATAL or CRITICAL level, this has been omitted as it isn't perceived to provide additional benefit above using
  *  the ERROR level with message and data.</p>
  */
-public final class LogLevel
-{
+public final class LogLevel {
   /** Prevent instantiation */
   private LogLevel() { }
 
@@ -68,17 +67,23 @@ public final class LogLevel
   public static String toString(int level) {
     if (level == LogLevel.NONE) {
       return "NONE";
-    } else if (level == LogLevel.ERROR) {
+    }
+    else if (level == LogLevel.ERROR) {
       return "ERROR";
-    } else if (level == LogLevel.WARNING) {
+    }
+    else if (level == LogLevel.WARNING) {
       return "WARNING";
-    } else if (level == LogLevel.INFO) {
+    }
+    else if (level == LogLevel.INFO) {
       return "INFO";
-    } else if (level == LogLevel.DEBUG) {
+    }
+    else if (level == LogLevel.DEBUG) {
       return "DEBUG";
-    } else if (level == LogLevel.ALL) {
+    }
+    else if (level == LogLevel.ALL) {
       return "ALL";
-    } else {
+    }
+    else {
       return "" + level;
     }
   }
@@ -107,20 +112,26 @@ public final class LogLevel
     levelStr = levelStr.toUpperCase().trim();
     if ("NONE".equals(levelStr)) {
       return LogLevel.NONE;
-    } else if ("ERROR".equals(levelStr)) {
+    }
+    else if ("ERROR".equals(levelStr)) {
       return LogLevel.ERROR;
-    } else if ("WARNING".equals(levelStr)) {
+    }
+    else if ("WARNING".equals(levelStr)) {
       return LogLevel.WARNING;
-    } else if ("INFO".equals(levelStr)) {
+    }
+    else if ("INFO".equals(levelStr)) {
       return LogLevel.INFO;
-    } else if ("DEBUG".equals(levelStr)) {
+    }
+    else if ("DEBUG".equals(levelStr)) {
       return LogLevel.DEBUG;
-    } else if ("ALL".equals(levelStr)) {
+    }
+    else if ("ALL".equals(levelStr)) {
       return LogLevel.ALL;
     }
     try {
       return Integer.parseInt(levelStr);
-    } catch (NumberFormatException nfe) {
+    }
+    catch (NumberFormatException nfe) {
       throw new IllegalArgumentException("Value '" + levelStr + "' cannot be parsed as a valid level", nfe);
     }
   }

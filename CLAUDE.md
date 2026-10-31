@@ -25,7 +25,7 @@ All commands use the Gradle wrapper (`gradlew` / `gradlew.bat` — use `gradlew.
 under the Bash tool).
 
 - Bootstrap a fresh checkout: `python scripts/bootstrap-dev-environment.py`
-- Run every CI validation step: `python scripts/devops.py check` (same as `gradlew build`: Spotless, tests, jars)
+- Run every CI validation step: `python scripts/devops.py check` (same as `gradlew build`: Spotless, Checkstyle, tests, jars)
 - Build: `gradlew build`
 - Run all tests: `gradlew test`
 - Run a single test class: `gradlew test --tests "com.pellicciotta.support.text.TokenizerTest"`

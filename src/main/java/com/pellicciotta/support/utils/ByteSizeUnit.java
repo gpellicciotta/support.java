@@ -176,7 +176,8 @@ public enum ByteSizeUnit {
     double units = byteSize / bytesPerUnit;
     if (decimals <= 0) {
       return String.format(Locale.US, "%d %s", (long) units, unitStr);
-    } else {
+    }
+    else {
       return String.format(Locale.US, "%." + decimals + "f %s", units, unitStr);
     }
   }

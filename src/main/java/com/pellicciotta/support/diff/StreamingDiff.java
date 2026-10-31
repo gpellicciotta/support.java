@@ -18,8 +18,7 @@ import static com.pellicciotta.support.diff.DiffUtils.ENABLE_LOGGING;
  *  If possible, successive chunks will be aligned on match-pairs, but only if there is a match-pair in the
  *  last 25% of items of both input chunks.</p>
  */
-public class StreamingDiff<T>
-{
+public class StreamingDiff<T> {
   /**
    *  Create an engine capable of performing a diff between two item streams.
    *

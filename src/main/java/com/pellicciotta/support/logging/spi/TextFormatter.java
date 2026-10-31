@@ -18,8 +18,7 @@ import com.pellicciotta.support.utils.StringUtils;
  *  The default format uses <code>${time} ${level}  ${indent}</code> as per-log-event prefix, matching the
  *  <code>[YYYY-MM-DD HH:MM:SS] **[LEVEL]**  &lt;origin&gt; Message text...</code> logging guideline.</p>
  */
-public class TextFormatter extends LogEventFormatterBase
-{
+public class TextFormatter extends LogEventFormatterBase {
   // <editor-fold desc="Defaults">
 
   public static final String DEFAULT_ERROR_LEVEL_PREFIX   = "**[ERROR]**";
@@ -406,9 +405,11 @@ public class TextFormatter extends LogEventFormatterBase
     String prefix = this.debugLevelPrefix;
     if (logLevel >= LogLevel.ERROR) {
       prefix = this.errorLevelPrefix;
-    } else if (logLevel >= LogLevel.WARNING) {
+    }
+    else if (logLevel >= LogLevel.WARNING) {
       return this.warningLevelPrefix;
-    } else if (logLevel >= LogLevel.INFO) {
+    }
+    else if (logLevel >= LogLevel.INFO) {
       return this.infoLevelPrefix;
     }
     return prefix;

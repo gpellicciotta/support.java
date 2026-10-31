@@ -14,8 +14,7 @@ import com.pellicciotta.support.utils.DateTimeUtils;
  *  <p>
  *  Implementing classes must ensure to remain thread-safe.</p>
  */
-public abstract class LogBackEndBase extends LogBackEnd
-{
+public abstract class LogBackEndBase extends LogBackEnd {
   // <editor-fold desc="Construction">
 
   protected LogBackEndBase() throws ConfigurationException {
@@ -85,14 +84,16 @@ public abstract class LogBackEndBase extends LogBackEnd
     if (this.closed) {
       throw new IllegalStateException("This log back-end has been closed");
     }
-    if (name == null) { name = ""; }
+    if (name == null) {
+      name = "";
+    }
     int minLogLevel = this.config == null ? LogLevel.ALL : this.config.getMinLevel();
     return this.logs.computeIfAbsent(name, n -> this.createNewLog(n, minLogLevel));
   }
 
   public abstract void onLogEvent(LogEvent logEvent);
 
-  protected static final ThreadLocal<Integer> spanLevel = ThreadLocal.withInitial(() -> { return 0; } );
+  protected static final ThreadLocal<Integer> spanLevel = ThreadLocal.withInitial(() -> 0);
 
   public synchronized void onSpanStarted(Span span) {
     LogEvent evt = new LogEvent(span.getLog().getName(), LogLevel.INFO, "Operation '%s' started", new Object[] { span.getName() }, null, null);

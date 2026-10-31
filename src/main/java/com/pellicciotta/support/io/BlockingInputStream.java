@@ -10,8 +10,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  * An {@link InputStream} with read methods which will block until the number of requested bytes are actually read.
  */
-public class BlockingInputStream extends InputStream
-{
+public class BlockingInputStream extends InputStream {
   private InputStream decoratedStream;
 
   /**
@@ -76,7 +75,8 @@ public class BlockingInputStream extends InputStream
       int bytesRead = this.decoratedStream.read(b, totalBytesRead, len - totalBytesRead);
       if (bytesRead == -1) {
         return -1;
-      } else {
+      }
+      else {
         totalBytesRead += bytesRead;
       }
     }

@@ -16,8 +16,7 @@ import com.pellicciotta.support.utils.StreamUtils;
 /**
  *  A class for performing HTTP(s) communication as client in a client/server architecture.
  */
-public final class HttpClient implements AutoCloseable
-{
+public final class HttpClient implements AutoCloseable {
   // <editor-fold desc="Quick Operations">
 
   static final Log log = LogService.fromCurrentClass();
@@ -281,7 +280,8 @@ public final class HttpClient implements AutoCloseable
     InputStream is;
     if (this.responseCode >= 400) {
       is = this.http.getErrorStream();
-    } else {
+    }
+    else {
       is = this.http.getInputStream();
     }
     if (is != null) {

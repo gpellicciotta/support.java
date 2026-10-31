@@ -5,8 +5,7 @@ package com.pellicciotta.support.diff;
 /**
  *  An item in a sequence.
  */
-public abstract class Item
-{
+public abstract class Item {
   protected Item(int index) {
     this.index = index;
   }

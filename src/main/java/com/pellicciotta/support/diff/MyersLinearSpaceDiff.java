@@ -9,8 +9,7 @@ import static com.pellicciotta.support.diff.DiffUtils.ENABLE_LOGGING;
  *  Based on: An O(ND) Difference Algorithm and Its Variations, Eugene W. Myers
  *  Now implementing the 'Linear Space Refinement's
  */
-public class MyersLinearSpaceDiff<T> extends DiffAlgorithmBase<T>
-{
+public class MyersLinearSpaceDiff<T> extends DiffAlgorithmBase<T> {
   @Override
   public String name() {
     return "myers linear-space diff";
@@ -203,8 +202,7 @@ public class MyersLinearSpaceDiff<T> extends DiffAlgorithmBase<T>
     throw new IllegalStateException("Reaching end of forward/backward scan is not supposed to happen");
   }
 
-  private static class Middle
-  {
+  private static class Middle {
     public Middle(int x, int y, int u, int v, int d) {
       this.x = x;
       this.y = y;

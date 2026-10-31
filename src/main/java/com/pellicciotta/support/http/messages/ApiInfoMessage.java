@@ -9,8 +9,7 @@ import java.util.List;
 /**
  *  Reports the running API's version plus its full set of routes.
  */
-public class ApiInfoMessage extends ApiVersionMessage
-{
+public class ApiInfoMessage extends ApiVersionMessage {
   public ApiInfoMessage(String version, List<ApiRouteMessage> webRoutes) {
     super(version);
     Contract.isNotNull(webRoutes);

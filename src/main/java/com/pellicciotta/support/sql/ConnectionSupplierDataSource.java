@@ -13,8 +13,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  A {@link DataSource} implementation based on an {@link Supplier <Connection>}.
  */
-public class ConnectionSupplierDataSource implements DataSource
-{
+public class ConnectionSupplierDataSource implements DataSource {
   /**
    *  Create a new {@link DataSource}.
    *

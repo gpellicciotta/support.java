@@ -7,8 +7,7 @@ import com.pellicciotta.support.text.*;
 /**
  *  Class capable of dividing a series of characters into a series of SQL tokens.
  */
-class SqlTokenizer extends Tokenizer
-{
+class SqlTokenizer extends Tokenizer {
   private static final TokenMatcher[] SQL_TOKEN_MATCHERS = new TokenMatcher[] {
     // Order is important!
     TokenMatchers.forPattern("\\s+", SqlSyntaxType.WHITESPACE),

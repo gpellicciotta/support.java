@@ -9,8 +9,7 @@ import java.util.*;
  *
  *  @param <T> The type of elements in the sequences or iterators being compared.
  */
-public interface DiffProcessor<T>
-{
+public interface DiffProcessor<T> {
   /**
    *  Processing has started on two sequences with known length.
    */

@@ -5,8 +5,7 @@ package com.pellicciotta.support;
 /**
  *  Library info.
  */
-public final class Info
-{
+public final class Info {
   private Info() {}
 
   static {
@@ -18,7 +17,9 @@ public final class Info
   }
 
   private static String valueOrDefault(String val, String defaultValue) {
-    if ((val != null) && !val.isEmpty()) { return val; }
+    if ((val != null) && !val.isEmpty()) {
+      return val;
+    }
     return defaultValue;
   }
 
@@ -66,7 +67,8 @@ public final class Info
     }
     if ("version".equals(action)) {
       emitVersion();
-    } else {
+    }
+    else {
       emitHelp(verbose);
     }
     System.exit(0);
@@ -92,7 +94,8 @@ public final class Info
       System.out.println("  -v, --version        Same as the 'version' action");
       System.out.println("  -h, -?, --help       Same as the 'help' action");
       System.out.println("  --verbose            Show this extended help instead of the short form");
-    } else {
+    }
+    else {
       System.out.printf("Usage: java -jar %s-%s.jar [version|help] [--verbose]%n", NAME, VERSION);
     }
     System.out.println();

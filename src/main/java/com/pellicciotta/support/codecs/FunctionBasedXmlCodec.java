@@ -9,8 +9,7 @@ import java.util.function.Function;
 /**
  *  An {@link XmlCodec} implementation based on two provided functions.
  */
-public class FunctionBasedXmlCodec<T> implements XmlCodec<T>
-{
+public class FunctionBasedXmlCodec<T> implements XmlCodec<T> {
   /**
    *  Create a new codec that will use the provided functions.
    *

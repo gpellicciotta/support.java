@@ -10,8 +10,7 @@ import java.io.IOException;
 /**
  *  Class for sending email via a mail transfer system.
  */
-public interface MailBackEnd extends AutoCloseable
-{
+public interface MailBackEnd extends AutoCloseable {
   /**
    *  Configure the back-end.
    *

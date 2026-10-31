@@ -5,8 +5,7 @@ package com.pellicciotta.support.logging;
 /**
  *  API to associate context-data with a {@link Log} during the timespan in which this {@link Span} object is active.
  */
-public interface Span extends AutoCloseable
-{
+public interface Span extends AutoCloseable {
   // <editor-fold desc="Properties">
 
   /**

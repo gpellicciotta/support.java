@@ -8,8 +8,7 @@ import java.util.Map;
 /**
  *  A collection of precondition checks.
  */
-public final class Contract
-{
+public final class Contract {
   /** Prevent instantiation */
   private Contract() {  }
 

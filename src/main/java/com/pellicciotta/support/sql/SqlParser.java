@@ -14,8 +14,7 @@ import com.pellicciotta.support.utils.Order;
 /**
  *  Class capable of dividing a series of characters into a series of SQL tokens and further into a higher-level structure.
  */
-class SqlParser
-{
+class SqlParser {
   public SqlParser(List<SyntaxToken> tokens) {
     this.tokens = tokens.stream().filter((tok) -> (tok.getSyntaxType() != SqlSyntaxType.WHITESPACE) && (tok.getSyntaxType() != SqlSyntaxType.LINE_COMMENT) && (tok.getSyntaxType() != SqlSyntaxType.BLOCK_COMMENT)).collect(Collectors.toList());
   }
@@ -335,33 +334,43 @@ class SqlParser
   }
 
   public boolean matchOperator(int offset, String operator) {
-    if (offset >= this.tokens.size()) { return false; }
+    if (offset >= this.tokens.size()) {
+      return false;
+    }
     SyntaxToken tok = this.tokens.get(offset);
     SyntaxType tt = tok.getSyntaxType();
     return tt.equals(SqlSyntaxType.KEYWORD) && operator.equalsIgnoreCase(tok.getText());
   }
 
   public boolean matchKeyword(int offset, String keyword) {
-    if (offset >= this.tokens.size()) { return false; }
+    if (offset >= this.tokens.size()) {
+      return false;
+    }
     SyntaxToken tok = this.tokens.get(offset);
     SyntaxType tt = tok.getSyntaxType();
     return tt.equals(SqlSyntaxType.KEYWORD) && keyword.equalsIgnoreCase(tok.getText());
   }
 
   public boolean matchTokenType(int offset, SyntaxType expectedType) {
-    if (offset >= this.tokens.size()) { return false; }
+    if (offset >= this.tokens.size()) {
+      return false;
+    }
     SyntaxType tt = this.tokens.get(offset).getSyntaxType();
     return tt.equals(expectedType);
   }
 
   public boolean matchComma(int offset) {
-    if (offset >= this.tokens.size()) { return false; }
+    if (offset >= this.tokens.size()) {
+      return false;
+    }
     SyntaxType tt = this.tokens.get(offset).getSyntaxType();
     return tt.equals(SqlSyntaxType.COMMA);
   }
 
   public boolean matchWhitespaceOrComments(int offset) {
-    if (offset >= this.tokens.size()) { return false; }
+    if (offset >= this.tokens.size()) {
+      return false;
+    }
     SyntaxType tt = this.tokens.get(offset).getSyntaxType();
     return (tt.equals(SqlSyntaxType.WHITESPACE) || tt.equals(SqlSyntaxType.LINE_COMMENT) || tt.equals(SqlSyntaxType.BLOCK_COMMENT));
   }

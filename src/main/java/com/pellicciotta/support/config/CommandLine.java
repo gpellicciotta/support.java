@@ -29,8 +29,7 @@ import com.pellicciotta.support.utils.StringConversionUtils;
  *    <li>Using <code>:</code> as name and value separator.</li>
  *  </ul>
  */
-public class CommandLine
-{
+public class CommandLine {
   // <editor-fold desc="Factory Methods">
 
   /**

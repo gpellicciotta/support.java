@@ -13,8 +13,7 @@ import java.util.function.Predicate;
 /**
  * A set of utility methods for working with {@link Properties} or {@link Map<String,String>} collections.
  */
-public final class PropertiesUtils
-{
+public final class PropertiesUtils {
   private static Log log = LogService.fromCurrentClass();
 
   /** Prevent instantiation */

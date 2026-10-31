@@ -7,8 +7,7 @@ import java.util.function.Function;
 /**
  *  A {@link StringCodec} implementation based on two provided functions.
  */
-public class FunctionBasedStringCodec<T> implements StringCodec<T>
-{
+public class FunctionBasedStringCodec<T> implements StringCodec<T> {
   /**
    *  Create a new codec that will use the provided functions.
    *

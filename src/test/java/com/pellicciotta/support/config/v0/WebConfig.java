@@ -4,8 +4,7 @@ package com.pellicciotta.support.config.v0;
 
 import com.pellicciotta.support.config.*;
 
-public class WebConfig extends SettingsGroup
-{
+public class WebConfig extends SettingsGroup {
   public WebConfig() {
     super("web", "Web server configuration");
     SettingsFactory create = new SettingsFactory();

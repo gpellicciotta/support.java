@@ -21,8 +21,7 @@ import com.pellicciotta.support.logging.LogLevel;
  *  All methods allow replacing first any parameters of the form <code>${context:name}</code> or <code>${name}</code>
  *  before doing any additional conversion: see the {@link #toExpandedString(String)} comments for more details.</p>
  */
-public final class StringConversionUtils
-{
+public final class StringConversionUtils {
   /** Prevent instantiation. */
   private StringConversionUtils() { }
 
@@ -116,12 +115,14 @@ public final class StringConversionUtils
         if (paramVal != null) {
           if (paramFormat != null) {
             replVal = String.format(paramFormat, paramVal);
-          } else {
+          }
+          else {
             replVal = paramVal.toString();
           }
         }
         m.appendReplacement(sb, Matcher.quoteReplacement(replVal));
-      } else if (context != null) {
+      }
+      else if (context != null) {
         String paramVal = System.getProperty(paramName);
         if (paramVal == null) {
           paramVal = System.getenv(paramName);
@@ -370,17 +371,21 @@ public final class StringConversionUtils
         val = val.substring("aes:".length())
                  .trim();
         return symmetricDecode(val);
-      } catch (Exception e) {
+      }
+      catch (Exception e) {
         throw new IllegalArgumentException("Failed to decode the provided password with a symmetric key via AES", e);
       }
-    } else if (val.startsWith("base64:")) {
+    }
+    else if (val.startsWith("base64:")) {
       val = val.substring("base64:".length())
                .trim();
       return base64Decode(val);
-    } else if (val.startsWith("plain:")) {
+    }
+    else if (val.startsWith("plain:")) {
       return val.substring("plain:".length())
                 .trim();
-    } else {
+    }
+    else {
       return val.trim();
     }
   }
@@ -425,7 +430,8 @@ public final class StringConversionUtils
       case "aes":
         try {
           return "aes:" + symmetricEncode(plainPassword);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
           throw new IllegalArgumentException("Failed to encode the provided password with a symmetric key via AES", e);
         }
 

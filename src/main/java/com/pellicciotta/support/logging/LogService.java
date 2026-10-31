@@ -16,8 +16,7 @@ import java.lang.reflect.Constructor;
  *  This {@link LogService} should be configured once at the very start of an application, and henceforth only used
  *  to obtain {@link Log} objects.</p>
  */
-public final class LogService
-{
+public final class LogService {
   // <editor-fold desc="Configuration">
 
   /** Prevent instantiation */
@@ -139,7 +138,9 @@ public final class LogService
   /**
    *  Close the default log.
    */
-  public static synchronized void close() { defaultLog.close(); }
+  public static synchronized void close() {
+    defaultLog.close();
+  }
 
   /**
    * @return Is the {@link LogLevel#ERROR} level currently enabled for the default log?

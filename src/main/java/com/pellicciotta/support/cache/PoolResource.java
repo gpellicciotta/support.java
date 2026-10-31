@@ -13,8 +13,7 @@ import com.pellicciotta.support.utils.DateTimeUtils;
 /**
  *  A pooled resource needs to be closeable and capable of indicating its health.
  */
-public interface PoolResource extends AutoCloseable
-{
+public interface PoolResource extends AutoCloseable {
   /**
    *  @return Whether this is resource is still healthy and can be re-used.
    */

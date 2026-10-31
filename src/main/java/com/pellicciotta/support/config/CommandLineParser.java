@@ -16,8 +16,7 @@ import com.pellicciotta.support.utils.CollectionUtils;
  *  only supports <code>--</code> prefixed flags, <code>--</code> and <code>=</code> using properties and positional
  *  argument: see {@link CommandLine} for a more verbose description.</p>
  */
-public class CommandLineParser
-{
+public class CommandLineParser {
   // <editor-fold desc="Construction">
 
   /**

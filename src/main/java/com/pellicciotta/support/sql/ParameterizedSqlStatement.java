@@ -22,8 +22,7 @@ import com.pellicciotta.support.utils.Contract;
  *  simple wrapper that ensures throwning unchecked {@link SqlRuntimeException} instead of the
  *  checked {@link SQLException}.</p>
  */
-public class ParameterizedSqlStatement extends SqlStatementBase
-{
+public class ParameterizedSqlStatement extends SqlStatementBase {
   // <editor-fold desc="Construction">
 
   /**
@@ -98,7 +97,8 @@ public class ParameterizedSqlStatement extends SqlStatementBase
       for (int parameterIndex : positions) {
         this.wrapped.setNull(parameterIndex, sqlType);
       }
-    } catch (SQLException e) {
+    }
+    catch (SQLException e) {
       throw new SqlRuntimeException(e);
     }
   }

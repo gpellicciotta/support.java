@@ -11,8 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *  constructor instead of a real sleep, so the window-elapses-and-refills case runs instantly and
  *  deterministically.
  */
-public class RequestThrottleTest
-{
+public class RequestThrottleTest {
   @Test
   public void allowsRequestsUpToTheLimit() {
     AtomicLong clock = new AtomicLong(0L);

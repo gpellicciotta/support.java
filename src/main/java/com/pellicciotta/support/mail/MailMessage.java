@@ -14,8 +14,7 @@ import static javax.mail.Message.RecipientType.*;
 /**
  *  A mail message.
  */
-public class MailMessage
-{
+public class MailMessage {
   // <editor-fold desc="Construction">
 
   MailMessage(MailAddress from, MailAddress replyTo, List<MailAddress> to, List<MailAddress> cc, List<MailAddress> bcc, String subject, String body, String bodyMimeType, List<MailAttachment> attachments) {

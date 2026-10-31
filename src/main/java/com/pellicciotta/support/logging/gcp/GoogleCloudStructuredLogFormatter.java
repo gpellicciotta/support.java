@@ -15,8 +15,7 @@ import com.pellicciotta.support.utils.StringUtils;
  *  and the actual format written based on: https://cloud.google.com/logging/docs/structured-logging
  *  </p>
  */
-public class GoogleCloudStructuredLogFormatter extends LogEventFormatterBase
-{
+public class GoogleCloudStructuredLogFormatter extends LogEventFormatterBase {
   // <editor-fold desc="Construction">
 
   /**
@@ -26,7 +25,9 @@ public class GoogleCloudStructuredLogFormatter extends LogEventFormatterBase
    *   <li>Include full stack trace information.</li>
    *   <li>Include all context data.</li></ul>
    */
-  public GoogleCloudStructuredLogFormatter() { this(true, true); }
+  public GoogleCloudStructuredLogFormatter() {
+    this(true, true);
+  }
 
   /**
    * Construct a formatter that is initialized with the specified properties.

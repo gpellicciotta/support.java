@@ -41,7 +41,7 @@ Open a shell in the project root and run:
 python scripts/bootstrap-dev-environment.py
 ```
 
-This initializes Git if needed and runs `gradlew build`, which compiles, checks formatting, runs the tests, and
+This initializes Git if needed and runs `gradlew build`, which compiles, checks formatting and style, runs the tests, and
 produces the jars in `build/libs/`. Day-to-day operations go through `python scripts/devops.py help`.
 
 See also:

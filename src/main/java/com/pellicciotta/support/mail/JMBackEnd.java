@@ -15,8 +15,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  Class for sending email via a mail transfer system offered via the Java mail APIs.
 **/
-public class JMBackEnd extends MailBackEndBase
-{
+public class JMBackEnd extends MailBackEndBase {
   private static final Log log = LogService.fromCurrentClass();
 
   // <editor-fold desc="Construction">

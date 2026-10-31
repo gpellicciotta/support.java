@@ -11,8 +11,7 @@ import com.pellicciotta.support.utils.Contract;
  *  <p>
  *  Syntax types are considered equal if their ordinal value is equal.</p>
  */
-public class SyntaxType
-{
+public class SyntaxType {
   /** Token for source character(s) that don't match anything. */
   public final static SyntaxType ERROR = new SyntaxType(0, "error");
 
@@ -32,7 +31,9 @@ public class SyntaxType
   protected final int ordinal;
   protected final String name;
 
-  public String getName() { return this.name; }
+  public String getName() {
+    return this.name;
+  }
 
   @Override
   public boolean equals(Object o) {

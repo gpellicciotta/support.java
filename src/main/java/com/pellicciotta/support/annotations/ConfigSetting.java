@@ -13,8 +13,7 @@ import com.pellicciotta.support.codecs.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @Inherited
-public @interface ConfigSetting
-{
+public @interface ConfigSetting {
   /** The simple name of the configuration setting. */
   String name();
 

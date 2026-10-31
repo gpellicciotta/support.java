@@ -13,8 +13,7 @@ import java.util.regex.Pattern;
 /**
  * A collection of File related utility methods.
  */
-public final class FileUtils
-{
+public final class FileUtils {
   /** Prevent instantiation */
   private FileUtils() { }
 
@@ -129,7 +128,8 @@ public final class FileUtils
     }
     if (forwardSeparators) {
       return canonPath.replace('\\', '/');
-    } else {
+    }
+    else {
       return canonPath;
     }
   }
@@ -154,7 +154,8 @@ public final class FileUtils
     }
     if (forwardSeparators) {
       return canonPath.replace('\\', '/');
-    } else {
+    }
+    else {
       return canonPath;
     }
   }
@@ -375,7 +376,8 @@ public final class FileUtils
     for (int i = 0; i < maxCommonPartLen; i++) {
       if (file1Dirs[i].equals(file2Dirs[i])) {
         commonBasePath = new File(commonBasePath, file1Dirs[i]);
-      } else {
+      }
+      else {
         break;
       }
     }
@@ -424,7 +426,8 @@ public final class FileUtils
     // Determine relative path
     if (i < 0) { // No common part
       return filePath;
-    } else if (i == (baseDirs.length - 1)) { // Purely nested: filePath is under (hierarchically) baseDirPath
+    }
+    else if (i == (baseDirs.length - 1)) { // Purely nested: filePath is under (hierarchically) baseDirPath
       /*
        * Example 1 with filePath a file: baseDirPath: z/a/ -> [z][a] filePath: z/a/bb.txt -&gt; [z][a] return: bb.txt
        *
@@ -436,10 +439,12 @@ public final class FileUtils
       }
       if (!isDirectory(filePath)) {
         return relPath + new File(filePath).getName();
-      } else {
+      }
+      else {
         return relPath;
       }
-    } else { // filePath is above (hierarchically) baseDirPath
+    }
+    else { // filePath is above (hierarchically) baseDirPath
       /*
        * Example 1 with filePath a file: baseDirPath: z/a/b/c/d -> [z][a][b][c] filePath: z/a/d/bb.txt -&gt; [z][a] return:
        * ../../../d/bb.txt
@@ -455,7 +460,8 @@ public final class FileUtils
       }
       if (!isDirectory(filePath)) {
         return relPath + new File(filePath).getName();
-      } else {
+      }
+      else {
         return relPath;
       }
     }
@@ -485,9 +491,11 @@ public final class FileUtils
     String prefix = null;
     if (fileName.replace('\\', '/').startsWith("//")) { // Windows UNC path
       prefix = fileName.substring(0, 2);
-    } else if (fileName.startsWith("/")) {
+    }
+    else if (fileName.startsWith("/")) {
       prefix = "/";
-    } else {
+    }
+    else {
       Matcher m = FileUtils.WINDOWS_PREFIX_PATTERN.matcher(fileName);
       if (m.find()) {
         prefix = m.group(1);
@@ -525,7 +533,8 @@ public final class FileUtils
     int index = name.lastIndexOf('.');
     if (index > 0) {
       return name.substring(0, index);
-    } else {
+    }
+    else {
       return name;
     }
   }
@@ -547,7 +556,8 @@ public final class FileUtils
     String fileExt = getExtension(fileName);
     if (fileExt.isEmpty()) {
       return fileName;
-    } else {
+    }
+    else {
       return fileName.substring(0, fileName.length() - fileExt.length() - 1 /* for the dot */);
     }
   }
@@ -674,8 +684,9 @@ public final class FileUtils
     List<String> result = new ArrayList<>();
     for (; ; ) {
       String line = reader.readLine();
-      if (line == null)
+      if (line == null) {
         break;
+      }
       result.add(line);
     }
     return result;

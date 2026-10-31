@@ -14,8 +14,7 @@ import java.util.regex.Pattern;
 /**
  *  Settings specific to one logger.
  */
-public class LoggerConfig
-{
+public class LoggerConfig {
   /**
    *  Create settings for the named logger.
    *
@@ -54,8 +53,7 @@ public class LoggerConfig
 
   // <editor-fold desc="Codecs">
 
-  public static class XmlCodec implements com.pellicciotta.support.codecs.XmlCodec<LoggerConfig>
-  {
+  public static class XmlCodec implements com.pellicciotta.support.codecs.XmlCodec<LoggerConfig> {
     @Override
     public LoggerConfig decode(Element from) {
       assert from != null;
@@ -83,8 +81,7 @@ public class LoggerConfig
 
   public static final XmlCodec XML_CODEC = new XmlCodec();
 
-  public static class StringCodec implements com.pellicciotta.support.codecs.StringCodec<LoggerConfig>
-  {
+  public static class StringCodec implements com.pellicciotta.support.codecs.StringCodec<LoggerConfig> {
     private final static Pattern REGEX = Pattern.compile("^([^:]+) *[:] *([^ ]+) *$");
 
     @Override
@@ -104,7 +101,9 @@ public class LoggerConfig
 
     @Override
     public String encode(LoggerConfig config) {
-      if (config == null) { return null; }
+      if (config == null) {
+        return null;
+      }
 
       return String.format("%s:%s", config.name, StringConversionUtils.fromLogLevel(config.minLogLevel));
     }
@@ -112,8 +111,7 @@ public class LoggerConfig
 
   public static final StringCodec STRING_CODEC = new StringCodec();
 
-  public static class PropertyCodec implements com.pellicciotta.support.codecs.PropertyCodec<LoggerConfig>
-  {
+  public static class PropertyCodec implements com.pellicciotta.support.codecs.PropertyCodec<LoggerConfig> {
     @Override
     public LoggerConfig decode(Map<String, String> from) {
       assert from != null;

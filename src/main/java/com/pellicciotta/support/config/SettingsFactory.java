@@ -23,8 +23,7 @@ import com.pellicciotta.support.utils.*;
  * All <code>standaloneXxx</code> methods return a {@link Setting} that encapsulates its own value,
  * while all <code>attachedXxx</code> methods return a {@link Setting} that works with an existing pair of get/set functions.</p>
  */
-public class SettingsFactory
-{
+public class SettingsFactory {
   // <editor-fold desc="Support Functions" >
 
   private static String getName(String name, Field targetField) {
@@ -140,7 +139,8 @@ public class SettingsFactory
       public T get() {
         try {
           return (T)targetField.get(targetObject);
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e) {
           LogService.error("Failed to get value of field '%s': %s", targetField.getName(), e);
         }
         return null;
@@ -149,7 +149,8 @@ public class SettingsFactory
       public void set(T value) {
         try {
           targetField.set(targetObject, value);
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e) {
           LogService.error("Failed to set value of field '%s': %s", targetField.getName(), e);
         }
       }
@@ -178,7 +179,8 @@ public class SettingsFactory
       public List<T> get() {
         try {
           return (List<T>)targetField.get(targetObject);
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e) {
           LogService.error("Failed to get value of field '%s': %s", targetField.getName(), e);
         }
         return null;
@@ -187,7 +189,8 @@ public class SettingsFactory
       public void set(List<T> value) {
         try {
           targetField.set(targetObject, value);
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e) {
           LogService.error("Failed to set value of field '%s': %s", targetField.getName(), e);
         }
       }
@@ -406,8 +409,12 @@ public class SettingsFactory
 
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, Supplier<T> getF, Consumer<T> setF) {
     final TypedValue<T> tv = new TypedValue<T>() {
-      @Override public T get() { return getF.get(); }
-      @Override public void set(T value) { setF.accept(value); }
+      @Override public T get() {
+        return getF.get();
+      }
+      @Override public void set(T value) {
+        setF.accept(value);
+      }
     };
     return this.attachedSetting(valueType, name, description, tv);
   }
@@ -418,8 +425,12 @@ public class SettingsFactory
 
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, StringCodec<T> strCodec, Supplier<T> getF, Consumer<T> setF) {
     final TypedValue<T> tv = new TypedValue<T>() {
-      @Override public T get() { return getF.get(); }
-      @Override public void set(T value) { setF.accept(value); }
+      @Override public T get() {
+        return getF.get();
+      }
+      @Override public void set(T value) {
+        setF.accept(value);
+      }
     };
     return this.attachedSetting(valueType, name, description, strCodec, tv);
   }
@@ -430,8 +441,12 @@ public class SettingsFactory
 
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, T defaultValue, Supplier<T> getF, Consumer<T> setF) {
     final TypedValue<T> tv = new TypedValue<T>() {
-      @Override public T get() { return getF.get(); }
-      @Override public void set(T value) { setF.accept(value); }
+      @Override public T get() {
+        return getF.get();
+      }
+      @Override public void set(T value) {
+        setF.accept(value);
+      }
     };
     return this.attachedSetting(valueType, name, description, defaultValue, tv);
   }
@@ -442,8 +457,12 @@ public class SettingsFactory
 
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, T defaultValue, StringCodec<T> strCodec, Supplier<T> getF, Consumer<T> setF) {
     final TypedValue<T> tv = new TypedValue<T>() {
-      @Override public T get() { return getF.get(); }
-      @Override public void set(T value) { setF.accept(value); }
+      @Override public T get() {
+        return getF.get();
+      }
+      @Override public void set(T value) {
+        setF.accept(value);
+      }
     };
     return this.attachedSetting(valueType, name, description, defaultValue, strCodec, tv);
   }

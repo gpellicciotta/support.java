@@ -7,8 +7,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  SQL dialect specifics
  */
-public abstract class SqlDialect
-{
+public abstract class SqlDialect {
   /**
    *  Quote an identifier.
    *

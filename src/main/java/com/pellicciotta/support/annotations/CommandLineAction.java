@@ -12,8 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @Inherited
-public @interface CommandLineAction
-{
+public @interface CommandLineAction {
   /** The simple name of the command-line action. */
   String name();
 

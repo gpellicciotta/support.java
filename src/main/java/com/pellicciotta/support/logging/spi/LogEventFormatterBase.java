@@ -15,8 +15,7 @@ import com.pellicciotta.support.utils.*;
 /**
  *  Base class for formatting {@link LogEvent}s as plain text messages.
  */
-public abstract class LogEventFormatterBase implements LogEventFormatter
-{
+public abstract class LogEventFormatterBase implements LogEventFormatter {
   // <editor-fold desc="Defaults">
 
   public static final String DEFAULT_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS000";
@@ -97,7 +96,8 @@ public abstract class LogEventFormatterBase implements LogEventFormatter
         Object cdValue = cd.get(cdName);
         if (cdName.startsWith("origin-")) {
           formattingData.put(cdName, cdValue);
-        } else {
+        }
+        else {
           formattingData.put("ctx:" + cdName, cdValue);
         }
       }
@@ -166,11 +166,13 @@ public abstract class LogEventFormatterBase implements LogEventFormatter
           if ("".equals(paramValue)) {             // Replace by nothing
             m.appendReplacement(sb, ""); // The replacement treats $ and \ specially, that's why we append separately
             sb.append(backslashes);
-          } else if (paramFormat == null) {
+          }
+          else if (paramFormat == null) {
             m.appendReplacement(sb, ""); // The replacement treats $ and \ specially, that's why we append separately
             sb.append(backslashes);
             sb.append(paramValue);
-          } else {
+          }
+          else {
             String repl = String.format("%" + paramFormat, paramValue);
             m.appendReplacement(sb, ""); // The replacement treats $ and \ specially, that's why we append separately
             sb.append(backslashes);

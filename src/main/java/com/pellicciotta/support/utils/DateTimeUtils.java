@@ -13,8 +13,7 @@ import com.pellicciotta.support.exceptions.FormatException;
 /**
  *  Date and time related utility methods.
  */
-public final class DateTimeUtils
-{
+public final class DateTimeUtils {
   /** Prevent instantiation */
   private DateTimeUtils() {  }
 
@@ -229,7 +228,8 @@ public final class DateTimeUtils
 
           return totalMillis;
         }
-      } catch (NumberFormatException nfe) {
+      }
+      catch (NumberFormatException nfe) {
         // continue trying the next pattern - should never happen though
       }
     }
@@ -296,7 +296,8 @@ public final class DateTimeUtils
     buf.append('.');
     if (milliseconds < 10L) {
       buf.append('0').append('0');
-    } else if (milliseconds < 100L) {
+    }
+    else if (milliseconds < 100L) {
       buf.append('0');
     }
     buf.append(milliseconds);
@@ -333,7 +334,8 @@ public final class DateTimeUtils
         // DateFormat/SimpleDateFormat is not thread-safe; clone the shared template before use
         // so concurrent callers never mutate the same instance.
         return parseDateTimeExact(timeStr, (DateFormat)format.clone());
-      } catch (ParseException pe) {
+      }
+      catch (ParseException pe) {
         // continue trying the next pattern
       }
     }
@@ -598,7 +600,8 @@ public final class DateTimeUtils
     else { // In future
       if (diffSeconds < 2) {
         return "now";
-      } else if (diffSeconds < 51) {
+      }
+      else if (diffSeconds < 51) {
         return String.format("in %d seconds", diffSeconds);
       }
       else if (diffSeconds < 121) {

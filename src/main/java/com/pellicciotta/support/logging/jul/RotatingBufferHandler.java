@@ -11,8 +11,7 @@ import com.pellicciotta.support.utils.Contract;
 /**
  *  An {@link Handler} implementation that will keep track of the n most recent {@link LogRecord}s.
  */
-public class RotatingBufferHandler extends Handler
-{
+public class RotatingBufferHandler extends Handler {
   // <editor-fold desc="Construction">
 
   /**

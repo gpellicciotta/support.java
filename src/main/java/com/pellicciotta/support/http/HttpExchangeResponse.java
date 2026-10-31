@@ -19,8 +19,7 @@ import com.sun.net.httpserver.HttpExchange;
  *  Answers to a {@code HEAD} request, and {@code 1xx}, {@code 204}, and {@code 304} answers, carry no body: their headers go out
  *  with the JDK's no-body length, and whatever a handler writes is dropped, so handlers need no special case.</p>
  */
-final class HttpExchangeResponse implements Response
-{
+final class HttpExchangeResponse implements Response {
   HttpExchangeResponse(HttpExchange exchange) {
     assert exchange != null;
     this.exchange = exchange;

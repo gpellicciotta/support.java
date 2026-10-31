@@ -9,8 +9,7 @@ import com.pellicciotta.support.utils.PagingResult;
 /**
  *  Class representing a page of typed query results.
  */
-public class SqlPage<T> implements PagingResult<T>
-{
+public class SqlPage<T> implements PagingResult<T> {
   // <editor-fold desc="Construction">
 
   protected SqlPage(List<T> elements, int size, String startBookmark, String endBookmark) {

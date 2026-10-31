@@ -17,8 +17,7 @@ import com.pellicciotta.support.logging.LogService;
 import com.pellicciotta.support.text.TextBuilder;
 import com.pellicciotta.support.utils.*;
 
-public class DiffTool extends BasicApp<DiffToolConfig>
-{
+public class DiffTool extends BasicApp<DiffToolConfig> {
   // <editor-fold desc="Command-line Entry-Point">
 
   /**
@@ -275,21 +274,33 @@ public class DiffTool extends BasicApp<DiffToolConfig>
   }
 
   private static void addUnifiedDelete(TextBuilder tb, String itemToDelete, boolean useColors) {
-    if (useColors) { tb.append("\u001b[31m"); }
+    if (useColors) {
+      tb.append("\u001b[31m");
+    }
     tb.appendLine("-%s", itemToDelete);
-    if (useColors) { tb.append("\u001b[0m"); }
+    if (useColors) {
+      tb.append("\u001b[0m");
+    }
   }
 
   private static void addUnifiedInsert(TextBuilder tb, String itemToInsert, boolean useColors) {
-    if (useColors) { tb.append("\u001b[32m"); }
+    if (useColors) {
+      tb.append("\u001b[32m");
+    }
     tb.appendLine("+%s", itemToInsert);
-    if (useColors) { tb.append("\u001b[0m"); }
+    if (useColors) {
+      tb.append("\u001b[0m");
+    }
   }
 
   private static void addUnifiedMatch(TextBuilder tb, String matchingItem, boolean useColors) {
-    if (useColors) { tb.append("\u001b[90m"); }
+    if (useColors) {
+      tb.append("\u001b[90m");
+    }
     tb.appendLine(" %s", matchingItem);
-    if (useColors) { tb.append("\u001b[0m"); }
+    if (useColors) {
+      tb.append("\u001b[0m");
+    }
   }
 
   private void printSideBySideDiff() throws IOException {
