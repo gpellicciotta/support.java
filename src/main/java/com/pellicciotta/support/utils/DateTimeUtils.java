@@ -19,6 +19,7 @@ public final class DateTimeUtils {
 
   // <editor-fold desc="Support Types">
 
+  /** Output format of a formatted time span (see the individual constants). */
   public enum TimespanFormat {
     /** Always hours, minutes and seconds, even when zero:
      *    [-] h:mm:ss.mmm
@@ -50,21 +51,32 @@ public final class DateTimeUtils {
       this.pattern = Pattern.compile("^\\s*" + patternStr + "\\s*$");
     }
 
+    /** The compiled regular expression for this form, anchored and tolerant of surrounding whitespace. */
     public final Pattern pattern;
   }
 
   // </editor-fold>
   // <editor-fold desc="Constants">
 
+  /** Number of hours in a day. */
   public static final long HOURS_PER_DAY = 24L;
+  /** Number of minutes in an hour. */
   public static final long MINUTES_PER_HOUR = 60L;
+  /** Number of minutes in a day. */
   public static final long MINUTES_PER_DAY = DateTimeUtils.MINUTES_PER_HOUR * DateTimeUtils.HOURS_PER_DAY;
+  /** Number of seconds in a minute. */
   public static final long SECONDS_PER_MINUTE = 60L;
+  /** Number of seconds in an hour. */
   public static final long SECONDS_PER_HOUR = DateTimeUtils.SECONDS_PER_MINUTE * DateTimeUtils.MINUTES_PER_HOUR;
+  /** Number of seconds in a day. */
   public static final long SECONDS_PER_DAY = DateTimeUtils.SECONDS_PER_HOUR * DateTimeUtils.HOURS_PER_DAY;
+  /** Number of milliseconds in a second. */
   public static final long MILLISECONDS_PER_SECOND = 1000L;
+  /** Number of milliseconds in a minute. */
   public static final long MILLISECONDS_PER_MINUTE = DateTimeUtils.MILLISECONDS_PER_SECOND * DateTimeUtils.SECONDS_PER_MINUTE;
+  /** Number of milliseconds in an hour. */
   public static final long MILLISECONDS_PER_HOUR = DateTimeUtils.MILLISECONDS_PER_MINUTE * DateTimeUtils.MINUTES_PER_HOUR;
+  /** Number of milliseconds in a day. */
   public static final long MILLISECONDS_PER_DAY = DateTimeUtils.MILLISECONDS_PER_HOUR * DateTimeUtils.HOURS_PER_DAY;
 
   /**
@@ -147,22 +159,52 @@ public final class DateTimeUtils {
   }
 
 
+  /**
+   * Returns the current date and time in UTC.
+   *
+   * @return The current UTC date and time as a zone-less {@link LocalDateTime}.
+   */
   public static LocalDateTime utcNowAsLocalDateTime() {
     return LocalDateTime.now(ZoneOffset.UTC);
   }
 
+  /**
+   * Converts a {@link Date} to a {@link LocalDateTime} expressed in UTC.
+   *
+   * @param d The date to convert; must not be {@code null}.
+   * @return The same instant as a UTC {@link LocalDateTime}.
+   */
   public static LocalDateTime fromUtcDateToLocalDateTime(Date d) {
     return LocalDateTime.ofInstant(d.toInstant(), ZoneOffset.UTC);
   }
 
+  /**
+   * Converts a {@link LocalDateTime}, interpreted as UTC, to a {@link Date}.
+   *
+   * @param d The UTC date and time to convert; must not be {@code null}.
+   * @return The {@link Date} for that instant.
+   */
   public static Date fromLocalDateTimeToUtcDate(LocalDateTime d) {
     return Date.from(d.atZone(ZoneOffset.UTC).toInstant());
   }
 
+  /**
+   * Converts a {@link LocalDateTime}, interpreted in the system default time zone, to a {@link Date}.
+   *
+   * @param d The local date and time to convert; must not be {@code null}.
+   * @return The {@link Date} for that instant.
+   */
   public static Date fromLocalDateTimeToLocalDate(LocalDateTime d) {
     return Date.from(d.atZone(ZoneId.systemDefault()).toInstant());
   }
 
+  /**
+   * Converts a {@link ZonedDateTime} to a {@link Date} by dropping its zone and interpreting its local date and
+   * time in the system default time zone.
+   *
+   * @param d The zoned date and time to convert; must not be {@code null}.
+   * @return The {@link Date} for that local date and time in the system default zone.
+   */
   public static Date fromZonedDateTimeToLocalDate(ZonedDateTime d) {
     return fromLocalDateTimeToLocalDate(d.toLocalDateTime());
   }

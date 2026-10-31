@@ -147,6 +147,12 @@ public final class JULUtils {
     }
   }
 
+  /**
+   * Resets JUL, removes and closes all root handlers, and installs a console handler with a console formatter.
+   *
+   * @param prefix The application name prefix passed to the console formatter.
+   * @param level The minimum {@link LogLevel} for console output.
+   */
   public static void configure(String prefix, int level) {
     LogManager.getLogManager().reset();
     Logger rootLogger = LogManager.getLogManager().getLogger("");

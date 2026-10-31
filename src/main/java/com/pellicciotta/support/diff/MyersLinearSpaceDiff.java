@@ -15,6 +15,16 @@ public class MyersLinearSpaceDiff<T> extends DiffAlgorithmBase<T> {
     return "myers linear-space diff";
   }
 
+  /**
+   * Finds the middle snake and recursively processes the regions before and after it.
+   *
+   * @param aSeq The first sequence.
+   * @param aSeqStart Inclusive start in the first sequence.
+   * @param aSeqEnd Exclusive end in the first sequence.
+   * @param bSeq The second sequence.
+   * @param bSeqStart Inclusive start in the second sequence.
+   * @param bSeqEnd Exclusive end in the second sequence.
+   */
   protected void calculateNormalCase(T[] aSeq, int aSeqStart, int aSeqEnd, T[] bSeq, int bSeqStart, int bSeqEnd) {
     if (ENABLE_LOGGING) {
       this.log.debug("Normal case calculation for A [%d, %d] and B [%d, %d]", aSeqStart, aSeqEnd - 1, bSeqStart, bSeqEnd - 1);

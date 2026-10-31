@@ -70,6 +70,7 @@ public class EditRegion {
 
   final EditCommand[] commands;
 
+  /** @return The commands of this region; the internal array, not a copy. */
   public EditCommand[] getCommands() {
     return this.commands;
   }

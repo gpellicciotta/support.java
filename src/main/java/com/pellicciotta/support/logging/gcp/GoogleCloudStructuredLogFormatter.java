@@ -43,6 +43,7 @@ public class GoogleCloudStructuredLogFormatter extends LogEventFormatterBase {
   // </editor-fold>
   // <editor-fold desc="Properties">
 
+  /** Whether stack trace information is included for events that carry a cause. */
   protected boolean includeStackTrace;
 
   /**
@@ -63,6 +64,7 @@ public class GoogleCloudStructuredLogFormatter extends LogEventFormatterBase {
     this.includeStackTrace = include;
   }
 
+  /** Whether all context data is included in the formatted output. */
   protected boolean includeAllContextData;
 
   /**

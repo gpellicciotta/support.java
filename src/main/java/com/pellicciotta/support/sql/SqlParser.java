@@ -29,8 +29,11 @@ class SqlParser {
       this.lastTokenIndex = endIdx;
     }
 
+    /** The token list this part refers to. */
     protected final List<SyntaxToken> tokenSource;
+    /** Index in {@code tokenSource} of the first token of this part. */
     protected final int firstTokenIndex;
+    /** Index in {@code tokenSource} of the last token of this part (inclusive). */
     protected final int lastTokenIndex;
 
     @Override
@@ -161,7 +164,9 @@ class SqlParser {
       this.orderKeywordIndex = orderKeywordIndex;
     }
 
+    /** Index of the token holding the sort column identifier. */
     protected final int identifierIndex;
+    /** Index of the token holding the order keyword ({@code ASC} or {@code DESC}). */
     protected final int orderKeywordIndex;
 
     public String getIdentifier() {
@@ -185,7 +190,9 @@ class SqlParser {
       this.orderBySpecs = orderBySpecs;
     }
 
+    /** Index of the {@code ORDER BY} keyword token. */
     protected final int orderByKeywordIndex;
+    /** The individual sort specifications of this clause. */
     protected final OrderBySpec[] orderBySpecs;
   }
 

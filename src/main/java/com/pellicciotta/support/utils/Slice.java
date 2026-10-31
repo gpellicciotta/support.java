@@ -33,8 +33,11 @@ public abstract class Slice<T, E> implements Iterable<E> {
   // </editor-fold>
   // <editor-fold desc="Properties">
 
+  /** The underlying sequence this slice refers to. */
   protected final T source;
+  /** Index of the first element of the slice (inclusive). */
   protected final int startIndex; // Inclusive
+  /** Index just past the last element of the slice (exclusive). */
   protected final int endIndex; // Exclusive
 
   /**

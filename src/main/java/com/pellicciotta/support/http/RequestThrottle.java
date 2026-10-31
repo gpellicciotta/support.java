@@ -31,6 +31,10 @@ public final class RequestThrottle {
   private static final long IDLE_EVICTION_MILLIS = 60_000L;
   private static final long SWEEP_INTERVAL_MILLIS = 30_000L;
 
+  /**
+   *  Creates a throttle using the system clock.
+   *  @param maxRequestsPerSecondPerIp the per-IP rate and burst capacity; must be positive
+   */
   public RequestThrottle(int maxRequestsPerSecondPerIp) {
     this(maxRequestsPerSecondPerIp, System::currentTimeMillis);
   }
@@ -49,6 +53,7 @@ public final class RequestThrottle {
   private final ConcurrentHashMap<String, Bucket> bucketsByIp = new ConcurrentHashMap<>();
   private final AtomicLong lastSweepMillis;
 
+  /** @return The per-IP request rate (and bucket capacity) this throttle enforces. */
   public int getMaxRequestsPerSecondPerIp() {
     return this.maxRequestsPerSecondPerIp;
   }

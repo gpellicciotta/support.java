@@ -63,7 +63,9 @@ public abstract class Tree<T extends Tree<T>> {
   // </editor-fold>
   // <editor-fold desc="Tree Structure">
 
+  /** The parent node, or {@code null} for a root node. */
   protected T parent;
+  /** The child nodes of this node, in insertion order. */
   protected List<T> children;
 
   /**

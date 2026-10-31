@@ -43,6 +43,7 @@ public class JsonFormatter extends LogEventFormatterBase {
   // </editor-fold>
   // <editor-fold desc="Properties">
 
+  /** Whether the stack trace of {@link LogEvent#getCause()} is included in the output. */
   protected boolean includeStackTrace;
 
   /**
@@ -63,6 +64,7 @@ public class JsonFormatter extends LogEventFormatterBase {
     this.includeStackTrace = include;
   }
 
+  /** Whether the event's context data is included in the output. */
   protected boolean includeAllContextData;
 
   /**

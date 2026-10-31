@@ -17,6 +17,11 @@ import com.pellicciotta.support.utils.DateTimeUtils;
 public abstract class WrappingLogBackEnd extends LogBackEnd {
   // <editor-fold desc="Construction">
 
+  /**
+   * Create a back-end that delegates to another one.
+   *
+   * @param actual The back-end to wrap; must not be <code>null</code>.
+   */
   protected WrappingLogBackEnd(LogBackEnd actual) {
     Contract.isNotNull("actual", actual);
     this.wrapped = actual;
@@ -75,18 +80,35 @@ public abstract class WrappingLogBackEnd extends LogBackEnd {
     return new LogBase(actualLog.getName(), minLevel, this);
   }
 
+  /**
+   * Pass the event on to the wrapped back-end.
+   *
+   * @param logEvent The event to be written.
+   */
   public void onLogEvent(LogEvent logEvent) {
     this.wrapped.onLogEvent(logEvent);
   }
 
+  /** Per-thread nesting depth of currently open spans. */
   protected static final ThreadLocal<Integer> spanLevel = ThreadLocal.withInitial(() -> 0);
 
+  /**
+   * Log an INFO event announcing the span and increase the calling thread's span nesting level.
+   *
+   * @param span The span that was started.
+   */
   public synchronized void onSpanStarted(Span span) {
     LogEvent evt = new LogEvent(span.getLog().getName(), LogLevel.INFO, "Operation '%s' started", new Object[] { span.getName() }, null, null);
     this.onLogEvent(evt);
     spanLevel.set(spanLevel.get() + 1);
   }
 
+  /**
+   * Decrease the calling thread's span nesting level (never below zero) and log an INFO event with the span's
+   * elapsed time.
+   *
+   * @param span The span that was closed.
+   */
   public synchronized void onSpanClosed(Span span) {
     spanLevel.set(Math.max(0, spanLevel.get() - 1));
     LogEvent evt = new LogEvent(span.getLog().getName(), LogLevel.INFO, "Operation '%s' ended in %s", new Object[] { span.getName(), DateTimeUtils.formatTimespan(span.getElapsedTime()) }, null, null);

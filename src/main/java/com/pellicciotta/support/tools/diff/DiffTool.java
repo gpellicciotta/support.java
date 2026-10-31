@@ -17,6 +17,9 @@ import com.pellicciotta.support.logging.LogService;
 import com.pellicciotta.support.text.TextBuilder;
 import com.pellicciotta.support.utils.*;
 
+/**
+ * Command-line tool that diffs two text files and prints the result in the configured output format.
+ */
 public class DiffTool extends BasicApp<DiffToolConfig> {
   // <editor-fold desc="Command-line Entry-Point">
 
@@ -90,6 +93,14 @@ public class DiffTool extends BasicApp<DiffToolConfig> {
     return LogService.getBackEnd().getLog(NAME);
   }
 
+  /**
+   * Prints the available diff algorithms and their characteristics to standard output.
+   *
+   * @param cli The parsed command line.
+   * @param config The tool configuration.
+   * @param positionalArguments The action arguments, unused.
+   * @return {@link ExitCode#NORMAL}.
+   */
   @CommandLineAction(name = "list-algorithms", description =  "List all available diff algorithms")
   protected int listDiffAlgorithms(CommandLine cli, DiffToolConfig config, String[] positionalArguments) {
     System.out.println("Available diff algorithms:");
@@ -101,6 +112,15 @@ public class DiffTool extends BasicApp<DiffToolConfig> {
     return ExitCode.NORMAL;
   }
 
+  /**
+   * Diffs the two files named by the positional arguments.
+   *
+   * @param cli The parsed command line.
+   * @param config The tool configuration.
+   * @param positionalArguments Exactly two file paths.
+   * @return {@link ExitCode#CONFIG_ERROR} unless exactly two arguments are given, else the comparison result.
+   * @throws ConfigurationException If either path does not exist or is a directory.
+   */
   @CommandLineAction(name = "diff", description =  "Determine the diff between two text files", commandLineSyntax = "diff <file-1> <file-2>")
   protected int runDiffAction(CommandLine cli, DiffToolConfig config, String[] positionalArguments) {
     Log log = this.getAppLog();
@@ -127,6 +147,14 @@ public class DiffTool extends BasicApp<DiffToolConfig> {
   private List<MatchPair> lcs;
   private List<EditCommand> ses;
 
+  /**
+   * Compares two files with the configured algorithm and prints the result in the configured format.
+   * Lines matching the configured ignore patterns are excluded from the comparison.
+   *
+   * @param f1 The first file.
+   * @param f2 The second file.
+   * @return {@link ExitCode#NORMAL}, or {@link ExitCode#INTERNAL_ERROR} if the comparison fails.
+   */
   protected int runFileCompare(File f1, File f2) {
     Log log = this.getAppLog();
     try {

@@ -12,6 +12,11 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  *  This buffer is safe to use from multiple threads.</p>
  */
 public class FixedSizeBuffer<T> implements Iterable<T> {
+  /**
+   * Creates an empty buffer.
+   *
+   * @param capacity The max. number of elements held before the oldest ones are discarded.
+   */
   public FixedSizeBuffer(int capacity) {
     this.capacity = capacity;
     this.buffer = new ConcurrentLinkedDeque<>();

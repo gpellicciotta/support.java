@@ -74,12 +74,14 @@ public class CommandLine {
   // </editor-fold>
   // <editor-fold desc="Construction">
 
+  /** Creates a command line from the given flags, properties and arguments, copying all three. */
   public CommandLine(Set<String> flags, Map<String, List<String>> properties, List<String> arguments) {
     this.flags = new HashSet<>(flags);
     this.properties = new HashMap<>(properties);
     this.arguments = new ArrayList(arguments);
   }
 
+  /** Creates a command line from the given flags, properties and arguments, copying all three. */
   public CommandLine(String[] flags, Map<String, List<String>> properties, String[] arguments) {
     this.flags = CollectionUtils.asSet(flags);
     this.properties = new HashMap<>(properties);

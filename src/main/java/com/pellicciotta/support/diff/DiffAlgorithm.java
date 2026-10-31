@@ -13,6 +13,7 @@ import com.pellicciotta.support.utils.Contract;
  *             This means that T must be a reference type (and hence not be a primitive type).
  */
 public abstract class DiffAlgorithm<T> {
+  /** Constructor for subclasses. */
   protected DiffAlgorithm() { }
 
   /**
@@ -20,8 +21,11 @@ public abstract class DiffAlgorithm<T> {
    */
   public abstract String name();
 
+  /** The first (origin) sequence; <code>null</code> until set. */
   protected T[] a;
+  /** Inclusive start index of the range to compare within {@link #a}. */
   protected int aStart;
+  /** Exclusive end index of the range to compare within {@link #a}. */
   protected int aEnd;
 
   /**
@@ -50,8 +54,11 @@ public abstract class DiffAlgorithm<T> {
     this.aEnd = endIndex;
   }
 
+  /** The second (target) sequence; <code>null</code> until set. */
   protected T[] b;
+  /** Inclusive start index of the range to compare within {@link #b}. */
   protected int bStart;
+  /** Exclusive end index of the range to compare within {@link #b}. */
   protected int bEnd;
 
   /**
@@ -80,12 +87,15 @@ public abstract class DiffAlgorithm<T> {
     this.bEnd = endIndex;
   }
 
+  /** Shared empty result for sequences without matches. */
   protected static final MatchPair[] NO_MATCHES = new MatchPair[0];
 
+  /** @return <code>true</code> if both sequences have been set. */
   protected boolean checkSequencesSet() {
     return ((this.a != null) && (this.b != null));
   }
 
+  /** @return <code>true</code> if either sequence, or its selected range, is empty so no matches are possible. */
   protected boolean cannotHaveAnyMatches() {
     return ((this.a.length == 0) || (this.aEnd == this.aStart) || (this.b.length == 0) || (this.bEnd == this.bStart));
   }

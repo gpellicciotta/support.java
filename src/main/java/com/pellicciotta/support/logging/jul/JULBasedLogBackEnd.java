@@ -11,6 +11,9 @@ import com.pellicciotta.support.logging.spi.*;
  *  A {@link LogBackEnd} that really uses JUL.
  */
 public class JULBasedLogBackEnd extends LogBackEndBase {
+  /**
+   * Creates a back-end that forwards log events and span start/end notices to JUL.
+   */
   public JULBasedLogBackEnd() { }
 
   @Override

@@ -23,10 +23,25 @@ public final class Info {
     return defaultValue;
   }
 
+  /**
+   * Library name from the manifest Implementation-Title, or <code>support.java</code> if absent.
+   */
   public static final String NAME;
+  /**
+   * Library version from the manifest Implementation-Version, or <code>0.0.0+unknown</code> if absent.
+   */
   public static final String VERSION;
+  /**
+   * Author from the manifest Implementation-Vendor, or a built-in default if absent.
+   */
   public static final String AUTHOR;
+  /**
+   * Copyright line from the manifest Specification-Vendor, or a built-in default if absent.
+   */
   public static final String COPYRIGHT;
+  /**
+   * Description from the manifest Specification-Title, or a built-in default if absent.
+   */
   public static final String DESCRIPTION;
 
   /**

@@ -20,11 +20,17 @@ import com.pellicciotta.support.utils.Contract;
 public class SqlRow implements ResultSet {
   // <editor-fold desc="Construction">
 
+  /**
+   *  Wraps the given result set.
+   *
+   *  @param wrapped The result set to delegate to; must not be null.
+   */
   protected SqlRow(ResultSet wrapped) {
     Contract.isNotNull("wrapped", wrapped);
     this.wrapped = wrapped;
   }
 
+  /** The underlying result set all calls are delegated to. */
   protected final ResultSet wrapped;
 
   // </editor-fold>

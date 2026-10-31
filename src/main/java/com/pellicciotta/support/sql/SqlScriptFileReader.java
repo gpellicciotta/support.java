@@ -206,6 +206,11 @@ public class SqlScriptFileReader {
   // </editor-fold>
   // <editor-fold desc="Testing">
 
+  /**
+   *  Command-line test entry point: parses the given SQL script file and logs each versioned part found.
+   *
+   *  @param args Exactly one argument, the path of the SQL script file; otherwise a usage error is logged and the JVM exits.
+   */
   public static void main(String[] args) {
     if (args.length != 1) {
       log.error("Usage: java %s <sql-script-file>", SqlScriptFileReader.class.getName());

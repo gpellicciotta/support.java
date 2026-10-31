@@ -7,5 +7,8 @@ package com.pellicciotta.support.logging.jul;
  *  and ensure the JUL configuration starts out empty.
  */
 public final class JULEmptyConfiguration {
+  /**
+   * Creates the instance JUL requires; it performs no configuration, leaving JUL empty.
+   */
   public JULEmptyConfiguration() {  }
 }

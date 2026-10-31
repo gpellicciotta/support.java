@@ -18,6 +18,7 @@ public class NumberSampler {
   // </editor-fold>
   // <editor-fold desc="Properties">
 
+  /** The most recently sampled value. */
   protected double lastSampleValue;
 
   /**
@@ -27,6 +28,7 @@ public class NumberSampler {
     return this.lastSampleValue;
   }
 
+  /** The smallest sampled value; NaN when no samples were gathered. */
   protected double minSampleValue;
 
   /**
@@ -41,6 +43,7 @@ public class NumberSampler {
     }
   }
 
+  /** The largest sampled value; NaN when no samples were gathered. */
   protected double maxSampleValue;
 
   /**
@@ -55,6 +58,7 @@ public class NumberSampler {
     }
   }
 
+  /** The running sum of all sampled values. */
   protected long sumOfSampleValues;
 
   /**
@@ -64,6 +68,7 @@ public class NumberSampler {
     return this.sumOfSampleValues;
   }
 
+  /** The number of samples gathered since the last reset. */
   protected long sampleCount;
 
   /**

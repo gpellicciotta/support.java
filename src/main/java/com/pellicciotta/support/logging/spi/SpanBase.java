@@ -7,9 +7,17 @@ import java.util.concurrent.ConcurrentMap;
 
 import com.pellicciotta.support.logging.*;
 
+/** Default {@link Span}: tracks timing and context data, and notifies its {@link LogBase} when closed. */
 public class SpanBase implements Span {
   // <editor-fold desc="Construction">
 
+  /**
+   * Create an open span, started now.
+   *
+   * @param name The span name; must not be <code>null</code> (asserted).
+   * @param parentSpan The enclosing span; may be <code>null</code>.
+   * @param log The owning log; must not be <code>null</code> (asserted).
+   */
   protected SpanBase(String name, SpanBase parentSpan, LogBase log) {
     assert name != null;
     assert log != null;

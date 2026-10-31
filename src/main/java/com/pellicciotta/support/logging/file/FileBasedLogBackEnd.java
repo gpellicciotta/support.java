@@ -38,10 +38,16 @@ public class FileBasedLogBackEnd extends LogBackEndBase {
     super(config);
   }
 
+  /** Minimum log level; events below it are discarded. */
   protected int minLevel;
+  /** Formatter that turns each {@link LogEvent} into the text line written to the file. */
   protected LogEventFormatter formatter;
+  /** Writer on the configured log file; <code>null</code> when no file is open. */
   protected PrintWriter writer;
 
+  /**
+   * Closes the open log file, if any, and restores the default minimum level (0) and a default {@link TextFormatter}.
+   */
   protected void resetConfiguration() {
     super.resetConfiguration();
     this.closeWriter();

@@ -12,6 +12,7 @@ import static com.pellicciotta.support.diff.DiffUtils.ENABLE_LOGGING;
  *  Basically find the most unique common item and divide the sequences based on that item' match-pair.
  */
 public class HistogramDiff<T> extends DiffAlgorithmBase<T> {
+  /** Create a histogram diff algorithm. */
   public HistogramDiff() { }
 
   @Override

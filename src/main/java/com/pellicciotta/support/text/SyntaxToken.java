@@ -13,12 +13,28 @@ import com.pellicciotta.support.utils.Slice;
  *  Tokens can have zero-length, in which case they don't actually represent input characters but some implied entity at a given offset (e.g. <c>INDENT</c> token in python).</p>
  */
 public class SyntaxToken extends Slice<CharSequence, Character> implements SyntaxElement, Comparable<SyntaxToken> {
+  /**
+   *  Create a token covering a region of the source; its text is that region.
+   *
+   *  @param tokenType The token type.
+   *  @param source The character sequence the token is a slice of.
+   *  @param offset The index of the first covered character.
+   *  @param length The number of covered characters.
+   */
   public SyntaxToken(SyntaxType tokenType, CharSequence source, int offset, int length) {
     super(source, offset, offset + length);
     this.tokenType = tokenType;
     this.text = this.source.subSequence(offset, offset + length).toString();
   }
 
+  /**
+   *  Create a zero-length pseudo-token at an offset, with explicit text.
+   *
+   *  @param tokenType The token type.
+   *  @param source The character sequence the token is positioned in.
+   *  @param offset The position of the token.
+   *  @param text The token text; must not be null.
+   */
   public SyntaxToken(SyntaxType tokenType, CharSequence source, int offset, String text) {
     super(source, offset, offset);
     Contract.isNotNull("text", text);
@@ -26,7 +42,9 @@ public class SyntaxToken extends Slice<CharSequence, Character> implements Synta
     this.text = text;
   }
 
+  /** The type of this token. */
   protected final SyntaxType tokenType;
+  /** The token text. */
   protected final String text;
 
   @Override

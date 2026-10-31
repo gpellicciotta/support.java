@@ -18,6 +18,7 @@ public class TimeSampler {
   // </editor-fold>
   // <editor-fold desc="Properties">
 
+  /** The most recently sampled time, in milliseconds. */
   protected long lastSampleTime;
 
   /**
@@ -27,6 +28,7 @@ public class TimeSampler {
     return this.lastSampleTime;
   }
 
+  /** The smallest sampled time in milliseconds; {@link Long#MAX_VALUE} when no samples were gathered. */
   protected long minTime;
 
   /**
@@ -41,6 +43,7 @@ public class TimeSampler {
     }
   }
 
+  /** The largest sampled time in milliseconds; {@link Long#MIN_VALUE} when no samples were gathered. */
   protected long maxTime;
 
   /**
@@ -55,6 +58,7 @@ public class TimeSampler {
     }
   }
 
+  /** The sum of all sampled times, in milliseconds. */
   protected long totalTime;
 
   /**
@@ -64,6 +68,7 @@ public class TimeSampler {
     return this.totalTime;
   }
 
+  /** The number of samples gathered since the last reset. */
   protected long sampleCount;
 
   /**

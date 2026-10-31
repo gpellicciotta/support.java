@@ -14,6 +14,14 @@ public final class DiffUtils {
 
   static final boolean ENABLE_LOGGING = false; // Only while debugging
 
+  /**
+   * Creates a copy of a match-pair with both indexes shifted by an offset.
+   *
+   * @param original The match-pair to copy.
+   * @param aOffset The offset added to the index in the first sequence.
+   * @param bOffset The offset added to the index in the second sequence.
+   * @return The shifted match-pair.
+   */
   public static <T> MatchPair createOffsetMatchPair(MatchPair original, int aOffset, int bOffset) {
     if (original instanceof ExtendedMatchPair) {
       return new ExtendedMatchPair(aOffset + original.indexA, bOffset + original.indexB, ((ExtendedMatchPair) original).val);
@@ -35,6 +43,14 @@ public final class DiffUtils {
     }
   }
 
+  /**
+   * Creates a copy of an edit command with its ranges shifted by an offset.
+   *
+   * @param original The edit command to copy.
+   * @param aOffset The offset added to the range in the first sequence.
+   * @param bOffset The offset added to the range in the second sequence.
+   * @return The shifted edit command.
+   */
   public static <T> EditCommand createOffsetCommand(EditCommand original, int aOffset, int bOffset) {
     if (original instanceof ExtendedEditCommand) {
       return new ExtendedEditCommand(original.type, aOffset + original.startInA, aOffset + original.endInA, bOffset + original.startInB, bOffset + original.endInB, ((ExtendedEditCommand) original).val);

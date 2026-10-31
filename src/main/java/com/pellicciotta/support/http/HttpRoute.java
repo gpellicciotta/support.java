@@ -33,28 +33,33 @@ public final class HttpRoute implements HttpRequestHandler, Comparable<HttpRoute
 
   private final HttpMethod method;
 
+  /** @return The HTTP method this route handles. */
   public HttpMethod getMethod() {
     return this.method;
   }
 
   private final String path;
 
+  /** @return The path pattern (a regular expression) this route matches. */
   public String getPath() {
     return this.path;
   }
 
   private final Set<String> realms;
 
+  /** @return {@code true} if the route requires at least one realm. */
   public boolean isRestricted() {
     return !this.realms.isEmpty();
   }
 
+  /** @return The realms allowed to access this route; empty if unrestricted. */
   public Set<String> getRealms() {
     return this.realms;
   }
 
   private final String description;
 
+  /** @return The human-readable description of this route. */
   public String getDescription() {
     return this.description;
   }
@@ -63,6 +68,7 @@ public final class HttpRoute implements HttpRequestHandler, Comparable<HttpRoute
 
   private transient final Set<String> groupNames;
 
+  /** @return The names of the named groups found in the path pattern. */
   public Set<String> getPathGroupNames() {
     return this.groupNames;
   }

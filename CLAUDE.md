@@ -107,8 +107,11 @@ started from [java-project-template](https://github.com/gpellicciotta/java-proje
 
 ## Conventions
 - Every source file starts with `// Copyright (c) Giovanni Pellicciotta`.
-- Packages with non-trivial design decisions document them in `package-info.java` (see `logging`, `config`) —
-  update these when the design changes, don't just leave them describing the old shape.
+- Every package has a `package-info.java`; those with non-trivial design decisions document them there (see `logging`,
+  `config`) — update them when the design changes, don't leave them describing the old shape.
+- Checkstyle (see [checkstyle.xml](config/checkstyle/checkstyle.xml)) fails the build on: opening braces not at line end,
+  `else`/`catch`/`finally` not on a new line, control blocks without braces, and public or protected types, methods,
+  and fields without Javadoc.
 - Versioning/release process: `gradle.properties` (`version=`) drives what actually gets published; keep
   `CHANGELOG.md`'s newest heading matching it exactly (`python scripts/devops.py versions` checks this). Versions
   carry a `-pre` suffix while in development; `doFullRelease` strips it, publishes, and opens the next patch.

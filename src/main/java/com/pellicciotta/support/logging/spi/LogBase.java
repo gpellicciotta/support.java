@@ -17,6 +17,13 @@ import com.pellicciotta.support.logging.jul.JULBasedLog;
 public class LogBase implements Log {
   // <editor-fold desc="Construction">
 
+  /**
+   * Create an open log.
+   *
+   * @param name The log name; must not be <code>null</code> (asserted).
+   * @param minLevel The minimum level of events this log emits.
+   * @param backEnd The back-end that receives the events; must not be <code>null</code> (asserted).
+   */
   protected LogBase(String name, int minLevel, LogBackEnd backEnd) {
     assert name != null;
     assert backEnd != null;
@@ -38,6 +45,12 @@ public class LogBase implements Log {
   // </editor-fold>
   // <editor-fold desc="Implementation">
 
+  /**
+   * Called by a span when it closes: makes its parent span the active one (if it was the active span) and notifies
+   * the back-end.
+   *
+   * @param span The span that was closed.
+   */
   protected synchronized void onSpanClosed(SpanBase span) {
     if (span == this.activeSpan) {
       this.activeSpan = span.parentSpan;
@@ -81,6 +94,12 @@ public class LogBase implements Log {
   // </editor-fold>
   // <editor-fold desc="Log Methods">
 
+  /**
+   * Collect the context data for a new event: items of the active span chain (innermost wins), then open log-level
+   * items, plus the <code>origin-*</code> items describing the first caller outside the logging package.
+   *
+   * @return A snapshot of the context data.
+   */
   protected synchronized ContextData getContextData() {
     Map<String, ContextDataItem> ctx = new HashMap<>();
     List<ContextDataItem> logData = new ArrayList<>(); // Safety copy
@@ -116,9 +135,13 @@ public class LogBase implements Log {
     return new ContextData(ctx.values());
   }
 
+  /** Context data name holding the class name of the code that logged. */
   public static final String ORIGIN_CLASS = "origin-class";
+  /** Context data name holding the method name of the code that logged. */
   public static final String ORIGIN_METHOD = "origin-method";
+  /** Context data name holding the source file name of the code that logged; omitted when unknown. */
   public static final String ORIGIN_FILE = "origin-file";
+  /** Context data name holding the source line number of the code that logged; omitted when unknown. */
   public static final String ORIGIN_LINE = "origin-line";
 
   private static StackTraceElement getCallerStackTrace() {
@@ -135,6 +158,14 @@ public class LogBase implements Log {
     return stackTrace[0];
   }
 
+  /**
+   * Build a {@link LogEvent} and send it to the back-end, without checking the level; the first {@link Throwable}
+   * among the parameters becomes the event's cause.
+   *
+   * @param level The event level.
+   * @param msgFormat The message format.
+   * @param formatParams The format parameters; may be <code>null</code>.
+   */
   protected synchronized void log(int level, String msgFormat, Object[] formatParams) {
     ContextData ctxData = this.getContextData();
     Throwable cause = null;

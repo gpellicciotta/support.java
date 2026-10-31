@@ -11,10 +11,26 @@ import com.pellicciotta.support.utils.Contract;
 public class VersionedSqlStatement {
   // <editor-fold desc="Construction">
 
+  /**
+   *  Creates a statement without input source information.
+   *
+   *  @param version The version this statement belongs to; must not be null.
+   *  @param comment Optional comment describing the statement.
+   *  @param sqlStatement The SQL text; must not be null.
+   */
   public VersionedSqlStatement(Version version, String comment, String sqlStatement) {
     this(version, comment, sqlStatement, null, -1);
   }
 
+  /**
+   *  Creates a statement that remembers where it was read from.
+   *
+   *  @param version The version this statement belongs to; must not be null.
+   *  @param comment Optional comment describing the statement.
+   *  @param sqlStatement The SQL text; must not be null.
+   *  @param inputSource Optional name of the source the statement came from.
+   *  @param startLine Line in the source where the statement starts, or -1 if unknown.
+   */
   public VersionedSqlStatement(Version version, String comment, String sqlStatement, String inputSource, int startLine) {
     Contract.isNotNull(version);
     Contract.isNotNull(sqlStatement);
@@ -31,18 +47,33 @@ public class VersionedSqlStatement {
 
   private final Version version;
 
+  /**
+   *  Returns the version this statement belongs to.
+   *
+   *  @return The version, never null.
+   */
   public Version getVersion() {
     return this.version;
   }
 
   private final String sqlStatement;
 
+  /**
+   *  Returns the SQL text.
+   *
+   *  @return The SQL statement, never null.
+   */
   public String getSqlStatement() {
     return this.sqlStatement;
   }
 
   private final String comment;
 
+  /**
+   *  Returns the comment describing this statement.
+   *
+   *  @return The comment, or null if none.
+   */
   public String getComment() {
     return this.comment;
   }

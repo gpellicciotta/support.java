@@ -18,8 +18,14 @@ import com.pellicciotta.support.utils.*;
 public abstract class LogEventFormatterBase implements LogEventFormatter {
   // <editor-fold desc="Defaults">
 
+  /** Default {@link SimpleDateFormat} pattern for event times. */
   public static final String DEFAULT_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS000";
+  /**
+   * Matches <code>${name}</code>, <code>${ctx:name}</code> and <code>${env:name}</code> parameters (optionally
+   * with a <code>:format</code> suffix), including leading backslashes.
+   */
   protected static final Pattern PARAMETER_REGEX = Pattern.compile("([\\\\]*[$])([{]((?:ctx|env)[:])?([^:}]+)(?:[:]([^}]+))?[}])");
+  /** The platform line separator. */
   protected static final String NL = EnvironmentUtils.getLineSeparator();
 
   // </editor-fold>
@@ -46,7 +52,9 @@ public abstract class LogEventFormatterBase implements LogEventFormatter {
   // <editor-fold desc="Properties">
 
   private LoggingConfig config = null;
+  /** The pattern string of the current time format. */
   protected String timeFormatStr;
+  /** The UTC {@link DateFormat} built from the current time format pattern. */
   protected DateFormat timeFormat;
 
   /**
@@ -85,8 +93,17 @@ public abstract class LogEventFormatterBase implements LogEventFormatter {
   // </editor-fold>
   // <editor-fold desc="Formatting">
 
+  /** A shared empty parameter array. */
   protected static final Object[] EMPTY_ARRAY = new Object[0];
 
+  /**
+   * Build the substitution values for an event: the context data (<code>origin-*</code> items by name, others as
+   * <code>ctx:name</code>) plus <code>thread-id</code>, <code>name</code>, <code>time</code> and
+   * <code>level</code>.
+   *
+   * @param event The event being formatted.
+   * @return A new, modifiable map of parameter names to values.
+   */
   protected Map<String, Object> getFormattingData(LogEvent event) {
     ContextData cd = event.getContextData();
     // Prepare formatting data (if needed):
@@ -109,6 +126,15 @@ public abstract class LogEventFormatterBase implements LogEventFormatter {
     return formattingData;
   }
 
+  /**
+   * Apply the positional parameters with {@link String#format}, leaving the message unchanged if the format is
+   * invalid, then substitute the <code>${...}</code> parameters.
+   *
+   * @param origMsgFormat The message format.
+   * @param formatParams The positional parameters; may be <code>null</code>.
+   * @param formattingData The values for the <code>${...}</code> parameters.
+   * @return The formatted message.
+   */
   protected String formatMessage(String origMsgFormat, Object[] formatParams, Map<String, Object> formattingData) {
     if ((formatParams != null) && (formatParams.length > 0)) { // Handle position arguments first
       try {
@@ -121,6 +147,15 @@ public abstract class LogEventFormatterBase implements LogEventFormatter {
     return this.formatText(origMsgFormat, formattingData);
   }
 
+  /**
+   * Substitute <code>${name}</code>, <code>${ctx:name}</code> and <code>${env:name}</code> parameters in the text.
+   * Unknown names are left untouched; a backslash before the <code>$</code> suppresses substitution, and backslash
+   * pairs collapse to single backslashes.
+   *
+   * @param origText The text to process.
+   * @param replacements The values, keyed by name (<code>ctx:</code> prefixed for context data).
+   * @return The text with the parameters replaced.
+   */
   protected String formatText(String origText, Map<String, Object> replacements) {
     Matcher m = PARAMETER_REGEX.matcher(origText);
     if (!m.find()) { // No parameters: so leave as-is

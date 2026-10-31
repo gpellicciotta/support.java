@@ -74,6 +74,7 @@ public abstract class Setting<T> extends ConfigElement {
     return this.type;
   }
 
+  /** The default value, which can be <code>null</code>. */
   protected T defaultValue;
 
   /**
@@ -145,6 +146,7 @@ public abstract class Setting<T> extends ConfigElement {
   // </editor-fold>
   // <editor-fold desc="Persistence Operations">
 
+  /** Resets the setting's value to its default value. */
   protected void reset() {
     this.resetValue();
   }
@@ -196,6 +198,11 @@ public abstract class Setting<T> extends ConfigElement {
   // </editor-fold>
   // <editor-fold desc="Debugging Aids">
 
+  /**
+   * Appends a human-readable description of this setting, including its type and current value, to the given builder.
+   *
+   * @param tb The builder to append to.
+   */
   public void addTo(TextBuilder tb) {
     tb.append("'%s' setting of type '%s' with value '%s' (%s)", this.getName(), this.getType().getSimpleName(), this.getValueOrDefault(), this.isValueSet() ? "non-default" : ((this.defaultValue != null) ? "default" : "unset"));
   }

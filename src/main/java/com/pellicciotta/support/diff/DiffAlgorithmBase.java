@@ -18,17 +18,35 @@ import static com.pellicciotta.support.diff.DiffUtils.ENABLE_LOGGING;
  *  Note that the algorithm has been adapted to work with zero-based indexes.
  */
 public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T> {
+  /** Whether {@link #cachedLcs} and {@link #cachedEs} are valid for the current sequences. */
   protected boolean calculationsDone;
+  /** The longest common subsequence from the last calculation. */
   protected final List<MatchPair> cachedLcs = new ArrayList<>();
+  /** The edit script, including KEEP commands, from the last calculation. */
   protected final List<EditCommand> cachedEs = new ArrayList<>();
 
+  /** Logger used for debug output of the calculations. */
   protected final Log log = LogService.fromCurrentClass();
 
+  /**
+   * Sets the first sequence like the super-class and invalidates any cached results.
+   *
+   * @param seq The sequence to be compared.
+   * @param startIndex The index of the first element to compare. An inclusive lower bound.
+   * @param endIndex The index just beyond the last element to compare. An exclusive upper bound.
+   */
   public void setSequenceA(T[] seq, int startIndex, int endIndex) {
     super.setSequenceA(seq, startIndex, endIndex);
     this.calculationsDone = false;
   }
 
+  /**
+   * Sets the second sequence like the super-class and invalidates any cached results.
+   *
+   * @param seq The sequence to be compared.
+   * @param startIndex The index of the first element to compare. An inclusive lower bound.
+   * @param endIndex The index just beyond the last element to compare. An exclusive upper bound.
+   */
   public void setSequenceB(T[] seq, int startIndex, int endIndex) {
     super.setSequenceB(seq, startIndex, endIndex);
     this.calculationsDone = false;
@@ -107,6 +125,10 @@ public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T> {
     return new ArrayList<>(this.cachedEs);
   }
 
+  /**
+   * Calculates the LCS and the edit script (with KEEP commands) for the current sequences into the caches.
+   * Handles empty sequences directly and otherwise delegates to {@link #calculateMatchesAndEdits}.
+   */
   protected void calculate() {
     if (ENABLE_LOGGING) {
       this.log.info("Calculating LCS and SES for A[%d, %d] and B[%d, %d] with %s", this.aStart, this.aEnd - 1, this.bStart, this.bEnd - 1, this.name());
@@ -135,6 +157,18 @@ public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T> {
     this.calculationsDone = true;
   }
 
+  /**
+   * Appends matches and edits for the given sub-ranges to the caches.
+   * Matching elements at the start and end are matched directly; the remaining middle is delegated to
+   * {@link #calculateNormalCase} unless one side is empty.
+   *
+   * @param aSeq The first sequence.
+   * @param aSeqStart Inclusive start in the first sequence.
+   * @param aSeqEnd Exclusive end in the first sequence.
+   * @param bSeq The second sequence.
+   * @param bSeqStart Inclusive start in the second sequence.
+   * @param bSeqEnd Exclusive end in the second sequence.
+   */
   protected void calculateMatchesAndEdits(T[] aSeq, int aSeqStart, int aSeqEnd, T[] bSeq, int bSeqStart, int bSeqEnd) {
     // Pre-match matching elements at start and end to shorten sequences to be compared:
     List<MatchPair> frontMatches = new ArrayList<>();
@@ -240,8 +274,30 @@ public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T> {
     }
   }
 
+  /**
+   * Algorithm-specific step: appends matches and edits for ranges that both still have elements
+   * and share no common prefix or suffix.
+   *
+   * @param aSeq The first sequence.
+   * @param aSeqStart Inclusive start in the first sequence.
+   * @param aSeqEnd Exclusive end in the first sequence.
+   * @param bSeq The second sequence.
+   * @param bSeqStart Inclusive start in the second sequence.
+   * @param bSeqEnd Exclusive end in the second sequence.
+   */
   protected abstract void calculateNormalCase(T[] aSeq, int aSeqStart, int aSeqEnd, T[] bSeq, int bSeqStart, int bSeqEnd);
 
+  /**
+   * Appends an edit script that deletes all given elements of the first sequence, then inserts all given
+   * elements of the second sequence.
+   *
+   * @param aSeq The first sequence.
+   * @param aSeqStart Inclusive start in the first sequence.
+   * @param aSeqEnd Exclusive end in the first sequence.
+   * @param bSeq The second sequence.
+   * @param bSeqStart Inclusive start in the second sequence.
+   * @param bSeqEnd Exclusive end in the second sequence.
+   */
   protected void createNoMatchEditScript(T[] aSeq, int aSeqStart, int aSeqEnd, T[] bSeq, int bSeqStart, int bSeqEnd) {
     // First delete all from first sequence
     for (int i = aSeqStart; i < aSeqEnd; i++) {
@@ -253,6 +309,12 @@ public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T> {
     }
   }
 
+  /**
+   * Appends a delete command for one element of the first sequence.
+   *
+   * @param aIndex Index of the element to delete in the first sequence.
+   * @param bIndex Current position in the second sequence.
+   */
   protected void addDelete(int aIndex, int bIndex) {
     this.cachedEs.add(DiffUtils.createDeleteCommand(this.a, aIndex, bIndex));
     if (ENABLE_LOGGING) {
@@ -260,6 +322,12 @@ public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T> {
     }
   }
 
+  /**
+   * Appends an insert command for one element of the second sequence.
+   *
+   * @param aIndex Index in the first sequence after which to insert.
+   * @param bIndex Index of the element to insert in the second sequence.
+   */
   protected void addInsert(int aIndex, int bIndex) {
     this.cachedEs.add(DiffUtils.createInsertCommand(aIndex, this.b, bIndex));
     if (ENABLE_LOGGING) {
@@ -267,10 +335,23 @@ public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T> {
     }
   }
 
+  /**
+   * Creates a match-pair for the current sequences without adding it to the caches.
+   *
+   * @param aIndex Index in the first sequence.
+   * @param bIndex Index in the second sequence.
+   * @return The new match-pair.
+   */
   protected MatchPair createMatchPair(int aIndex, int bIndex) {
     return DiffUtils.createMatchPair(this.a, aIndex, this.b, bIndex);
   }
 
+  /**
+   * Records a match by appending a KEEP command to the edit script and a match-pair to the LCS.
+   *
+   * @param aIndex Index in the first sequence.
+   * @param bIndex Index in the second sequence.
+   */
   protected void addMatch(int aIndex, int bIndex) {
     this.cachedEs.add(DiffUtils.createKeepCommand(this.a, aIndex, this.b, bIndex));
     MatchPair mp = DiffUtils.createMatchPair(this.a, aIndex, this.b, bIndex);
@@ -280,6 +361,11 @@ public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T> {
     this.cachedLcs.add(mp);
   }
 
+  /**
+   * Writes the edit script to the debug log.
+   *
+   * @param script The edit commands to log.
+   */
   protected void logEditScript(List<EditCommand> script) {
     TextBuilder tb = new TextBuilder();
     tb.append("SES with length %d:", script.size());
@@ -290,6 +376,11 @@ public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T> {
     this.log.debug(tb.toString());
   }
 
+  /**
+   * Writes the longest common subsequence to the debug log.
+   *
+   * @param matches The match-pairs to log.
+   */
   protected void logLcs(List<MatchPair> matches) {
     TextBuilder tb = new TextBuilder();
     tb.append("LCS with length %d:", matches.size());
@@ -300,6 +391,13 @@ public abstract class DiffAlgorithmBase<T> extends DiffAlgorithm<T> {
     this.log.debug(tb.toString());
   }
 
+  /**
+   * Writes the Myers edit graph, one V array per edit distance, to the debug log.
+   *
+   * @param editGraph The V arrays, indexed by edit distance.
+   * @param N The length of the first sequence range.
+   * @param M The length of the second sequence range.
+   */
   protected void logEditGraph(List<int[]> editGraph, int N, int M) {
     final int MAX = M + N;
     final int DELTA = N - M;

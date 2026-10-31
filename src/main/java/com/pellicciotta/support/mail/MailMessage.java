@@ -41,36 +41,54 @@ public class MailMessage {
 
   private final MailAddress from;
 
+  /**
+   * @return The sender address.
+   */
   public MailAddress getFrom() {
     return this.from;
   }
 
   private final MailAddress replyTo;
 
+  /**
+   * @return The reply-to address; may be null.
+   */
   public MailAddress getReplyTo() {
     return this.replyTo;
   }
 
   private final List<MailAddress> to;
 
+  /**
+   * @return The primary recipients (never empty when built via {@link MailMessageBuilder}).
+   */
   public List<MailAddress> getTo() {
     return this.to;
   }
 
   private final List<MailAddress> cc;
 
+  /**
+   * @return The carbon-copy recipients; may be empty.
+   */
   public List<MailAddress> getCc() {
     return this.cc;
   }
 
   private final List<MailAddress> bcc;
 
+  /**
+   * @return The blind-carbon-copy recipients; may be empty.
+   */
   public List<MailAddress> getBcc() {
     return this.bcc;
   }
 
   private final String subject;
 
+  /**
+   * @return The subject line; may be null.
+   */
   public String getSubject() {
     return this.subject;
   }
@@ -78,16 +96,25 @@ public class MailMessage {
   private final String body;
   private final String bodyMimeType;
 
+  /**
+   * @return The message body text.
+   */
   public String getBody() {
     return this.body;
   }
 
+  /**
+   * @return The MIME type of the body, such as {@code text/plain} or {@code text/html}.
+   */
   public String getBodyMimeType() {
     return this.bodyMimeType;
   }
 
   private final List<MailAttachment> attachments;
 
+  /**
+   * @return The attachments; may be empty.
+   */
   public List<MailAttachment> getAttachments() {
     return this.attachments;
   }
@@ -95,14 +122,42 @@ public class MailMessage {
   // </editor-fold>
   // <editor-fold desc="Conversion Operators">
 
+  /**
+   * Convert to a JavaMail message using the current time as sent date and no X-Mailer header.
+   *
+   * @param session The mail session to create the message in.
+   * @return The MIME message.
+   * @throws MessagingException If setting any header, address, or content fails.
+   * @throws IOException If reading an attachment file fails.
+   */
   public MimeMessage toMimeMessage(Session session) throws MessagingException, IOException {
     return this.toMimeMessage(session, null, new Date());
   }
 
+  /**
+   * Convert to a JavaMail message using the current time as sent date.
+   *
+   * @param session The mail session to create the message in.
+   * @param xMailerHeader If non-null, an {@code X-Mailer} header is set (to a fixed value, not this argument).
+   * @return The MIME message.
+   * @throws MessagingException If setting any header, address, or content fails.
+   * @throws IOException If reading an attachment file fails.
+   */
   public MimeMessage toMimeMessage(Session session, String xMailerHeader) throws MessagingException, IOException {
     return this.toMimeMessage(session, xMailerHeader, new Date());
   }
 
+  /**
+   * Convert to a JavaMail message. A multipart message is produced if there are attachments or the body is not
+   * {@code text/plain}; otherwise a single-part UTF-8 text message.
+   *
+   * @param session The mail session to create the message in.
+   * @param xMailerHeader If non-null, an {@code X-Mailer} header is set (to a fixed value, not this argument).
+   * @param sentDate The sent date; if null, the current time is used.
+   * @return The MIME message.
+   * @throws MessagingException If setting any header, address, or content fails.
+   * @throws IOException If reading an attachment file fails.
+   */
   public MimeMessage toMimeMessage(Session session, String xMailerHeader, Date sentDate) throws MessagingException, IOException {
     MimeMessage mimeMsg = new MimeMessage(session);
     if (xMailerHeader != null) {

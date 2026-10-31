@@ -106,10 +106,14 @@ public abstract class ListSetting<T> extends Setting<List<? extends T>> {
   // </editor-fold>
   // <editor-fold desc="Persistence Operations">
 
+  /** Codec used to convert single elements to and from strings. */
   protected final StringCodec<T> stringCodec;
+  /** Codec used to convert single elements to and from XML. */
   protected final XmlCodec<T> xmlCodec;
+  /** Codec used to convert single elements to and from property values. */
   protected final PropertyCodec<T> propsCodec;
 
+  /** Resets the list to its default value. */
   protected void reset() {
     this.resetValue();
   }
@@ -291,6 +295,11 @@ public abstract class ListSetting<T> extends Setting<List<? extends T>> {
   // </editor-fold>
   // <editor-fold desc="Debugging Aids">
 
+  /**
+   * Appends a human-readable description of this list setting, including its element type and values, to the given builder.
+   *
+   * @param tb The builder to append to.
+   */
   public void addTo(TextBuilder tb) {
     tb.append("'%s' list setting with element type '%s' and values: %s (%s)", this.getName(), this.getElementType().getSimpleName(), this.toString(this.getValueOrDefault()), this.isValueSet() ? "non-default" : ((this.defaultValue != null) ? "default" : "unset"));
   }

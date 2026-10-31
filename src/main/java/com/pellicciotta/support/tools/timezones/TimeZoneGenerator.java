@@ -13,6 +13,9 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Command-line tool that lists all time zone IDs available in the running JVM, with raw GMT offsets.
+ */
 public class TimeZoneGenerator extends BasicApp<TimeZoneGeneratorConfig> {
   // <editor-fold desc="Command-line Entry-Point">
 
@@ -78,6 +81,14 @@ public class TimeZoneGenerator extends BasicApp<TimeZoneGeneratorConfig> {
     return LogService.getBackEnd().getLog(NAME);
   }
 
+  /**
+   * Prints each available time zone as <code>(GMT+h:mm) id</code> to standard output.
+   *
+   * @param cli The parsed command line.
+   * @param config The tool configuration.
+   * @param positionalArguments The action arguments, unused.
+   * @return {@link ExitCode#NORMAL}, or {@link ExitCode#INTERNAL_ERROR} if listing fails.
+   */
   @CommandLineAction(name = "list", description = "List all known timezones", commandLineSyntax = "list")
   protected int runGenerateAction(CommandLine cli, TimeZoneGeneratorConfig config, String[] positionalArguments) {
     Log log = this.getAppLog();

@@ -13,14 +13,32 @@ import com.pellicciotta.support.utils.*;
 public class MailAttachment {
   // <editor-fold desc="Construction">
 
+  /**
+   * Create an attachment named after the file, with the MIME type derived from the file.
+   *
+   * @param file An existing regular file; must not be null.
+   */
   public MailAttachment(File file) {
     this(null, file, null);
   }
 
+  /**
+   * Create an attachment with an explicit name and the MIME type derived from the file.
+   *
+   * @param name Name shown to the recipient; if null, the file name is used.
+   * @param file An existing regular file; must not be null.
+   */
   public MailAttachment(String name, File file) {
     this(name, file, null);
   }
 
+  /**
+   * Create an attachment with an explicit name and MIME type.
+   *
+   * @param name Name shown to the recipient; if null, the file name is used.
+   * @param file An existing regular file; must not be null.
+   * @param mimeType MIME type of the content; if null, it is derived from the file.
+   */
   public MailAttachment(String name, File file, String mimeType) {
     Contract.isNotNull("file", file);
     Contract.isTrue("file.exists() && file.isFile()", file.exists() && file.isFile());
@@ -36,6 +54,9 @@ public class MailAttachment {
   private final File file;
   private final String mimeType;
 
+  /**
+   * @return The attachment name, which is the file name if no explicit name was given.
+   */
   public String getName() {
     if (this.name != null) {
       return this.name;
@@ -43,10 +64,16 @@ public class MailAttachment {
     return this.file.getName();
   }
 
+  /**
+   * @return The file whose content is attached.
+   */
   public File getFile() {
     return this.file;
   }
 
+  /**
+   * @return The MIME type of the attachment, either as given or derived from the file.
+   */
   public String getMimeType() {
     return this.mimeType;
   }

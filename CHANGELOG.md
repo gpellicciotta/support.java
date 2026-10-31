@@ -27,6 +27,8 @@ All releases are available on [GitHub Packages](https://github.com/gpellicciotta
 - BackEnd: Added `text` with a tokenizer, syntax tree, and text and HTML builders.
 - BackEnd: Added `utils`, `cache`, `io`, `exceptions`, and `annotations` with shared helpers, caches, CSV I/O, and declarative markers.
 - Build: Added a Gradle build with a JDK 25 toolchain, Spotless, JUnit 6, Testcontainers, and publishing to GitHub Packages.
+- Docs: Documented the full public API with Javadoc and a `package-info.java` for every package.
+- Build: Enforced Stroustrup braces, mandatory control-block braces, and public API Javadoc with Checkstyle.
 - DevEx: Added `devops.py` and the `doFullRelease` pipeline for CI-equivalent checks and one-command releases.
 
 ---

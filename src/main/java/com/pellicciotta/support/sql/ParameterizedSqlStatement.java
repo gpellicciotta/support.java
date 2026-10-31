@@ -45,7 +45,9 @@ public class ParameterizedSqlStatement extends SqlStatementBase {
     this.namedParameterPositions.putAll(namedParameterPositions);
   }
 
+  /** The original SQL text this statement was created from. */
   protected final String sqlText;
+  /** Positions of each named parameter, keyed case-insensitively by parameter name. */
   protected final Map<String, int[]> namedParameterPositions;
 
   /**

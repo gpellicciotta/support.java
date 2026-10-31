@@ -34,15 +34,27 @@ public final class TextBuilder {
 
   // <editor-fold desc="Construction">
 
+  /** Create a builder that writes into a new, empty {@link StringBuilder}, indenting groups by two spaces. */
   public TextBuilder() {
     this.sb = new StringBuilder();
   }
 
+  /**
+   *  Create a builder that appends to the given buffer, indenting groups by two spaces.
+   *
+   *  @param sb The target buffer; must not be null.
+   */
   public TextBuilder(StringBuilder sb) {
     Contract.isNotNull(sb);
     this.sb = sb;
   }
 
+  /**
+   *  Create a builder that appends to the given buffer.
+   *
+   *  @param sb The target buffer; must not be null.
+   *  @param indentSize The number of spaces each open group adds to the indentation; must not be negative.
+   */
   public TextBuilder(StringBuilder sb, int indentSize) {
     Contract.isNotNull(sb);
     Contract.isTrue(indentSize >= 0);
@@ -79,6 +91,11 @@ public final class TextBuilder {
     return this;
   }
 
+  /**
+   *  Register a group as open, which indents subsequent lines.
+   *
+   *  @param group The group to open.
+   */
   protected void startGroup(Group group) {
     this.openGroups.addLast(group);
   }
@@ -90,6 +107,12 @@ public final class TextBuilder {
     return new Group();
   }
 
+  /**
+   *  Close the group and any groups opened after it.
+   *
+   *  @param group The group to close.
+   *  @throws IllegalArgumentException If the group is not currently open.
+   */
   protected void closeGroup(Group group) {
     if (!this.openGroups.contains(group)) {
       throw new IllegalArgumentException("The provided group is not currently open in this TextBuilder");
@@ -107,6 +130,13 @@ public final class TextBuilder {
     this.closeGroup(group);
   }
 
+  /**
+   *  Append text, indenting each line that starts at the beginning of a line.
+   *
+   *  @param format The {@link String#format} pattern; used as-is when there are no arguments.
+   *  @param args The format arguments.
+   *  @return This builder.
+   */
   public TextBuilder append(String format, Object... args) {
     if (args.length == 0) {
       this.addText(format);
@@ -117,12 +147,24 @@ public final class TextBuilder {
     return this;
   }
 
+  /**
+   *  Format and append text followed by a line break.
+   *
+   *  @param format The {@link String#format} pattern; always formatted, so a literal percent sign must be escaped.
+   *  @param args The format arguments.
+   *  @return This builder.
+   */
   public TextBuilder appendLine(String format, Object... args) {
     String txt = String.format(format + "%n", args);
     this.addText(txt);
     return this;
   }
 
+  /**
+   *  Append a line break.
+   *
+   *  @return This builder.
+   */
   public TextBuilder appendLine() {
     String txt = String.format("%n");
     this.addText(txt);

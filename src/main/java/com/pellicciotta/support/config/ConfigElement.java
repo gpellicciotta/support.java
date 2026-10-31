@@ -17,6 +17,12 @@ import org.w3c.dom.Element;
 public abstract class ConfigElement {
   // <editor-fold desc="Construction">
 
+  /**
+   * Creates an element with the given name and description.
+   *
+   * @param name The simple name of the element.
+   * @param description A human-readable description.
+   */
   protected ConfigElement(String name, String description) {
     this.name = name;
     this.description = description;
@@ -63,6 +69,11 @@ public abstract class ConfigElement {
     return this.description;
   }
 
+  /**
+   * Replaces this element's description.
+   *
+   * @param newDescription The new description.
+   */
   protected void setDescription(String newDescription) {
     this.description = newDescription;
   }
@@ -76,6 +87,11 @@ public abstract class ConfigElement {
     return this.parent;
   }
 
+  /**
+   * Moves this element under a new parent group. The element is removed from its previous parent, added to the new one and its cached full name is reset. Does nothing if the parent is unchanged.
+   *
+   * @param newParent The new parent, or <code>null</code> to detach the element.
+   */
   protected void setParent(SettingsGroup newParent) {
     if (newParent == this.parent) {
       return ;
@@ -90,8 +106,10 @@ public abstract class ConfigElement {
     this.canonicalName = null;
   }
 
+  /** @return Whether this element is a single setting (a leaf) rather than a group. */
   protected abstract boolean isElementary();
 
+  /** @return Whether this element is a group, i.e. not elementary. */
   protected boolean isGroup() {
     return !this.isElementary();
   }
@@ -99,19 +117,43 @@ public abstract class ConfigElement {
   // </editor-fold>
   // <editor-fold desc="Context">
 
+  /** The configuration this element belongs to, if any. */
   protected Config config;
 
   // </editor-fold>
   // <editor-fold desc="Loading & Saving">
 
+  /** Resets this element, and any children, to the default values. */
   protected abstract void reset();
 
+  /**
+   * Loads this element's value(s) from the given XML element.
+   *
+   * @param xmlParent The XML element holding the data.
+   */
   protected abstract void loadFrom(Element xmlParent);
 
+  /**
+   * Saves this element's value(s) as child nodes of the given XML element.
+   *
+   * @param xmlParent The XML element to add nodes to.
+   * @param saveDefaultValues Whether settings still at their default value are saved as well.
+   */
   protected abstract void saveTo(Element xmlParent, boolean saveDefaultValues);
 
+  /**
+   * Loads this element's value(s) from the given map of properties.
+   *
+   * @param props Property values keyed by full name.
+   */
   protected abstract void loadFrom(Map<String, String> props);
 
+  /**
+   * Saves this element's value(s) into the given map of properties.
+   *
+   * @param props The map to store values in, keyed by full name.
+   * @param saveDefaultValues Whether settings still at their default value are saved as well.
+   */
   protected abstract void saveTo(Map<String, String> props, boolean saveDefaultValues);
 
   // </editor-fold>
@@ -125,6 +167,11 @@ public abstract class ConfigElement {
     return tb.toString();
   }
 
+  /**
+   * Appends a human-readable description of this element to the given builder.
+   *
+   * @param tb The builder to append to.
+   */
   public abstract void addTo(TextBuilder tb);
 
   // </editor-fold>

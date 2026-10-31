@@ -26,10 +26,22 @@ import org.w3c.dom.Element;
 public class Config {
   // <editor-fold desc="Construction">
 
+  /**
+   * Creates a configuration holding the given top-level elements.
+   *
+   * @param elements The top-level elements.
+   * @throws IllegalArgumentException If an element already has a parent group.
+   */
   public Config(ConfigElement... elements) {
     this.initialize(elements);
   }
 
+  /**
+   * Creates a configuration holding the given top-level elements.
+   *
+   * @param elements The top-level elements.
+   * @throws IllegalArgumentException If an element already has a parent group.
+   */
   public Config(List<ConfigElement> elements) {
     this.initialize(elements.toArray(new ConfigElement[0]));
   }
@@ -246,6 +258,7 @@ public class Config {
 
   private int loadOpsInProgress = 0;
 
+  /** Notifies listeners that a load started. Only the outermost of nested loads notifies. */
   protected <T> void fireLoadStarted() {
     this.loadOpsInProgress += 1;
     if (this.loadOpsInProgress == 1) { // Was zero
@@ -253,6 +266,7 @@ public class Config {
     }
   }
 
+  /** Notifies listeners that a load ended. Only the outermost of nested loads notifies. */
   protected <T> void fireLoadEnded() {
     this.loadOpsInProgress -= 1;
     if (this.loadOpsInProgress == 0) { // Was one
@@ -262,6 +276,7 @@ public class Config {
 
   private int saveOpsInProgress = 0;
 
+  /** Notifies listeners that a save started. Only the outermost of nested saves notifies. */
   protected <T> void fireSaveStarted() {
     this.saveOpsInProgress += 1;
     if (this.saveOpsInProgress == 1) { // Was zero
@@ -269,6 +284,7 @@ public class Config {
     }
   }
 
+  /** Notifies listeners that a save ended. Only the outermost of nested saves notifies. */
   protected <T> void fireSaveEnded() {
     this.saveOpsInProgress -= 1;
     if (this.saveOpsInProgress == 0) { // Was one
@@ -276,6 +292,13 @@ public class Config {
     }
   }
 
+  /**
+   * Notifies all registered listeners that a setting's value changed.
+   *
+   * @param setting The setting that changed.
+   * @param oldValue The previous value.
+   * @param newValue The new value.
+   */
   protected <T> void fireValueChanged(Setting<T> setting, T oldValue, T newValue) {
     this.eventListeners.forEach(l -> l.onValueChanged(setting, oldValue, newValue));
   }
@@ -545,6 +568,11 @@ public class Config {
     return sb.toString();
   }
 
+  /**
+   * Appends a human-readable description of this configuration and all its elements to the given builder.
+   *
+   * @param tb The builder to append to.
+   */
   public void addTo(TextBuilder tb) {
     if (this.topLevelConfigElements.isEmpty()) {
       tb.append("configuration is empty");

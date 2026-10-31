@@ -10,7 +10,9 @@ class StaticFileBasedResource implements Resource {
     this.mimeType = mimeType;
   }
 
+  /** The backing file. */
   protected final File file;
+  /** The MIME type reported for the file. */
   protected final String mimeType;
 
   public String getMimeType() {

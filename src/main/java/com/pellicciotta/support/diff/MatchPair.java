@@ -8,6 +8,12 @@ import java.util.Objects;
  *  A pair of indexes indicating a matching item in 2 sequences.
  */
 public class MatchPair {
+  /**
+   * Create a match-pair.
+   *
+   * @param indexA Index of the matching item in the first sequence.
+   * @param indexB Index of the matching item in the second sequence.
+   */
   public MatchPair(int indexA, int indexB) {
     this.indexA = indexA;
     this.indexB = indexB;

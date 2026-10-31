@@ -13,6 +13,9 @@ import com.pellicciotta.support.logging.LogService;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * Command-line tool that serves static files over HTTP from a base directory until the process is stopped.
+ */
 public class StaticHttpServer extends BasicApp<StaticHttpServerConfig> {
   // <editor-fold desc="Command-line Entry-Point">
 
@@ -81,6 +84,14 @@ public class StaticHttpServer extends BasicApp<StaticHttpServerConfig> {
     return LogService.getBackEnd().getLog(NAME);
   }
 
+  /**
+   * Starts the web server and blocks the calling thread indefinitely.
+   *
+   * @param cli The parsed command line.
+   * @param config The tool configuration (port, base directory, welcome and not-found files, caching).
+   * @param positionalArguments The action arguments, unused.
+   * @return {@link ExitCode#INTERNAL_ERROR} if the server fails; otherwise this method does not return.
+   */
   @CommandLineAction(name = "start", description = "Start the web server")
   protected int runStartAction(CommandLine cli, StaticHttpServerConfig config, String[] positionalArguments) {
     Log log = this.getAppLog();

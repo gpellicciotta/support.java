@@ -16,6 +16,12 @@ import com.pellicciotta.support.utils.DateTimeUtils;
  * @param <R> The type of resources to be pooled.
  */
 public class AbstractPool<R extends PoolResource> {
+  /**
+   * Create a pool.
+   *
+   * @param maxPoolSize The maximum number of idle resources kept pooled; must be positive.
+   * @param factory Creates new resources when none can be re-used; must not be <code>null</code>.
+   */
   public AbstractPool(int maxPoolSize, Supplier<R> factory) {
     Contract.isPositive("maxPoolSize", maxPoolSize);
     Contract.isNotNull("factory", factory);
@@ -23,19 +29,30 @@ public class AbstractPool<R extends PoolResource> {
     this.factory = factory;
   }
 
+  /** Logger for pool activity. */
   protected static final Log log = LogService.fromCurrentClass();
+  /** Maximum number of attempts to create a healthy resource in {@link #startLease()}. */
   protected static final int MAX_CREATION_ATTEMPTS = 3;
+  /** Pause, in milliseconds, between two failed resource creation attempts. */
   protected static final int WAIT_TIME_IN_MS_BETWEEN_CREATION_ATTEMPTS = 500;
 
+  /** Creates new resources; may return <code>null</code> to signal a failed creation. */
   protected final Supplier<R> factory;
+  /** Maximum number of idle resources kept in the pool. */
   protected final int maxPoolSize;
 
+  /** Number of leases started. */
   protected final AtomicLong startLeaseCount = new AtomicLong();
+  /** Number of leases ended. */
   protected final AtomicLong endLeaseCount = new AtomicLong();
+  /** Number of resources created by the factory. */
   protected final AtomicLong createCount = new AtomicLong();
+  /** Number of resources found to be unhealthy. */
   protected final AtomicLong unhealthyCount = new AtomicLong();
+  /** Number of resources discarded (closed and dropped). */
   protected final AtomicLong discardCount = new AtomicLong();
 
+  /** The idle resources that are available for re-use. */
   protected final Queue<R> pool = new ConcurrentLinkedDeque<>();
 
   /**

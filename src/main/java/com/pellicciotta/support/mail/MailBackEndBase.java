@@ -20,15 +20,25 @@ import java.util.concurrent.ConcurrentMap;
 public abstract class MailBackEndBase implements MailBackEnd {
   // <editor-fold desc="Construction">
 
+  /**
+   * Create a back-end with a default {@link MailConfig}.
+   */
   protected MailBackEndBase() {
     this(new MailConfig());
   }
 
+  /**
+   * Create a back-end with the provided configuration.
+   *
+   * @param config The configuration to be applied.
+   */
   protected MailBackEndBase(MailConfig config) {
     this.configure(config);
   }
 
+  /** Whether {@link #close()} has been called. */
   protected boolean closed = false;
+  /** The active configuration, as last set by {@link #configure(MailConfig)}. */
   protected MailConfig config = null;
 
   // </editor-fold>
@@ -42,7 +52,18 @@ public abstract class MailBackEndBase implements MailBackEnd {
   // </editor-fold>
   // <editor-fold desc="Overridable Methods">
 
+  /**
+   * Called after a message was sent successfully.
+   *
+   * @param mailMessage The message that was sent.
+   */
   protected abstract void onMailSent(MailMessage mailMessage);
+  /**
+   * Called when sending a message failed, before the exception is rethrown by {@link #send(MailMessage)}.
+   *
+   * @param mailMessage The message that could not be sent.
+   * @param cause The failure.
+   */
   protected abstract void onMailError(MailMessage mailMessage, Exception cause);
 
   // </editor-fold>
@@ -73,6 +94,13 @@ public abstract class MailBackEndBase implements MailBackEnd {
     }
   }
 
+  /**
+   * Performs the actual delivery of a message.
+   *
+   * @param msg The message to be sent.
+   * @throws MessagingException If the mail system rejects or fails to send the message.
+   * @throws IOException If reading the message content or attachments fails.
+   */
   protected abstract void doSend(MailMessage msg) throws MessagingException, IOException;
 
   /**

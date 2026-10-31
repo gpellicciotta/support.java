@@ -14,6 +14,9 @@ import com.pellicciotta.support.logging.Log;
 import com.pellicciotta.support.logging.LogService;
 import com.pellicciotta.support.utils.CollectionUtils;
 
+/**
+ * Command-line tool that lists all charsets available in the running JVM, with their aliases.
+ */
 public class CharsetsGenerator extends BasicApp<CharsetsGeneratorConfig> {
   // <editor-fold desc="Command-line Entry-Point">
 
@@ -79,6 +82,14 @@ public class CharsetsGenerator extends BasicApp<CharsetsGeneratorConfig> {
     return LogService.getBackEnd().getLog(NAME);
   }
 
+  /**
+   * Prints each available charset and its aliases to standard output.
+   *
+   * @param cli The parsed command line.
+   * @param config The tool configuration.
+   * @param positionalArguments The action arguments, unused.
+   * @return {@link ExitCode#NORMAL}, or {@link ExitCode#INTERNAL_ERROR} if listing fails.
+   */
   @CommandLineAction(name = "list", description = "List all known charsets")
   protected int runGenerateAction(CommandLine cli, CharsetsGeneratorConfig config, String[] positionalArguments) {
     Log log = this.getAppLog();

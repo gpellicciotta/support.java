@@ -20,12 +20,19 @@ import com.pellicciotta.support.utils.*;
 public class TextFormatter extends java.util.logging.SimpleFormatter {
   // <editor-fold desc="Defaults">
 
+  /** Default tag for error events. */
   public static final String DEFAULT_ERROR_LEVEL_PREFIX   = "**[ERROR]**";
+  /** Default tag for warning events. */
   public static final String DEFAULT_WARNING_LEVEL_PREFIX = "**[WARN]** ";
+  /** Default tag for info events. */
   public static final String DEFAULT_INFO_LEVEL_PREFIX    = "**[INFO]** ";
+  /** Default tag for debug events. */
   public static final String DEFAULT_DEBUG_LEVEL_PREFIX   = "**[DEBUG]**";
+  /** Default time pattern, in {@link java.text.SimpleDateFormat} syntax. */
   public static final String DEFAULT_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+  /** Default message prefix format: time, level tag and indentation. */
   public static final String DEFAULT_MESSAGE_PREFIX_FORMAT = "${time} ${level}  ${indent}";
+  /** Default name shown for events from the root logger. */
   public static final String DEFAULT_ROOT_LOG_NAME = "<root>";
 
   private static final Pattern PARAMETER_REGEX = Pattern.compile("([\\\\]*[$])([{]((?:ctx|env)[:])?([^:}]+)(?:[:]([^}]+))?[}])");
@@ -71,7 +78,9 @@ public class TextFormatter extends java.util.logging.SimpleFormatter {
   // </editor-fold>
   // <editor-fold desc="Properties">
 
+  /** Format of the prefix placed before each message; may contain <code>${...}</code> parameters. */
   protected String messagePrefixFormat;
+  /** Whether the message prefix format contains any <code>${...}</code> parameter. */
   protected boolean messagePrefixFormatContainsParameters;
 
   /**
@@ -128,6 +137,7 @@ public class TextFormatter extends java.util.logging.SimpleFormatter {
     }
   }
 
+  /** Whether stack traces are appended for records that carry a Throwable. */
   protected boolean showStackTrace;
 
   /**
@@ -148,6 +158,7 @@ public class TextFormatter extends java.util.logging.SimpleFormatter {
     this.showStackTrace = show;
   }
 
+  /** Whether leading whitespace is stripped from messages. */
   protected boolean trimLeadingWhitespace;
 
   /**
@@ -170,6 +181,7 @@ public class TextFormatter extends java.util.logging.SimpleFormatter {
     this.trimLeadingWhitespace = trim;
   }
 
+  /** Whether trailing whitespace is stripped from messages. */
   protected boolean trimTrailingWhitespace;
 
   /**
@@ -190,6 +202,7 @@ public class TextFormatter extends java.util.logging.SimpleFormatter {
     this.trimTrailingWhitespace = trim;
   }
 
+  /** Name shown for events from the root logger. */
   protected String rootLogName;
 
   /**
@@ -210,6 +223,7 @@ public class TextFormatter extends java.util.logging.SimpleFormatter {
     this.rootLogName = (name != null) ? name : DEFAULT_ROOT_LOG_NAME;
   }
 
+  /** Tag used for error events. */
   protected String errorLevelPrefix;
 
   /**
@@ -228,6 +242,7 @@ public class TextFormatter extends java.util.logging.SimpleFormatter {
     this.errorLevelPrefix = (prefix == null ? TextFormatter.DEFAULT_ERROR_LEVEL_PREFIX : prefix);
   }
 
+  /** Tag used for warning events. */
   protected String warningLevelPrefix;
 
   /**
@@ -246,6 +261,7 @@ public class TextFormatter extends java.util.logging.SimpleFormatter {
     this.warningLevelPrefix = (prefix == null ? TextFormatter.DEFAULT_WARNING_LEVEL_PREFIX : prefix);
   }
 
+  /** Tag used for info events. */
   protected String infoLevelPrefix;
 
   /**
@@ -264,6 +280,7 @@ public class TextFormatter extends java.util.logging.SimpleFormatter {
     this.infoLevelPrefix = (prefix == null ? TextFormatter.DEFAULT_INFO_LEVEL_PREFIX : prefix);
   }
 
+  /** Tag used for debug events. */
   protected String debugLevelPrefix;
 
   /**
@@ -282,7 +299,9 @@ public class TextFormatter extends java.util.logging.SimpleFormatter {
     this.debugLevelPrefix = (prefix == null ? TextFormatter.DEFAULT_DEBUG_LEVEL_PREFIX : prefix);
   }
 
+  /** Time pattern string from which the time format is built. */
   protected String timeFormatStr;
+  /** Format used to render the event time. */
   protected DateFormat timeFormat;
 
   /**

@@ -23,12 +23,14 @@ public class EditCommand {
 
   final EditType type;
 
+  /** @return The type of this command. */
   public EditType getType() {
     return this.type;
   }
 
   final int startInA;
 
+  /** @return The zero-based start index of the affected range in the first sequence. */
   public int getStartInA() {
     return this.startInA;
   }
@@ -37,6 +39,7 @@ public class EditCommand {
 
   final int startInB;
 
+  /** @return The zero-based start index of the affected range in the second sequence. */
   public int getStartInB() {
     return this.startInB;
   }

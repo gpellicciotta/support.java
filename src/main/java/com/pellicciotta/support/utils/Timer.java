@@ -139,6 +139,7 @@ public class Timer implements AutoCloseable {
     this.stop();
   }
 
+  /** Whether the timer is currently suspended. */
   protected boolean suspended;
 
   /**

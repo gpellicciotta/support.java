@@ -30,6 +30,7 @@ public class StdoutBasedLogBackEnd extends LogBackEndBase {
     super(config);
   }
 
+  /** Minimum log level; events below it are discarded. */
   protected int minLevel;
 
   /**
@@ -41,6 +42,7 @@ public class StdoutBasedLogBackEnd extends LogBackEndBase {
     this.minLevel = minLogLevel;
   }
 
+  /** Formatter used when none is configured: level tag and indent, no timestamp, no info tag. */
   protected static final TextFormatter DEFAULT_FORMATTER;
   static {
     // No ${time}: timestamps are stripped on stdout/stderr per the logging guideline.
@@ -49,6 +51,7 @@ public class StdoutBasedLogBackEnd extends LogBackEndBase {
     DEFAULT_FORMATTER.setInfoLevelPrefix("");
   }
 
+  /** Formatter that turns each {@link LogEvent} into the line written to stdout. */
   protected LogEventFormatter formatter;
 
   /**
@@ -60,6 +63,10 @@ public class StdoutBasedLogBackEnd extends LogBackEndBase {
     this.formatter = formatter == null ? DEFAULT_FORMATTER : formatter;
   }
 
+  /**
+   * @param logName The log name; ignored, since one minimum level applies to all logs.
+   * @return The minimum log level of this back-end.
+   */
   protected int getMinLogLevel(String logName) {
     return this.minLevel;
   }
@@ -67,6 +74,9 @@ public class StdoutBasedLogBackEnd extends LogBackEndBase {
   // </editor-fold>
   // <editor-fold desc="LogBackEndBase Overrides">
 
+  /**
+   * Resets the minimum level to 0 and the formatter to the default one, after the base-class reset.
+   */
   protected void resetConfiguration() {
     super.resetConfiguration();
     this.minLevel = 0;

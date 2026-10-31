@@ -36,7 +36,9 @@ public class StreamingDiff<T> {
     this.chunkB = (T[])new Object[maxChunkSize];
   }
 
+  /** The processor notified of diff results. */
   protected final DiffProcessor processor;
+  /** The algorithm applied to each chunk. */
   protected final DiffAlgorithm<T> algo;
 
   private final int maxChunkSize;
@@ -49,6 +51,7 @@ public class StreamingDiff<T> {
   private Iterator<T> streamA;
   private Iterator<T> streamB;
 
+  /** Logger used for debug output. */
   protected final Log log = LogService.fromCurrentClass();
 
   /**
@@ -159,6 +162,11 @@ public class StreamingDiff<T> {
     this.processor.onEnded(aLength, bLength, editScriptLength, lcsLength);
   }
 
+  /**
+   * Shifts the unconsumed items of each chunk to its start, then refills both chunks from the streams.
+   *
+   * @return <code>true</code> if at least one chunk holds items to process.
+   */
   protected boolean readNextChunk() {
     // Copy over last parts of previous buffers
     for (int k = this.chunkAConsumed; k < this.chunkALength; k++) {
@@ -185,6 +193,14 @@ public class StreamingDiff<T> {
     return (this.chunkALength + this.chunkBLength > 0);
   }
 
+  /**
+   * Decides how much of the current chunks is consumed. By default everything; if more input remains and the last
+   * match lies in the last 25% of both chunks, edit commands after that match are removed from the script
+   * (in place) and only items up to and including the match are consumed.
+   *
+   * @param currentEditScript The edit script of the current chunk; may be modified.
+   * @param currentMatches The matches of the current chunk.
+   */
   protected void optionallyEndOnLastMatchPair(List<EditCommand> currentEditScript, List<MatchPair> currentMatches) {
     this.chunkAConsumed = this.chunkALength;
     this.chunkBConsumed = this.chunkBLength;

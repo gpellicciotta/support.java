@@ -53,6 +53,7 @@ public class LoggerConfig {
 
   // <editor-fold desc="Codecs">
 
+  /** Codec between a {@link LoggerConfig} and a <code>&lt;logger name="..." level="..."&gt;</code> XML element. */
   public static class XmlCodec implements com.pellicciotta.support.codecs.XmlCodec<LoggerConfig> {
     @Override
     public LoggerConfig decode(Element from) {
@@ -79,8 +80,10 @@ public class LoggerConfig {
     }
   }
 
+  /** Shared {@link XmlCodec} instance. */
   public static final XmlCodec XML_CODEC = new XmlCodec();
 
+  /** Codec between a {@link LoggerConfig} and its <code>name:level</code> string form. */
   public static class StringCodec implements com.pellicciotta.support.codecs.StringCodec<LoggerConfig> {
     private final static Pattern REGEX = Pattern.compile("^([^:]+) *[:] *([^ ]+) *$");
 
@@ -109,8 +112,10 @@ public class LoggerConfig {
     }
   }
 
+  /** Shared {@link StringCodec} instance. */
   public static final StringCodec STRING_CODEC = new StringCodec();
 
+  /** Codec between a {@link LoggerConfig} and a map with <code>name</code> and <code>level</code> entries. */
   public static class PropertyCodec implements com.pellicciotta.support.codecs.PropertyCodec<LoggerConfig> {
     @Override
     public LoggerConfig decode(Map<String, String> from) {
@@ -132,6 +137,7 @@ public class LoggerConfig {
     }
   }
 
+  /** Shared {@link PropertyCodec} instance. */
   public static final PropertyCodec PROPERTY_CODEC = new PropertyCodec();
 
   // </editor-fold>

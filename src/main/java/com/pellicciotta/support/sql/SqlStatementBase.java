@@ -24,11 +24,17 @@ import com.pellicciotta.support.utils.StringConversionUtils;
 public class SqlStatementBase implements PreparedStatement {
   // <editor-fold desc="Construction">
 
+  /**
+   *  Wraps the given prepared statement.
+   *
+   *  @param wrapped The statement to delegate to; must not be null.
+   */
   protected SqlStatementBase(PreparedStatement wrapped) {
     Contract.isNotNull("wrapped", wrapped);
     this.wrapped = wrapped;
   }
 
+  /** The underlying prepared statement all calls are delegated to. */
   protected final PreparedStatement wrapped;
 
   // </editor-fold>

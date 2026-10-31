@@ -13,6 +13,7 @@ import com.pellicciotta.support.utils.*;
 public final class HtmlTextBuilder {
   // <editor-fold desc="Support Types">
 
+  /** An open HTML tag that closes itself when used in a try-with-resources block. */
   public interface Tag extends AutoCloseable {
     @Override
     void close();
@@ -21,10 +22,16 @@ public final class HtmlTextBuilder {
   // </editor-fold>
   // <editor-fold desc="Construction">
 
+  /** Create a builder that writes into a new, empty {@link StringBuilder}. */
   public HtmlTextBuilder() {
     this.sb = new StringBuilder();
   }
 
+  /**
+   *  Create a builder that appends to the given {@link StringBuilder}.
+   *
+   *  @param sb The target buffer; must not be null.
+   */
   public HtmlTextBuilder(StringBuilder sb) {
     Contract.isNotNull(sb);
     this.sb = sb;
@@ -79,6 +86,14 @@ public final class HtmlTextBuilder {
     return XmlUtils.escape(rawText);
   }
 
+  /**
+   *  Write a complete element: start tag, escaped formatted text, then end tag.
+   *
+   *  @param tag The tag name.
+   *  @param format The {@link String#format} pattern for the text; the result is HTML-escaped.
+   *  @param args The format arguments.
+   *  @return This builder.
+   */
   public HtmlTextBuilder inlineTag(String tag, String format, Object... args) {
     this.startTag(tag);
     this.text(format, args);
@@ -102,6 +117,12 @@ public final class HtmlTextBuilder {
     }
   }
 
+  /**
+   *  Start a tag and return a handle whose {@code close()} ends it.
+   *
+   *  @param name The tag name.
+   *  @return The handle; closing it fails with a contract violation if the tag is no longer the innermost open tag.
+   */
   public Tag startAutoCloseableTag(String name) {
     this.startTag(name);
     int level = this.tagsToBeClosed.size();
@@ -115,6 +136,13 @@ public final class HtmlTextBuilder {
     this.lastOpenTagIsClosed = true;
   }
 
+  /**
+   *  Start a tag and leave it open for {@code attr} calls; tags such as {@code html}, {@code body} and {@code h1}
+   *  are placed on a new line.
+   *
+   *  @param name The tag name.
+   *  @return This builder.
+   */
   public HtmlTextBuilder startTag(String name) {
     this.closeOpenTag();
     if (tagsToBeIndented.contains(name)) {
@@ -132,14 +160,35 @@ public final class HtmlTextBuilder {
     return "" + value;
   }
 
+  /**
+   *  Add an integer attribute to the tag that was just started.
+   *
+   *  @param name The attribute name.
+   *  @param value The attribute value.
+   *  @return This builder.
+   */
   public HtmlTextBuilder attr(String name, int value) {
     return attr(name, formatNumber(value));
   }
 
+  /**
+   *  Add a long attribute to the tag that was just started.
+   *
+   *  @param name The attribute name.
+   *  @param value The attribute value.
+   *  @return This builder.
+   */
   public HtmlTextBuilder attr(String name, long value) {
     return attr(name, formatNumber(value));
   }
 
+  /**
+   *  Add a value-less attribute to the tag that was just started.
+   *
+   *  @param name The attribute name.
+   *  @return This builder.
+   *  @throws IllegalArgumentException If there is no start tag still open for attributes.
+   */
   public HtmlTextBuilder attr(String name) {
     Contract.isTrue("There is an unclosed open tag", !this.tagsToBeClosed.isEmpty() && !this.lastOpenTagIsClosed);
     this.sb.append(" ");
@@ -147,6 +196,14 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  Add an attribute with an HTML-escaped, double-quoted value to the tag that was just started.
+   *
+   *  @param name The attribute name.
+   *  @param value The attribute value.
+   *  @return This builder.
+   *  @throws IllegalArgumentException If there is no start tag still open for attributes.
+   */
   public HtmlTextBuilder attr(String name, String value) {
     Contract.isTrue("There is an unclosed open tag", !this.tagsToBeClosed.isEmpty() && !this.lastOpenTagIsClosed);
     this.sb.append(" ");
@@ -157,6 +214,15 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  Add an attribute whose value is formatted with {@link String#format}, HTML-escaped and double-quoted.
+   *
+   *  @param name The attribute name.
+   *  @param valueFormat The format pattern for the value.
+   *  @param args The format arguments.
+   *  @return This builder.
+   *  @throws IllegalArgumentException If there is no start tag still open for attributes.
+   */
   public HtmlTextBuilder attr(String name, String valueFormat, Object... args) {
     Contract.isTrue("There is an unclosed open tag", !this.tagsToBeClosed.isEmpty() && !this.lastOpenTagIsClosed);
     this.sb.append(" ");
@@ -167,6 +233,13 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  Append HTML-escaped text, first closing any start tag that is still open for attributes.
+   *
+   *  @param format The {@link String#format} pattern; used as-is (but still escaped) when there are no arguments.
+   *  @param args The format arguments.
+   *  @return This builder.
+   */
   public HtmlTextBuilder text(String format, Object... args) {
     if (!this.lastOpenTagIsClosed) {
       this.sb.append(">");
@@ -176,6 +249,13 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  End the innermost open tag, checking that it has the given name (case-insensitive).
+   *
+   *  @param name The expected tag name.
+   *  @return This builder.
+   *  @throws IllegalArgumentException If no tag is open or the innermost open tag has a different name.
+   */
   public HtmlTextBuilder endTag(String name) {
     Contract.isTrue("There is an unclosed tag", !this.tagsToBeClosed.isEmpty());
     Contract.isTrue("There is an unclosed '" + name + "' tag", name.equalsIgnoreCase(this.tagsToBeClosed.peekLast()));
@@ -194,6 +274,12 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  End the innermost open tag.
+   *
+   *  @return This builder.
+   *  @throws IllegalArgumentException If no tag is open.
+   */
   public HtmlTextBuilder endTag() {
     Contract.isTrue("There is an unclosed tag", !this.tagsToBeClosed.isEmpty());
     if (!this.lastOpenTagIsClosed) {
@@ -211,6 +297,11 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  End all open tags, innermost first.
+   *
+   *  @return This builder.
+   */
   public HtmlTextBuilder endAllOpenTags() {
     while (!this.tagsToBeClosed.isEmpty()) {
       this.endTag();
@@ -218,6 +309,13 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  Write a {@code pre} element containing the escaped formatted text.
+   *
+   *  @param format The {@link String#format} pattern.
+   *  @param args The format arguments.
+   *  @return This builder.
+   */
   public HtmlTextBuilder pre(String format, Object... args) {
     this.startTag("pre");
     this.text(format, args);
@@ -225,6 +323,13 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  Write an {@code h1} element containing the escaped formatted text.
+   *
+   *  @param format The {@link String#format} pattern.
+   *  @param args The format arguments.
+   *  @return This builder.
+   */
   public HtmlTextBuilder h1(String format, Object... args) {
     this.startTag("h1");
     this.text(format, args);
@@ -232,6 +337,13 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  Write an {@code h2} element containing the escaped formatted text.
+   *
+   *  @param format The {@link String#format} pattern.
+   *  @param args The format arguments.
+   *  @return This builder.
+   */
   public HtmlTextBuilder h2(String format, Object... args) {
     this.startTag("h2");
     this.text(format, args);
@@ -239,6 +351,13 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  Write an {@code h3} element containing the escaped formatted text.
+   *
+   *  @param format The {@link String#format} pattern.
+   *  @param args The format arguments.
+   *  @return This builder.
+   */
   public HtmlTextBuilder h3(String format, Object... args) {
     this.startTag("h3");
     this.text(format, args);
@@ -246,6 +365,13 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  Write an {@code h4} element containing the escaped formatted text.
+   *
+   *  @param format The {@link String#format} pattern.
+   *  @param args The format arguments.
+   *  @return This builder.
+   */
   public HtmlTextBuilder h4(String format, Object... args) {
     this.startTag("h4");
     this.text(format, args);
@@ -253,6 +379,13 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  Write an {@code h5} element containing the escaped formatted text.
+   *
+   *  @param format The {@link String#format} pattern.
+   *  @param args The format arguments.
+   *  @return This builder.
+   */
   public HtmlTextBuilder h5(String format, Object... args) {
     this.startTag("h5");
     this.text(format, args);
@@ -260,6 +393,13 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  Write an {@code h6} element containing the escaped formatted text.
+   *
+   *  @param format The {@link String#format} pattern.
+   *  @param args The format arguments.
+   *  @return This builder.
+   */
   public HtmlTextBuilder h6(String format, Object... args) {
     this.startTag("h6");
     this.text(format, args);
@@ -267,6 +407,13 @@ public final class HtmlTextBuilder {
     return this;
   }
 
+  /**
+   *  Write a raw HTML fragment followed by a newline; the format pattern is not escaped, only the arguments are.
+   *
+   *  @param format The {@link String#format} pattern containing markup.
+   *  @param args The arguments, each converted with {@code toString} and HTML-escaped.
+   *  @return This builder.
+   */
   public HtmlTextBuilder custom(String format, Object... args) {
     this.closeOpenTag();
     Object[] escapedArgs = new Object[args.length];
@@ -290,6 +437,11 @@ public final class HtmlTextBuilder {
 
   // </editor-fold>
 
+  /**
+   *  Demo entry point that builds a small HTML page and logs it.
+   *
+   *  @param args Ignored.
+   */
   public static void main(String[] args) {
     HtmlTextBuilder html = new HtmlTextBuilder();
     html.startTag("html")

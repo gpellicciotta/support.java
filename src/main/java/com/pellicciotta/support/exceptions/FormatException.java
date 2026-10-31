@@ -86,6 +86,7 @@ public class FormatException extends RuntimeExceptionBase {
   // </editor-fold>
   // <editor-fold desc="Properties">
 
+  /** The value that did not conform to the expected format; may be {@code null}. */
   protected Object value;
 
   /**

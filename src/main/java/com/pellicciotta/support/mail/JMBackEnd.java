@@ -58,6 +58,11 @@ public class JMBackEnd extends MailBackEndBase {
   private Transport connection;
   private Session session;
 
+  /**
+   * Tells whether the underlying transport currently exists and is connected.
+   *
+   * @return {@code true} if connected, {@code false} if never connected or already disconnected.
+   */
   public boolean isConnected() {
     if (this.connection != null) {
       return this.connection.isConnected();
@@ -65,10 +70,24 @@ public class JMBackEnd extends MailBackEndBase {
     return false;
   }
 
+  /**
+   * Connects to the configured mail server using the user and password from the {@link MailConfig}.
+   *
+   * @throws MessagingException If the transport cannot be obtained or the connection fails.
+   */
   public void connect() throws MessagingException {
     this.connect(this.config.getUser(), this.config.getPassword());
   }
 
+  /**
+   * Connects to the configured mail server with explicit credentials. Uses the {@code smtps} protocol when
+   * {@code password} is non-null and {@code smtp} otherwise, and sets the matching {@code mail.*} JVM system
+   * properties as a side effect. Replaces any existing session and transport.
+   *
+   * @param user User name for authentication.
+   * @param password Password for authentication.
+   * @throws MessagingException If the transport cannot be obtained or the connection fails.
+   */
   public void connect(String user, String password) throws MessagingException {
     log.debug("Trying to connect with user '%s' and password '%s'...", user, password);
     String mailProtocol = password != null ? "smtps" : "smtp";
@@ -101,6 +120,10 @@ public class JMBackEnd extends MailBackEndBase {
     this.disconnect();
   }
 
+  /**
+   * Closes the transport if connected and discards the session and transport. Failures while closing are logged,
+   * not thrown.
+   */
   public void disconnect() {
     log.debug("Disconnecting...");
     try {

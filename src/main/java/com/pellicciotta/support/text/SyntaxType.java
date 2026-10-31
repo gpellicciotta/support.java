@@ -28,9 +28,12 @@ public class SyntaxType {
     this.name = name;
   }
 
+  /** The ID that defines equality of syntax types. */
   protected final int ordinal;
+  /** The descriptive name of this type. */
   protected final String name;
 
+  /** @return The descriptive name of this type. */
   public String getName() {
     return this.name;
   }

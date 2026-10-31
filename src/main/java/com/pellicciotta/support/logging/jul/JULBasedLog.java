@@ -108,6 +108,10 @@ public final class JULBasedLog implements Log {
     return this.logger;
   }
 
+  /**
+   * @return The name of the wrapped JUL logger.
+   * @throws IllegalStateException If this log has been closed.
+   */
   public String getName() {
     if (this.closed) {
       throw new IllegalStateException("This log has been closed");
@@ -209,6 +213,14 @@ public final class JULBasedLog implements Log {
 
   private final Map<String, ContextDataItem> logInstanceContextData;
 
+  /**
+   * Collects the context data visible to this log, merged from least to most specific scope (log name, thread, log
+   * instance) so that more specific items override less specific ones with the same name.
+   *
+   * @param scope The scope to read; if <code>null</code>, all scopes are merged.
+   * @return A new snapshot of the matching context data.
+   * @throws IllegalStateException If this log has been closed.
+   */
   public ContextData getContextData(ContextDataItemScope scope) {
     if (this.closed) {
       throw new IllegalStateException("This log has been closed");
@@ -245,6 +257,15 @@ public final class JULBasedLog implements Log {
     return this.addContextData(ContextDataItemScope.LOG_INSTANCE, itemName, itemValue);
   }
 
+  /**
+   * Adds or replaces a context data item in the given scope.
+   *
+   * @param scope The scope to store the item in; if <code>null</code>, {@link ContextDataItemScope#LOG_INSTANCE}.
+   * @param name The item name; must not be <code>null</code>.
+   * @param value The item value.
+   * @return The item that was stored.
+   * @throws IllegalStateException If this log has been closed.
+   */
   public ContextDataItem addContextData(ContextDataItemScope scope, String name, Object value) {
     Contract.isNotNull("name", name);
     if (this.closed) {
@@ -280,6 +301,13 @@ public final class JULBasedLog implements Log {
     }
   }
 
+  /**
+   * Removes the named context data item from the given scope.
+   *
+   * @param scope The scope to remove from; if <code>null</code>, the item is removed from all scopes.
+   * @param name The item name; must not be <code>null</code>.
+   * @throws IllegalStateException If this log has been closed.
+   */
   public void removeContextData(ContextDataItemScope scope, String name) {
     Contract.isNotNull("name", name);
     if (this.closed) {
@@ -304,6 +332,12 @@ public final class JULBasedLog implements Log {
     }
   }
 
+  /**
+   * Removes all context data items from the given scope.
+   *
+   * @param scope The scope to clear; if <code>null</code>, all scopes are cleared.
+   * @throws IllegalStateException If this log has been closed.
+   */
   public void clearContextData(ContextDataItemScope scope) {
     if (this.closed) {
       throw new IllegalStateException("This log has been closed");
@@ -324,6 +358,11 @@ public final class JULBasedLog implements Log {
     }
   }
 
+  /**
+   * @param level A {@link LogLevel} constant, mapped to the nearest JUL level.
+   * @return True when the wrapped JUL logger would log at that level.
+   * @throws IllegalStateException If this log has been closed.
+   */
   public boolean isLevelEnabled(int level) {
     if (this.closed) {
       throw new IllegalStateException("This log has been closed");
@@ -331,6 +370,13 @@ public final class JULBasedLog implements Log {
     return this.logger.isLoggable(JULUtils.toNearestLevel(level));
   }
 
+  /**
+   * Logs a message at the JUL level nearest to the given {@link LogLevel} constant.
+   *
+   * @param level A {@link LogLevel} constant.
+   * @param messageOrFormat The message, or a format string for the parameters.
+   * @param messageParamsOrData Format parameters and/or data to attach to the event.
+   */
   public void log(int level, String messageOrFormat, Object... messageParamsOrData) {
     this.log(JULUtils.toNearestLevel(level), messageOrFormat, messageParamsOrData);
   }
@@ -375,6 +421,11 @@ public final class JULBasedLog implements Log {
     this.log(Level.FINE, messageOrFormat, messageParamsOrData);
   }
 
+  /**
+   * Flushes all handlers attached directly to the wrapped JUL logger.
+   *
+   * @throws IllegalStateException If this log has been closed.
+   */
   public void flush() {
     if (this.closed) {
       throw new IllegalStateException("This log has been closed");

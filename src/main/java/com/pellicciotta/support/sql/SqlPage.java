@@ -12,6 +12,14 @@ import com.pellicciotta.support.utils.PagingResult;
 public class SqlPage<T> implements PagingResult<T> {
   // <editor-fold desc="Construction">
 
+  /**
+   *  Creates a page holding a defensive copy of the given elements.
+   *
+   *  @param elements The elements on this page.
+   *  @param size The requested page size.
+   *  @param startBookmark Bookmark of the first element of this page.
+   *  @param endBookmark Bookmark of the last element of this page.
+   */
   protected SqlPage(List<T> elements, int size, String startBookmark, String endBookmark) {
     this.elements = new ArrayList<>(elements);
     this.pageSize = size;

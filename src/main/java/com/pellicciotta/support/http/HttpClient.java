@@ -178,26 +178,36 @@ public final class HttpClient implements AutoCloseable {
   // </editor-fold>
   // <editor-fold desc="Response Properties - Only filled after connect">
 
+  /** @return The HTTP status code; only meaningful after the connection was made. */
   public int getResponseCode() {
     return this.responseCode;
   }
 
+  /** @return The HTTP status message; only meaningful after the connection was made. */
   public String getResponseMessage() {
     return this.responseMessage;
   }
 
+  /** @return The response body decoded as text; only filled after the connection was made. */
   public String getResponseBody() {
     return this.responseBody;
   }
 
+  /** @return All response headers by name; only valid after the connection was made. */
   public Map<String, List<String>> getResponseHeaders() {
     return this.http.getHeaderFields();
   }
 
+  /**
+   *  @param name the header name
+   *  @return The first value of that response header, or null if absent; only valid after the connection
+   *  was made.
+   */
   public String getResponseHeader(String name) {
     return this.http.getHeaderField(name);
   }
 
+  /** @return The raw response body; only filled after the connection was made. */
   public byte[] getResponseBodyBytes() {
     return this.responseBodyBytes;
   }
@@ -205,18 +215,35 @@ public final class HttpClient implements AutoCloseable {
   // </editor-fold>
   // <editor-fold desc="Request Properties - to be set before connect">
 
+  /**
+   *  Sets a request header, replacing any previous value; names are matched case-insensitively.
+   *  @param name the header name
+   *  @param value the header value
+   */
   public void setRequestHeader(String name, String value) {
     this.headers.put(name, value);
   }
 
+  /**
+   *  Sets the {@code User-Agent} request header.
+   *  @param userAgentString the user agent string
+   */
   public void setUserAgent(String userAgentString) {
     this.headers.put("User-Agent", userAgentString);
   }
 
+  /**
+   *  Sets the {@code Accept} request header.
+   *  @param acceptMimeType the accepted MIME type(s)
+   */
   public void setAcceptHeader(String acceptMimeType) {
     this.headers.put("Accept", acceptMimeType);
   }
 
+  /**
+   *  Sets a URL-encoded form body and the matching {@code Content-Type} (UTF-8).
+   *  @param nameValuePairs the form fields, in order
+   */
   public void setFormDataBody(Pair<String, String>... nameValuePairs) {
     this.headers.put("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
     StringBuilder sb = new StringBuilder();
@@ -234,18 +261,30 @@ public final class HttpClient implements AutoCloseable {
     this.requestBodyBytes = this.requestBody.getBytes(StandardCharsets.UTF_8);
   }
 
+  /**
+   *  Sets a JSON request body and {@code Content-Type} {@code application/json; charset=UTF-8}.
+   *  @param jsonBody the JSON text; must not be null
+   */
   public void setJsonBody(String jsonBody) {
     this.headers.put("Content-Type", "application/json; charset=UTF-8");
     this.requestBody = jsonBody;
     this.requestBodyBytes = this.requestBody.getBytes(StandardCharsets.UTF_8);
   }
 
+  /**
+   *  Sets a plain-text request body and {@code Content-Type} {@code text/plain; charset=UTF-8}.
+   *  @param textBody the text; must not be null
+   */
   public void setTextBody(String textBody) {
     this.headers.put("Content-Type", "text/plain; charset=UTF-8");
     this.requestBody = textBody;
     this.requestBodyBytes = this.requestBody.getBytes(StandardCharsets.UTF_8);
   }
 
+  /**
+   *  Sets a binary request body and {@code Content-Type} {@code application/octet-stream}.
+   *  @param binaryBody the bytes to send
+   */
   public void setBinaryBody(byte[] binaryBody) {
     this.headers.put("Content-Type", "application/octet-stream");
     this.requestBodyBytes = binaryBody;

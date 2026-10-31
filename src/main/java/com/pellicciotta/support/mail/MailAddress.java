@@ -17,8 +17,11 @@ import com.pellicciotta.support.utils.*;
 public class MailAddress {
   // <editor-fold desc="Constants">
 
+  /** Maximum length of the local part (before the @-sign) accepted by {@link #isValid(String, List)}. */
   public static final int MAX_LOCAL_PART_LENGTH  =  64;
+  /** Maximum length of the domain part (after the @-sign) accepted by {@link #isValid(String, List)}. */
   public static final int MAX_DOMAIN_PART_LENGTH = 253;
+  /** Maximum length of a complete address accepted by {@link #isValid(String, List)}. */
   public static final int MAX_ADDRESS_LENGTH     = 254;
 
   // </editor-fold>
@@ -213,6 +216,12 @@ public class MailAddress {
   // </editor-fold>
   // <editor-fold desc="Conversion Operators">
 
+  /**
+   * Converts this address to a JavaMail {@link InternetAddress}, using the alias as the personal name when set.
+   *
+   * @return The equivalent internet address.
+   * @throws AddressException If the address text cannot be parsed by JavaMail.
+   */
   public InternetAddress toInternetAddress() throws AddressException {
     try {
       if (this.alias != null) {

@@ -21,12 +21,19 @@ import com.pellicciotta.support.utils.StringUtils;
 public class TextFormatter extends LogEventFormatterBase {
   // <editor-fold desc="Defaults">
 
+  /** Default prefix for error-level events. */
   public static final String DEFAULT_ERROR_LEVEL_PREFIX   = "**[ERROR]**";
+  /** Default prefix for warning-level events. */
   public static final String DEFAULT_WARNING_LEVEL_PREFIX = "**[WARN]** ";
+  /** Default prefix for info-level events. */
   public static final String DEFAULT_INFO_LEVEL_PREFIX    = "**[INFO]** ";
+  /** Default prefix for debug-level events. */
   public static final String DEFAULT_DEBUG_LEVEL_PREFIX   = "**[DEBUG]**";
+  /** Default {@link java.text.SimpleDateFormat} pattern for event times. */
   public static final String DEFAULT_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+  /** Default message prefix format. */
   public static final String DEFAULT_MESSAGE_PREFIX_FORMAT = "${time} ${level}  ${indent}";
+  /** Default name shown for the root log, which has an empty name. */
   public static final String DEFAULT_ROOT_LOG_NAME = "<root>";
 
   // </editor-fold>
@@ -69,7 +76,9 @@ public class TextFormatter extends LogEventFormatterBase {
   // </editor-fold>
   // <editor-fold desc="Properties">
 
+  /** The current message prefix format. */
   protected String messagePrefixFormat;
+  /** Whether the prefix format contains <code>${...}</code> parameters. */
   protected boolean messagePrefixFormatContainsParameters;
 
   /**
@@ -126,6 +135,7 @@ public class TextFormatter extends LogEventFormatterBase {
     }
   }
 
+  /** Whether stack traces are appended. */
   protected boolean showStackTrace;
 
   /**
@@ -146,6 +156,7 @@ public class TextFormatter extends LogEventFormatterBase {
     this.showStackTrace = show;
   }
 
+  /** Whether leading spaces are trimmed from messages. */
   protected boolean trimLeadingWhitespace;
 
   /**
@@ -168,6 +179,7 @@ public class TextFormatter extends LogEventFormatterBase {
     this.trimLeadingWhitespace = trim;
   }
 
+  /** Whether trailing whitespace is trimmed from messages. */
   protected boolean trimTrailingWhitespace;
 
   /**
@@ -188,6 +200,7 @@ public class TextFormatter extends LogEventFormatterBase {
     this.trimTrailingWhitespace = trim;
   }
 
+  /** The name shown for the root log. */
   protected String rootLogName;
 
   /**
@@ -208,6 +221,7 @@ public class TextFormatter extends LogEventFormatterBase {
     this.rootLogName = (name != null) ? name : DEFAULT_ROOT_LOG_NAME;
   }
 
+  /** The prefix used for error-level events. */
   protected String errorLevelPrefix;
 
   /**
@@ -226,6 +240,7 @@ public class TextFormatter extends LogEventFormatterBase {
     this.errorLevelPrefix = (prefix == null ? TextFormatter.DEFAULT_ERROR_LEVEL_PREFIX : prefix);
   }
 
+  /** The prefix used for warning-level events. */
   protected String warningLevelPrefix;
 
   /**
@@ -244,6 +259,7 @@ public class TextFormatter extends LogEventFormatterBase {
     this.warningLevelPrefix = (prefix == null ? TextFormatter.DEFAULT_WARNING_LEVEL_PREFIX : prefix);
   }
 
+  /** The prefix used for info-level events. */
   protected String infoLevelPrefix;
 
   /**
@@ -262,6 +278,7 @@ public class TextFormatter extends LogEventFormatterBase {
     this.infoLevelPrefix = (prefix == null ? TextFormatter.DEFAULT_INFO_LEVEL_PREFIX : prefix);
   }
 
+  /** The prefix used for debug-level events. */
   protected String debugLevelPrefix;
 
   /**

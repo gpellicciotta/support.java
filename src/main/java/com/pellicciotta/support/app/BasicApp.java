@@ -22,48 +22,116 @@ import java.util.stream.Collectors;
 public abstract class BasicApp<T extends BasicConfig> {
   // <editor-fold desc="Basic Information">
 
+  /**
+   * Returns the short, machine-friendly tool name.
+   *
+   * @return The name.
+   */
   public abstract String getName();
 
+  /**
+   * Returns the app version.
+   *
+   * @return The version.
+   */
   public abstract Version getVersion();
 
+  /**
+   * Returns the human-friendly app name.
+   *
+   * @return The pretty name.
+   */
   public abstract String getPrettyName();
 
+  /**
+   * Returns the copyright line shown with the version.
+   *
+   * @return <code>Copyright (c) Giovanni Pellicciotta</code> unless overridden.
+   */
   public String getCopyright() {
     return "Copyright (c) Giovanni Pellicciotta";
   }
 
+  /**
+   * Returns the one-line description of the app, shown by the help action.
+   *
+   * @return The description.
+   */
   public abstract String getDescription();
 
   // </editor-fold>
   // <editor-fold desc="Configuration">
 
+  /**
+   * Creates the configuration holding default values, before the command line is applied.
+   *
+   * @return A new configuration instance.
+   */
   protected abstract T getInitialConfiguration();
 
+  /**
+   * Returns the log the app uses for its own messages.
+   *
+   * @return The app log.
+   */
   protected abstract Log getAppLog();
 
   // </editor-fold>
   // <editor-fold desc="Command-line Handling">
 
+  /**
+   * Hook for process-level setup, called first by {@link #run(String[])}; does nothing by default.
+   * A thrown exception ends the run with {@link ExitCode#CONFIG_ERROR}.
+   *
+   * @param args The command-line arguments.
+   * @throws Exception If initialization fails.
+   */
   protected void initializeProcess(String[] args) throws Exception {
     // Do nothing
   }
 
+  /**
+   * Hook called after the action has run, even if it failed; does nothing by default.
+   */
   protected void finalizeProcess() {
     // Do nothing
   }
 
+  /**
+   * Configures the {@link LogService} from the logging section of the configuration.
+   *
+   * @param config The loaded configuration.
+   * @throws Exception If logging cannot be configured.
+   */
   protected void configureLogging(T config) throws Exception {
     LogService.configure(config.logging);
   }
 
+  /**
+   * Names of the registered actions, in registration order.
+   */
   protected final List<String> actionsInOrder = new ArrayList<>();
+  /**
+   * Registered actions, keyed by action name.
+   */
   protected final Map<String, BasicAction<T>> actionsByName = new HashMap<>();
 
+  /**
+   * Registers the default actions and then those declared with {@link CommandLineAction}.
+   * Subclasses may override to register more.
+   */
   protected void initializeApp() {
     this.initializeDefaultActions();
     this.initializeActionsFromAnnotations();
   }
 
+  /**
+   * Registers every method of this class annotated with {@link CommandLineAction} as an action.
+   *
+   * @throws InternalError If an annotated method does not return <code>int</code> or does not take
+   *                       (CommandLine, config type, String[]) parameters.
+   * @throws ConfigurationException If an action with the same name is already registered.
+   */
   protected final void initializeActionsFromAnnotations() {
     for (Method m : ReflectionUtils.listAnnotatedMethods(this.getClass(), CommandLineAction.class)) {
       if (m.getReturnType() != int.class) {
@@ -121,6 +189,9 @@ public abstract class BasicApp<T extends BasicConfig> {
     }
   }
 
+  /**
+   * Registers the built-in help, version, list-config and list-config-options actions.
+   */
   protected final void initializeDefaultActions() {
     this.initializeAction(this.helpAction);
     this.initializeAction(this.versionAction);
@@ -128,6 +199,12 @@ public abstract class BasicApp<T extends BasicConfig> {
     this.initializeAction(this.listConfigOptionsAction);
   }
 
+  /**
+   * Registers an action under its name, after any already registered actions.
+   *
+   * @param action The action to register.
+   * @throws ConfigurationException If an action with the same name is already registered.
+   */
   protected final void initializeAction(BasicAction<T> action) {
     String actionName = action.getName();
     if (this.actionsByName.containsKey(actionName)) {
@@ -236,6 +313,15 @@ public abstract class BasicApp<T extends BasicConfig> {
     }
   }
 
+  /**
+   * Determines the action to run and its positional arguments from the command line.
+   * The first positional argument selects the action by name or alias; if it matches none, the default action
+   * is used and all positional arguments are passed to it. Without positional arguments, action flags such as
+   * <code>--help</code> are looked up, falling back to the default action.
+   *
+   * @param cli The parsed command line.
+   * @return The chosen action and the arguments to pass to it.
+   */
   protected Pair<BasicAction<T>, String[]> getMainActionAndPositionalArguments(CommandLine cli) {
     BasicAction<T> chosenAction = null;
     String[] actionArgs = new String[0];
@@ -303,6 +389,15 @@ public abstract class BasicApp<T extends BasicConfig> {
     return chosenAction;
   }
 
+  /**
+   * Runs the registered action with the given name.
+   *
+   * @param actionName The name of the action.
+   * @param cli The parsed command line.
+   * @param config The loaded configuration.
+   * @param positionalArguments The arguments to pass to the action.
+   * @return The action exit code, or {@link ExitCode#CONFIG_ERROR} if no such action exists.
+   */
   protected int runAction(String actionName, CommandLine cli, T config, String[] positionalArguments) {
     int exitCode;
     BasicAction<T> action = this.actionsByName.get(actionName);
@@ -316,14 +411,31 @@ public abstract class BasicApp<T extends BasicConfig> {
     return exitCode;
   }
 
+  /**
+   * Returns the text that prefixes each usage line.
+   *
+   * @return A <code>java -cp [CLASSPATH] ClassName</code> style prefix.
+   */
   protected String getCommandLinePrefix() {
     return String.format("java -cp [CLASSPATH] %s", this.getClass().getName());
   }
 
+  /**
+   * Prints a usage line and its indented description to standard output.
+   *
+   * @param cmdLineSyntax The usage syntax.
+   * @param description The description printed below it.
+   */
   protected void addUsageSyntax(String cmdLineSyntax, String description) {
     System.out.printf("%s %s%n  %s%n", this.getCommandLinePrefix(), cmdLineSyntax, description);
   }
 
+  /**
+   * Prints the usage syntax, aliases (if any) and description of an action to standard output.
+   *
+   * @param prefix Text printed before the first line, such as <code>Usage: </code>; continuation lines align to it.
+   * @param action The action to describe.
+   */
   protected void addUsageSyntax(String prefix, BasicAction<T> action) {
     String[] aliases = action.getAliasNames();
     String firstLinePrefix = prefix;
@@ -336,6 +448,9 @@ public abstract class BasicApp<T extends BasicConfig> {
     }
   }
 
+  /**
+   * The built-in <code>help</code> action: shows version and description, and usage with <code>usage</code>.
+   */
   protected final BasicAction<T> helpAction = new BasicAction<T>("help", new String[] { "--help", "-h", "-?", "usage", "--usage", "-u" }, "Show help info and exit", "help [--usage]") {
     @Override
     protected int run(CommandLine cli, T config, String[] positionalArguments) {
@@ -373,6 +488,9 @@ public abstract class BasicApp<T extends BasicConfig> {
     return ExitCode.NORMAL;
   }
 
+  /**
+   * The built-in <code>version</code> action: shows the name, version and copyright.
+   */
   protected final BasicAction<T> versionAction = new BasicAction<T>("version", new String[] { "--version", "-v" }, "Show version and exit", "version") {
     @Override
     protected int run(CommandLine cli, T config, String[] positionalArguments) {
@@ -384,6 +502,9 @@ public abstract class BasicApp<T extends BasicConfig> {
     rows.add(colVals);
   }
 
+  /**
+   * The built-in <code>list-config</code> action: lists the active configuration.
+   */
   protected final BasicAction<T> listConfigAction = new BasicAction<T>("list-config", new String[0], "List active configuration options", "list-config [--include-environment]") {
     @Override
     protected int run(CommandLine cli, T config, String[] positionalArguments) {
@@ -391,6 +512,15 @@ public abstract class BasicApp<T extends BasicConfig> {
     }
   };
 
+  /**
+   * Prints application info, the command line and all active settings, plus system properties and
+   * environment variables when <code>--include-environment</code> is a positional argument.
+   *
+   * @param cli The parsed command line.
+   * @param config The loaded configuration.
+   * @param positionalArguments The action arguments.
+   * @return {@link ExitCode#NORMAL}.
+   */
   protected int runListConfigAction(CommandLine cli, T config, String[] positionalArguments) {
     List<String[]> lines = new ArrayList<>();
     addRow(lines, "Application Info");
@@ -450,6 +580,9 @@ public abstract class BasicApp<T extends BasicConfig> {
     return optionLines;
   }
 
+  /**
+   * The built-in <code>list-config-options</code> action: lists all settings with descriptions and defaults.
+   */
   protected final BasicAction<T> listConfigOptionsAction = new BasicAction<T>("list-config-options", new String[0], "List all available configuration options", "list-config-options") {
     @Override
     protected int run(CommandLine cli, T config, String[] positionalArguments) {
@@ -457,6 +590,12 @@ public abstract class BasicApp<T extends BasicConfig> {
     }
   };
 
+  /**
+   * Prints every setting with its description and default value to standard output.
+   *
+   * @param config The configuration whose settings are listed.
+   * @return {@link ExitCode#NORMAL}.
+   */
   protected int runListConfigOptionsAction(T config) {
     SortedSet<String> sortedSettingNames = new TreeSet<String>(config.elementarySettingNames());
     for (String settingName : sortedSettingNames) {
@@ -468,6 +607,13 @@ public abstract class BasicApp<T extends BasicConfig> {
     return ExitCode.NORMAL;
   }
 
+  /**
+   * Builds a table of all settings (name, default value, description), sorted by name, with a header row.
+   *
+   * @param config The configuration whose settings are listed.
+   * @param prefix Text prepended to each setting name.
+   * @return The table rows.
+   */
   protected List<String[]> getAvailableSettings(T config, String prefix) {
     SortedSet<String> sortedSettingNames = new TreeSet<String>(config.elementarySettingNames());
     List<String[]> optionLines = new ArrayList<>();

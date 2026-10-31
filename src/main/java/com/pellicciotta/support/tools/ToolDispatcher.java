@@ -35,11 +35,29 @@ public final class ToolDispatcher {
       return "";
     }
 
+    /**
+     * The tool name.
+     */
     public final String name;
+    /**
+     * The tool version string.
+     */
     public final String version;
+    /**
+     * The tool description.
+     */
     public final String description;
+    /**
+     * The class implementing the tool.
+     */
     public final Class<? extends BasicApp> toolClass;
+    /**
+     * The tool instance, created through its no-argument constructor.
+     */
     public final BasicApp tool;
+    /**
+     * The tool's public <code>run(String[])</code> method.
+     */
     public final Method toolRunMethod;
 
     public int run(String[] cliArgs) throws Exception {

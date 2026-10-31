@@ -15,6 +15,7 @@ import java.util.*;
  *  Logging configuration {@link SettingsGroup}.
  */
 public class LoggingConfig extends SettingsGroup {
+  /** Create the settings group <code>logging</code> with all settings at their defaults. */
   public LoggingConfig() {
     super("logging", "Logging back-end settings");
     SettingsFactory create = new SettingsFactory();
@@ -38,64 +39,109 @@ public class LoggingConfig extends SettingsGroup {
   private final Setting<Boolean> fileAppend;
   private final ListSetting<LoggerConfig> loggers;
 
+  /**
+   * @return The configured {@link LogBackEnd} class, or the default (stdout) when unset.
+   */
   @SuppressWarnings("unchecked")
   public Class<? extends LogBackEnd> getBackEndType() {
     return (Class<? extends LogBackEnd>) this.backEndType.getValueOrDefault();
   }
 
+  /**
+   * @param type The {@link LogBackEnd} class to use.
+   */
   public void setBackEndType(Class<? extends LogBackEnd> type) {
     this.backEndType.setValue(type);
   }
 
+  /**
+   * @return The configured {@link LogEventFormatter} class, or {@link TextFormatter} when unset.
+   */
   @SuppressWarnings("unchecked")
   public Class<? extends LogEventFormatter> getFormatterType() {
     return (Class<? extends LogEventFormatter>) this.formatterType.getValueOrDefault();
   }
 
+  /**
+   * @param type The {@link LogEventFormatter} class to use.
+   */
   public void setFormatterType(Class<? extends LogEventFormatter> type) {
     this.formatterType.setValue(type);
   }
 
+  /**
+   * @return The message format template, which only some formatters use.
+   */
   public String getFormatTemplate() {
     return this.formatTemplate.getValueOrDefault();
   }
 
+  /**
+   * @param template The message format template.
+   */
   public void setFormatTemplate(String template) {
     this.formatTemplate.setValue(template);
   }
 
+  /**
+   * @return The minimum log level for loggers without their own setting.
+   */
   public int getMinLevel() {
     return this.minLevel.getValueOrDefault();
   }
 
+  /**
+   * @param level The minimum log level for loggers without their own setting.
+   */
   public void setMinLevel(int level) {
     this.minLevel.setValue(level);
   }
 
+  /**
+   * @return Whether stack traces are logged.
+   */
   public boolean getIncludeStackTraces() {
     return this.includeStackTraces.getValueOrDefault();
   }
 
+  /**
+   * @param include Whether stack traces are logged.
+   */
   public void setIncludeStackTraces(boolean include) {
     this.includeStackTraces.setValue(include);
   }
 
+  /**
+   * @return The log file path for file-based back-ends; <code>null</code> when unset.
+   */
   public String getFilePath() {
     return this.filePath.getValueOrDefault();
   }
 
+  /**
+   * @param filePath The log file path for file-based back-ends.
+   */
   public void setFilePath(String filePath) {
     this.filePath.setValue(filePath);
   }
 
+  /**
+   * @return Whether file-based back-ends append to an existing file (true) or truncate it (false).
+   */
   public boolean getFileAppend() {
     return this.fileAppend.getValueOrDefault();
   }
 
+  /**
+   * @param append Whether file-based back-ends append to an existing file (true) or truncate it (false).
+   */
   public void setFileAppend(boolean append) {
     this.fileAppend.setValue(append);
   }
 
+  /**
+   * @return A new map of the named-logger settings by logger name, sorted by name.
+   */
   public Map<String, LoggerConfig> getLoggerConfigs() {
     Map<String, LoggerConfig> namedLoggerConfigs = new TreeMap<>();
     for (LoggerConfig lc : this.loggers.getValueOrDefault()) {
@@ -104,18 +150,35 @@ public class LoggingConfig extends SettingsGroup {
     return namedLoggerConfigs;
   }
 
+  /**
+   * Replace all named-logger settings.
+   *
+   * @param configs The new settings.
+   */
   public void setLoggerConfigs(List<? extends LoggerConfig> configs) {
     this.loggers.setValue(configs);
   }
 
+  /**
+   * Replace all named-logger settings with the values of the map; the keys are ignored.
+   *
+   * @param configs The new settings.
+   */
   public void setLoggerConfigs(Map<String, ? extends LoggerConfig> configs) {
     this.loggers.setValue(new ArrayList<>(configs.values()));
   }
 
+  /**
+   * @param config A named-logger setting to add.
+   */
   public void addLoggerConfig(LoggerConfig config) {
     this.loggers.addElementValue(config);
   }
 
+  /**
+   * @param name The logger name.
+   * @return The setting for that logger, or <code>null</code> if there is none.
+   */
   public LoggerConfig getLoggerConfig(String name) {
     for (LoggerConfig lc : this.loggers.getValue()) {
       if (lc.getName().equals(name)) {

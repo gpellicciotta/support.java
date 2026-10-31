@@ -11,6 +11,12 @@ import static com.pellicciotta.support.diff.DiffUtils.ENABLE_LOGGING;
  *  Based on: https://bramcohen.livejournal.com/73318.html
  */
 public class PatienceDiff<T> extends DiffAlgorithmBase<T> {
+  /**
+   * Create a patience diff algorithm.
+   *
+   * @param fallback The algorithm used for ranges without unique common items; if <code>null</code>,
+   *        a {@link MyersLinearSpaceDiff} is used.
+   */
   public PatienceDiff(DiffAlgorithm<T> fallback) {
     this.fallback = (fallback != null) ? fallback : new MyersLinearSpaceDiff<>();
   }
@@ -61,6 +67,18 @@ public class PatienceDiff<T> extends DiffAlgorithmBase<T> {
     }
   }
 
+  /**
+   * Finds items occurring exactly once in both ranges and keeps the longest subsequence of them
+   * whose positions increase in both sequences. Items are compared by hash code.
+   *
+   * @param aSeq The first sequence.
+   * @param aSeqStart Inclusive start in the first sequence.
+   * @param aSeqEnd Exclusive end in the first sequence.
+   * @param bSeq The second sequence.
+   * @param bSeqStart Inclusive start in the second sequence.
+   * @param bSeqEnd Exclusive end in the second sequence.
+   * @return The ordered anchor matches; empty if there are none.
+   */
   protected List<Match> uniqueCommonAndIncreasingItems(T[] aSeq, int aSeqStart, int aSeqEnd, T[] bSeq, int bSeqStart, int bSeqEnd) {
     // Determine common unique lines:
     Map<Integer, ItemInfo> items = new HashMap<>();

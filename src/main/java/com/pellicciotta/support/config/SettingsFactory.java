@@ -223,190 +223,270 @@ public class SettingsFactory {
   // </editor-fold>
   // <editor-fold desc="Factory Functions" />
 
+  /** Creates a standalone boolean {@link Setting} that stores its own value, with no default value. */
   public Setting<Boolean> standaloneBooleanSetting(String name, String description) {
     return this.standaloneSetting(Boolean.class, name, description, StandardStringCodecs.BOOLEAN);
   }
 
+  /** Creates a standalone boolean {@link Setting} that stores its own value, with the given default value. */
   public Setting<Boolean> standaloneBooleanSetting(String name, String description, boolean defaultValue) {
     return this.standaloneSetting(Boolean.class, name, description, defaultValue, StandardStringCodecs.BOOLEAN);
   }
 
+  /** Creates a standalone boolean {@link Setting} that stores its own value, with a default and custom codec. */
   public Setting<Boolean> standaloneBooleanSetting(String name, String description, boolean defaultValue, StringCodec<Boolean> strCodec) {
     return this.standaloneSetting(Boolean.class, name, description, defaultValue, strCodec);
   }
 
+  /** Creates a standalone integer {@link Setting} that stores its own value, with no default value. */
   public Setting<Integer> standaloneIntegerSetting(String name, String description) {
     return this.standaloneSetting(Integer.class, name, description, StandardStringCodecs.INTEGER);
   }
 
+  /** Creates a standalone integer {@link Setting} that stores its own value, with the given default value. */
   public Setting<Integer> standaloneIntegerSetting(String name, String description, int defaultValue) {
     return this.standaloneSetting(Integer.class, name, description, defaultValue, StandardStringCodecs.INTEGER);
   }
 
+  /** Creates a standalone integer {@link Setting} that stores its own value, with a default and custom codec. */
   public Setting<Integer> standaloneIntegerSetting(String name, String description, int defaultValue, StringCodec<Integer> strCodec) {
     return this.standaloneSetting(Integer.class, name, description, defaultValue, strCodec);
   }
 
+  /** Creates a standalone log-level (integer) {@link Setting} that stores its own value, with no default value. */
   public Setting<Integer> standaloneLogLevelSetting(String name, String description) {
     return this.standaloneSetting(Integer.class, name, description, StandardStringCodecs.LOG_LEVEL);
   }
 
+  /** Creates a standalone log-level (integer) {@link Setting} that stores its own value, with a default value. */
   public Setting<Integer> standaloneLogLevelSetting(String name, String description, int defaultValue) {
     return this.standaloneSetting(Integer.class, name, description, defaultValue, StandardStringCodecs.LOG_LEVEL);
   }
 
+  /** Creates a standalone long {@link Setting} that stores its own value, with no default value. */
   public Setting<Long> standaloneLongSetting(String name, String description) {
     return this.standaloneSetting(Long.class, name, description, StandardStringCodecs.LONG);
   }
 
+  /** Creates a standalone long {@link Setting} that stores its own value, with the given default value. */
   public Setting<Long> standaloneLongSetting(String name, String description, long defaultValue) {
     return this.standaloneSetting(Long.class, name, description, defaultValue, StandardStringCodecs.LONG);
   }
 
+  /** Creates a standalone long {@link Setting} that stores its own value, with a default and custom codec. */
   public Setting<Long> standaloneLongSetting(String name, String description, long defaultValue, StringCodec<Long> strCodec) {
     return this.standaloneSetting(Long.class, name, description, defaultValue, strCodec);
   }
 
+  /** Creates a standalone byte-size (long) {@link Setting} that stores its own value, with no default value. */
   public Setting<Long> standaloneByteSizeSetting(String name, String description) {
     return this.standaloneSetting(Long.class, name, description, StandardStringCodecs.BYTE_SIZE);
   }
 
+  /** Creates a standalone byte-size (long) {@link Setting} that stores its own value, with the given default value. */
   public Setting<Long> standaloneByteSizeSetting(String name, String description, long defaultValue) {
     return this.standaloneSetting(Long.class, name, description, defaultValue, StandardStringCodecs.BYTE_SIZE);
   }
 
+  /** Creates a standalone timespan (long) {@link Setting} that stores its own value, with no default value. */
   public Setting<Long> standaloneTimespanSetting(String name, String description) {
     return this.standaloneSetting(Long.class, name, description, StandardStringCodecs.TIMESPAN);
   }
 
+  /** Creates a standalone timespan (long) {@link Setting} that stores its own value, with the given default value. */
   public Setting<Long> standaloneTimespanSetting(String name, String description, long defaultValue) {
     return this.standaloneSetting(Long.class, name, description, defaultValue, StandardStringCodecs.TIMESPAN);
   }
 
+  /**
+   * Creates a standalone timespan (long) {@link Setting} that stores its own value, with a default and custom
+   * codec.
+   */
   public Setting<Long> standaloneTimespanSetting(String name, String description, long defaultValue, StringCodec<Long> strCodec) {
     return this.standaloneSetting(Long.class, name, description, defaultValue, strCodec);
   }
 
+  /** Creates a standalone string {@link Setting} that stores its own value, with no default value. */
   public Setting<String> standaloneStringSetting(String name, String description) {
     return this.standaloneSetting(String.class, name, description, StandardStringCodecs.STRING);
   }
 
+  /** Creates a standalone string {@link Setting} that stores its own value, with the given default value. */
   public Setting<String> standaloneStringSetting(String name, String description, String defaultValue) {
     return this.standaloneSetting(String.class, name, description, defaultValue, StandardStringCodecs.STRING);
   }
 
+  /** Creates a standalone string {@link Setting} that stores its own value, with a default and custom codec. */
   public Setting<String> standaloneStringSetting(String name, String description, String defaultValue, StringCodec<String> strCodec) {
     return this.standaloneSetting(String.class, name, description, defaultValue, strCodec);
   }
 
+  /** Creates a standalone password (string) {@link Setting} that stores its own value, with no default value. */
   public Setting<String> standalonePasswordSetting(String name, String description) {
     return this.standaloneSetting(String.class, name, description, StandardStringCodecs.PASSWORD);
   }
 
+  /** Creates a standalone password (string) {@link Setting} that stores its own value, with the given default value. */
   public Setting<String> standalonePasswordSetting(String name, String description, String defaultValue) {
     return this.standaloneSetting(String.class, name, description, defaultValue, StandardStringCodecs.PASSWORD);
   }
 
+  /** Creates a standalone charset {@link Setting} that stores its own value, with no default value. */
   public Setting<Charset> standaloneCharsetSetting(String name, String description) {
     return this.standaloneSetting(Charset.class, name, description, StandardStringCodecs.CHARSET);
   }
 
+  /** Creates a standalone charset {@link Setting} that stores its own value, with the given default value. */
   public Setting<Charset> standaloneCharsetSetting(String name, String description, Charset defaultValue) {
     return this.standaloneSetting(Charset.class, name, description, defaultValue, StandardStringCodecs.CHARSET);
   }
 
+  /** Creates a standalone byte-array {@link Setting} that stores its own value, with no default value. */
   public Setting<byte[]> standaloneByteArraySetting(String name, String description) {
     return this.standaloneSetting(byte[].class, name, description, StandardStringCodecs.BYTE_ARRAY);
   }
 
+  /** Creates a standalone byte-array {@link Setting} that stores its own value, with the given default value. */
   public Setting<byte[]> standaloneByteArraySetting(String name, String description, byte[] defaultValue) {
     return this.standaloneSetting(byte[].class, name, description, defaultValue, StandardStringCodecs.BYTE_ARRAY);
   }
 
+  /** Creates a standalone byte-array {@link Setting} that stores its own value, with a default and custom codec. */
   public Setting<byte[]> standaloneByteArraySetting(String name, String description, byte[] defaultValue, StringCodec<byte[]> strCodec) {
     return this.standaloneSetting(byte[].class, name, description, defaultValue, strCodec);
   }
 
+  /** Creates a standalone double {@link Setting} that stores its own value, with no default value. */
   public Setting<Double> standaloneDoubleSetting(String name, String description) {
     return this.standaloneSetting(Double.class, name, description, StandardStringCodecs.DOUBLE);
   }
 
+  /** Creates a standalone double {@link Setting} that stores its own value, with the given default value. */
   public Setting<Double> standaloneDoubleSetting(String name, String description, double defaultValue) {
     return this.standaloneSetting(Double.class, name, description, defaultValue, StandardStringCodecs.DOUBLE);
   }
 
+  /** Creates a standalone double {@link Setting} that stores its own value, with a default and custom codec. */
   public Setting<Double> standaloneDoubleSetting(String name, String description, double defaultValue, StringCodec<Double> strCodec) {
     return this.standaloneSetting(Double.class, name, description, defaultValue, strCodec);
   }
 
+  /** Creates a standalone date-time {@link Setting} that stores its own value, with no default value. */
   public Setting<Date> standaloneDateTimeSetting(String name, String description) {
     return this.standaloneSetting(Date.class, name, description, StandardStringCodecs.DATE_TIME);
   }
 
+  /** Creates a standalone date-time {@link Setting} that stores its own value, with the given default value. */
   public Setting<Date> standaloneDateTimeSetting(String name, String description, Date defaultValue) {
     return this.standaloneSetting(Date.class, name, description, defaultValue, StandardStringCodecs.DATE_TIME);
   }
 
+  /** Creates a standalone date-time {@link Setting} that stores its own value, with a default and custom codec. */
   public Setting<Date> standaloneDateTimeSetting(String name, String description, Date defaultValue, StringCodec<Date> strCodec) {
     return this.standaloneSetting(Date.class, name, description, defaultValue, strCodec);
   }
 
+  /** Creates a standalone enum {@link Setting} that stores its own value, with no default value. */
   public <E extends Enum<E>> Setting<E> standaloneEnumSetting(Class<E> enumClass, String name, String description) {
     return this.standaloneSetting(enumClass, name, description, enumStringCodec(enumClass));
   }
 
+  /** Creates a standalone enum {@link Setting} that stores its own value, with the given default value. */
   public <E extends Enum<E>> Setting<E> standaloneEnumSetting(Class<E> enumClass, String name, String description, E defaultValue) {
     return this.standaloneSetting(enumClass, name, description, defaultValue, enumStringCodec(enumClass));
   }
 
+  /** Creates a standalone enum {@link Setting} that stores its own value, with a default and custom codec. */
   public <E extends Enum<E>> Setting<E> standaloneEnumSetting(Class<E> enumClass, String name, String description, E defaultValue, StringCodec<E> stringCodec) {
     return this.standaloneSetting(enumClass, name, description, defaultValue, stringCodec);
   }
 
+  /**
+   * Creates a standalone {@link ListSetting} that stores its own values, empty by default. Elements are
+   * converted using the standard codec for the element type.
+   */
   public <E> ListSetting<E> standaloneListSetting(Class<E> elementClass, String name, String description) {
     return new StandaloneListSetting<E>(elementClass, name, description, Collections.emptyList(), getStringCodec(elementClass));
   }
 
+  /**
+   * Creates a standalone {@link ListSetting} that stores its own values, with the given default values. Elements
+   * are converted using the standard codec for the element type.
+   */
   public <E> ListSetting<E> standaloneListSetting(Class<E> elementClass, String name, String description, List<E> defaultValue) {
     return new StandaloneListSetting<E>(elementClass, name, description, defaultValue, getStringCodec(elementClass));
   }
 
+  /**
+   * Creates a standalone {@link ListSetting} that stores its own values, with the given default values. Elements
+   * are converted using the given codec(s).
+   */
   public <E> ListSetting<E> standaloneListSetting(Class<E> elementClass, String name, String description, List<E> defaultValue, StringCodec<E> stringCodec) {
     return new StandaloneListSetting<>(elementClass, name, description, defaultValue, stringCodec);
   }
 
+  /**
+   * Creates a standalone {@link ListSetting} that stores its own values, with the given default values. Elements
+   * are converted using the given codec(s).
+   */
   public <E> ListSetting<E> standaloneListSetting(Class<E> elementClass, String name, String description, List<E> defaultValue, PropertyCodec<E> propertyCodec, XmlCodec<E> xmlCodec) {
     return new StandaloneListSetting<>(elementClass, name, description, defaultValue, propertyCodec, xmlCodec);
   }
 
+  /**
+   * Creates a standalone {@link Setting} for classes assignable to the given base class that stores its own
+   * value, with no default value.
+   */
   public Setting<Class> standaloneClassSetting(Class baseClass, String name, String description) {
     return this.standaloneSetting(baseClass, name, description, null, classStringCodec(baseClass));
   }
 
+  /**
+   * Creates a standalone {@link Setting} for classes assignable to the given base class that stores its own
+   * value, with the given default value.
+   */
   public Setting<Class> standaloneClassSetting(Class baseClass, String name, String description, Class defaultValue) {
     return this.standaloneSetting(baseClass, name, description, defaultValue, classStringCodec(baseClass));
   }
 
+  /**
+   * Creates a standalone {@link Setting} for classes assignable to the given base class that stores its own
+   * value, with a default and custom codec.
+   */
   public Setting<Class> standaloneClassSetting(Class baseClass, String name, String description, Class defaultValue, StringCodec<Class> stringCodec) {
     return this.standaloneSetting(baseClass, name, description, defaultValue, stringCodec);
   }
 
+  /**
+   * Creates a standalone {@link Setting} that stores its own value, with no default value, converted using the
+   * standard codec for the value type.
+   */
   public <T> Setting<T> standaloneSetting(Class<T> valueType, String name, String description) {
     return new StandaloneSetting<>(valueType, name, description, getStringCodec(valueType));
   }
 
+  /** Creates a standalone {@link Setting} that stores its own value, with no default value, using the given codec. */
   public <T> Setting<T> standaloneSetting(Class<T> valueType, String name, String description, StringCodec<T> strCodec) {
     return new StandaloneSetting<>(valueType, name, description, strCodec);
   }
 
+  /**
+   * Creates a standalone {@link Setting} that stores its own value, with the given default value, converted
+   * using the standard codec for the value type.
+   */
   public <T> Setting<T> standaloneSetting(Class<T> valueType, String name, String description, T defaultValue) {
     return new StandaloneSetting<>(valueType, name, description, defaultValue, getStringCodec(valueType));
   }
 
+  /** Creates a standalone {@link Setting} that stores its own value, with a default and custom codec. */
   public <T> Setting<T> standaloneSetting(Class<T> valueType, String name, String description, T defaultValue, StringCodec<T> strCodec) {
     return new StandaloneSetting<>(valueType, name, description, defaultValue, strCodec);
   }
 
+  /**
+   * Creates a {@link Setting} whose value is read and written through the given getter and setter, using the
+   * standard codec for the value type.
+   */
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, Supplier<T> getF, Consumer<T> setF) {
     final TypedValue<T> tv = new TypedValue<T>() {
       @Override public T get() {
@@ -419,10 +499,18 @@ public class SettingsFactory {
     return this.attachedSetting(valueType, name, description, tv);
   }
 
+  /**
+   * Creates a {@link Setting} whose value is read and written through the given {@link TypedValue}, using the
+   * standard codec for the value type.
+   */
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, TypedValue<T> tv) {
     return new AttachedSetting<T>(valueType, name, description, tv, getStringCodec(valueType));
   }
 
+  /**
+   * Creates a {@link Setting} whose value is read and written through the given getter and setter, using the
+   * given codec.
+   */
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, StringCodec<T> strCodec, Supplier<T> getF, Consumer<T> setF) {
     final TypedValue<T> tv = new TypedValue<T>() {
       @Override public T get() {
@@ -435,10 +523,18 @@ public class SettingsFactory {
     return this.attachedSetting(valueType, name, description, strCodec, tv);
   }
 
+  /**
+   * Creates a {@link Setting} whose value is read and written through the given {@link TypedValue}, using the
+   * given codec.
+   */
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, StringCodec<T> strCodec, TypedValue<T> tv) {
     return new AttachedSetting<T>(valueType, name, description, tv, strCodec);
   }
 
+  /**
+   * Creates a {@link Setting} with a default value, whose value is read and written through the given getter and
+   * setter, using the standard codec for the value type.
+   */
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, T defaultValue, Supplier<T> getF, Consumer<T> setF) {
     final TypedValue<T> tv = new TypedValue<T>() {
       @Override public T get() {
@@ -451,10 +547,18 @@ public class SettingsFactory {
     return this.attachedSetting(valueType, name, description, defaultValue, tv);
   }
 
+  /**
+   * Creates a {@link Setting} with a default value, whose value is read and written through the given {@link
+   * TypedValue}, using the standard codec for the value type.
+   */
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, T defaultValue, TypedValue<T> tv) {
     return new AttachedSetting<T>(valueType, name, description, defaultValue, tv, getStringCodec(valueType));
   }
 
+  /**
+   * Creates a {@link Setting} with a default value, whose value is read and written through the given getter and
+   * setter, using the given codec.
+   */
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, T defaultValue, StringCodec<T> strCodec, Supplier<T> getF, Consumer<T> setF) {
     final TypedValue<T> tv = new TypedValue<T>() {
       @Override public T get() {
@@ -467,10 +571,20 @@ public class SettingsFactory {
     return this.attachedSetting(valueType, name, description, defaultValue, strCodec, tv);
   }
 
+  /**
+   * Creates a {@link Setting} with a default value, whose value is read and written through the given {@link
+   * TypedValue}, using the given codec.
+   */
   public <T> Setting<T> attachedSetting(Class<T> valueType, String name, String description, T defaultValue, StringCodec<T> strCodec, TypedValue<T> tv) {
     return new AttachedSetting<T>(valueType, name, description, defaultValue, tv, strCodec);
   }
 
+  /**
+   * Creates a {@link Setting} attached to a field annotated with {@link ConfigSetting}. For {@link List} fields, the annotation must declare an <code>elementType</code> and a {@link ListSetting} is returned.
+   *
+   * @throws IllegalArgumentException If the annotation is missing, or the element type is missing for a list field.
+   * @throws Exception If reflection or codec instantiation fails.
+   */
   public Setting<?> attachedSetting(Object targetObject, Field targetField) throws Exception {
     targetField.setAccessible(true);
     // Check annotations on field
@@ -491,6 +605,12 @@ public class SettingsFactory {
     }
   }
 
+  /**
+   * Creates a {@link Setting} of the given type attached to a field annotated with {@link ConfigSetting}, using the annotation's name, description and codec.
+   *
+   * @throws IllegalArgumentException If the field has no {@link ConfigSetting} annotation.
+   * @throws Exception If reflection or codec instantiation fails.
+   */
   public <T> Setting<T> attachedSetting(Class<T> valueType, Object targetObject, Field targetField) throws Exception {
     targetField.setAccessible(true);
     // Check annotations on field
@@ -501,6 +621,12 @@ public class SettingsFactory {
     return this.fieldAnnotationBasedSetting(valueType, targetObject, fieldAnnotation, targetField);
   }
 
+  /**
+   * Creates a {@link ListSetting} attached to a {@link List} field annotated with {@link ConfigSetting}.
+   *
+   * @throws IllegalArgumentException If the field has no {@link ConfigSetting} annotation.
+   * @throws Exception If reflection or codec instantiation fails.
+   */
   public <T> ListSetting<T> attachedListSetting(Class<T> listElemType, Object targetObject, Field targetField) throws Exception {
     targetField.setAccessible(true);
     // Check annotations on field
@@ -511,6 +637,12 @@ public class SettingsFactory {
     return this.fieldAnnotationBasedListSetting(listElemType, targetObject, fieldAnnotation, targetField);
   }
 
+  /**
+   * Creates a {@link SettingsGroup} attached to a field annotated with {@link ConfigGroup}, containing the elements discovered by reflection on the field's value.
+   *
+   * @throws IllegalArgumentException If the field has no {@link ConfigGroup} annotation.
+   * @throws Exception If reflection fails.
+   */
   public SettingsGroup<?> attachedSettingsGroup(Object targetObject, Field targetField) throws Exception {
     targetField.setAccessible(true);
     // Check annotations on field + create group
@@ -543,6 +675,12 @@ public class SettingsFactory {
     return configElements.toArray(new ConfigElement[0]);
   }
 
+  /**
+   * Creates a {@link Config} from the elements discovered by reflection on the given object: its {@link ConfigElement} fields and its fields annotated with {@link ConfigSetting} or {@link ConfigGroup}.
+   *
+   * @param targetObject The object to inspect.
+   * @throws Exception If reflection fails.
+   */
   public Config attachedConfig(Object targetObject) throws Exception {
     return new Config(this.discoverElements(targetObject));
   }
