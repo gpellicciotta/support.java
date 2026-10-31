@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../src/test">
+      <sourceFolder url="file://$MODULE_DIR$/../../src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../src/test/resources" type="java-test-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="main" />
+    <orderEntry type="library" name="junit" level="project" />
+    <orderEntry type="library" name="mockito.all" level="project" />
+    <orderEntry type="library" name="mariadb.jdbc.java.client" level="project" />
+    <orderEntry type="library" name="eclipse.jetty.webapp" level="project" />
+    <orderEntry type="library" name="sun.mail.javax" level="project" />
+  </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="977336f2-3441-4221-9d67-904b1a70331e" />
+  </component>
+</module>

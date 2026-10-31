@@ -1,0 +1,9 @@
+a
+EQUAL 1
+EQUAL 2
+EQUAL 3
+c
+d
+EQUAL 4
+f
+g

@@ -1,0 +1,11 @@
+i
+h
+g
+EQUAL 1
+EQUAL 2
+EQUAL 3
+e
+d
+EQUAL 4
+b
+a

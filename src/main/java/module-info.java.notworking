@@ -1,0 +1,27 @@
+module com.pellicciotta.support {
+  requires static java.xml;
+  requires static java.naming;
+  requires static java.logging;
+  requires static java.sql;
+  requires static java.mail;
+
+  exports com.pellicciotta.support;
+  exports com.pellicciotta.support.annotations;
+  exports com.pellicciotta.support.app;
+  exports com.pellicciotta.support.cache;
+  exports com.pellicciotta.support.codecs;
+  exports com.pellicciotta.support.config;
+  exports com.pellicciotta.support.diff;
+  exports com.pellicciotta.support.http;
+  exports com.pellicciotta.support.io;
+  exports com.pellicciotta.support.logging;
+  exports com.pellicciotta.support.logging.jul;
+  exports com.pellicciotta.support.logging.noop;
+  exports com.pellicciotta.support.logging.spi;
+  exports com.pellicciotta.support.logging.stdout;
+  exports com.pellicciotta.support.mail;
+  exports com.pellicciotta.support.sql;
+  exports com.pellicciotta.support.text;
+  exports com.pellicciotta.support.tools;
+  exports com.pellicciotta.support.utils;
+}

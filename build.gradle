@@ -1,0 +1,204 @@
+// Configuration for building:
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+}
+
+plugins {
+  id 'com.diffplug.spotless' version '8.10.1'
+}
+
+// Plugins:
+apply plugin: 'java'                              // Standard Java tasks
+apply plugin: 'maven-publish'                     // Publish Maven package
+apply plugin: 'application'                       // Run from cli
+
+// Build repositories:
+repositories {
+  mavenCentral()
+}
+
+// Code dependencies:
+dependencies {
+  // Needed at compile & runtime but assumed to be provided by environment:
+  implementation 'com.sun.mail:javax.mail:1.6.2'                               // Mail API
+
+  // Needed at test time:
+  testImplementation 'com.sun.mail:javax.mail:1.6.2'                           // Mail API
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:6.1.3'               // For Unit testing
+  testRuntimeOnly    'org.junit.jupiter:junit-jupiter-engine:6.1.3'            // For Unit testing
+  testRuntimeOnly    'org.junit.platform:junit-platform-launcher:6.1.3'        // For Unit testing
+  testImplementation 'org.mariadb.jdbc:mariadb-java-client:2.7.+'              // MySQL
+  testImplementation 'org.testcontainers:testcontainers:2.0.5'                 // For SqlPagingTest's MariaDB
+  testImplementation 'org.testcontainers:testcontainers-junit-jupiter:2.0.5'   // For SqlPagingTest's MariaDB
+  testImplementation 'org.testcontainers:testcontainers-mariadb:2.0.5'         // For SqlPagingTest's MariaDB
+  testRuntimeOnly    'org.slf4j:slf4j-nop:1.7.36'                              // Silences Testcontainers' SLF4J "no binding found" warning
+}
+
+gradle.rootProject.ext.projectMainClass   = 'com.pellicciotta.support.Info'
+gradle.rootProject.ext.projectPrettyName  = 'Pellicciotta/Support Library'
+gradle.rootProject.ext.projectDescription = 'A general-purpose Java support library'
+gradle.rootProject.ext.projectAuthor      = author
+gradle.rootProject.ext.projectCopyright   = copyright
+
+task printAllProperties {
+  group = 'Debug'
+  doFirst {
+    project.properties.each {
+      println " - ${it}"
+    }
+  }
+}
+
+// Always generate sources and javadoc jars:
+java {
+  modularity.inferModulePath = true
+
+  // A toolchain (rather than source/targetCompatibility) decouples the JDK used to
+  // compile from the JDK running Gradle, and compiles with --release semantics so
+  // that use of APIs newer than the target is caught at build time. Matches the
+  // toolchain version used by pellicciotta-counters.
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(25)
+  }
+
+  withJavadocJar()
+  withSourcesJar()
+}
+
+// Short commit hash of the current HEAD, or null outside a git checkout (e.g. a source-only tarball build):
+def gitCommitHash = {
+  try {
+    def process = ['git', 'rev-parse', '--short', 'HEAD'].execute(null, projectDir)
+    process.waitFor()
+    return process.exitValue() == 0 ? process.text.trim() : null
+  } catch (IOException ignored) {
+    return null
+  }
+}()
+
+// Implementation-Version carries +<short-commit-hash> build metadata so in-development builds sharing the
+// same -pre version stay individually traceable back to the commit that produced them:
+def implementationVersion = gitCommitHash ? "${version}+${gitCommitHash}" : version.toString()
+
+// Ensure all desired attributes:
+jar {
+  manifest {
+    attributes 'Main-Class': projectMainClass,
+               'Specification-Version': project.name,
+               'Specification-Title': projectDescription,
+               'Specification-Vendor': projectCopyright,
+               'Implementation-Title': projectPrettyName,
+               'Implementation-Version': implementationVersion,
+               'Implementation-Vendor': projectAuthor,
+               'Build-Time': new Date().format('yyyy-MM-dd HH:mm:ss')
+  }
+}
+
+// Javadoc:
+javadoc {
+  if (JavaVersion.current().isJava9Compatible()) {
+    options.addBooleanOption('html5', true)
+  }
+  if (JavaVersion.current().isJava8Compatible()) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+  }
+}
+
+// Unit testing:
+test {
+  useJUnitPlatform()
+  testLogging.showStandardStreams = true
+}
+
+// Formatting: normalizes whitespace only (trailing whitespace, final newline, tabs-to-spaces),
+// deliberately not a full reformatter (googleJavaFormat/eclipse) - the codebase's existing Allman
+// brace style and wildcard imports are intentional and out of scope for this step. `check` already
+// depends on `spotlessCheck` via the plugin's own wiring.
+spotless {
+  java {
+    target 'src/**/*.java'
+    trimTrailingWhitespace()
+    endWithNewline()
+    indentWithSpaces(2)
+  }
+  groovyGradle {
+    target '*.gradle'
+    trimTrailingWhitespace()
+    endWithNewline()
+    indentWithSpaces(2)
+  }
+}
+
+// Make sure test resources can be found:
+// See: https://stackoverflow.com/questions/25513788/intellij-cant-find-classpath-test-resource
+// But just seems to work now
+//task copyTestResources(type: Copy) {
+//  from "${projectDir}/src/test/resources"
+//  into "${buildDir}/classes/java/test"
+//}
+//processTestResources.dependsOn copyTestResources
+
+// Run from CLI:
+application {
+  mainClass.set(projectMainClass)
+}
+
+// Publish in Maven format:
+def githubRepo = 'gpellicciotta/support.java'
+publishing {
+  publications {
+    maven(MavenPublication) {
+      artifactId = 'support.java'
+      from components.java
+      versionMapping {
+        usage('java-api') {
+          fromResolutionOf('runtimeClasspath')
+        }
+        usage('java-runtime') {
+          fromResolutionResult()
+        }
+      }
+      pom {
+        name = "${project.name}"
+        description = "${projectDescription}"
+        url = "https://github.com/${githubRepo}"
+        licenses {
+          license {
+            name = 'MIT License'
+            url = "https://github.com/${githubRepo}/blob/master/LICENSE.md"
+          }
+        }
+        developers {
+          developer {
+            id = 'giovanni.pellicciotta'
+            name = 'Giovanni Pellicciotta'
+            email = 'support@pellicciotta.com'
+          }
+        }
+        scm {
+          connection = "scm:git:https://github.com/${githubRepo}.git"
+          developerConnection = "scm:git:ssh://git@github.com/${githubRepo}.git"
+          url = "https://github.com/${githubRepo}"
+        }
+      }
+    }
+  }
+  repositories {
+    maven {
+      // Local repository by default, but can be changed:
+      def releasesRepoUrl = "${buildDir}/repos/releases"
+      def snapshotsRepoUrl = "${buildDir}/repos/snapshots"
+      url = (version.endsWith('SNAPSHOT') || version.endsWith('pre')) ? snapshotsRepoUrl : releasesRepoUrl
+    }
+    maven {
+      name = 'GithubPackages'
+      url = uri("https://maven.pkg.github.com/${githubRepo}")
+      credentials { // These come from {user.home}/.gradle/gradle.properties:
+        username = project.findProperty("github.username") ?: System.getenv("GITHUB_USERNAME")
+        password = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
+      }
+    }
+  }
+}
