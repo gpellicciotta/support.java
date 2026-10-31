@@ -15,6 +15,10 @@ All releases are available on [GitHub Packages](https://github.com/gpellicciotta
 
 ---
 
+## v1.0.1-pre
+
+---
+
 ## v1.0.0 [released: 2026-10-31]
 - BackEnd: Added `logging` with `jul`, `stdout`, `file`, `noop`, and `gcp` back-ends plus hierarchical, timed `Span` operations.
 - Config: Added `config`, a typed settings tree loaded from command line, environment, and file with JSON, XML, and properties serialization.
