@@ -138,7 +138,7 @@ public class MailMessage {
    * Convert to a JavaMail message using the current time as sent date.
    *
    * @param session The mail session to create the message in.
-   * @param xMailerHeader If non-null, an {@code X-Mailer} header is set (to a fixed value, not this argument).
+   * @param xMailerHeader If non-null, an {@code X-Mailer} header with this value is set.
    * @return The MIME message.
    * @throws MessagingException If setting any header, address, or content fails.
    * @throws IOException If reading an attachment file fails.
@@ -152,7 +152,7 @@ public class MailMessage {
    * {@code text/plain}; otherwise a single-part UTF-8 text message.
    *
    * @param session The mail session to create the message in.
-   * @param xMailerHeader If non-null, an {@code X-Mailer} header is set (to a fixed value, not this argument).
+   * @param xMailerHeader If non-null, an {@code X-Mailer} header with this value is set.
    * @param sentDate The sent date; if null, the current time is used.
    * @return The MIME message.
    * @throws MessagingException If setting any header, address, or content fails.
@@ -161,7 +161,7 @@ public class MailMessage {
   public MimeMessage toMimeMessage(Session session, String xMailerHeader, Date sentDate) throws MessagingException, IOException {
     MimeMessage mimeMsg = new MimeMessage(session);
     if (xMailerHeader != null) {
-      mimeMsg.setHeader("X-Mailer", "SendMailTool");
+      mimeMsg.setHeader("X-Mailer", xMailerHeader);
     }
     mimeMsg.setSentDate(sentDate != null ? sentDate : new Date());
     // Set From: header field of the header.
