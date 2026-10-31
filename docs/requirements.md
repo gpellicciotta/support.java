@@ -5,7 +5,6 @@ Functional and technical requirements for the `support.java` project.
 ---
 
 ## High-Level Goals
-
 - Provide a general-purpose Java support library, usable in most Java projects, with as few third-party
   dependencies as possible so downstream consumers aren't burdened by transitive dependencies.
 - Serve as the shared foundation consumed by other single-process apps with an embedded HTTP server:
@@ -61,7 +60,6 @@ Functional and technical requirements for the `support.java` project.
 ---
 
 ## Technical Requirements
-
 - Java Version: explicitly targeted and compiled with the Java 25 toolchain (`java.toolchain`). Published
   bytecode requires JDK 25 or later to load.
 - Build System: Gradle with a pinned Gradle wrapper (`gradlew` / `gradlew.bat`).
@@ -74,4 +72,7 @@ Functional and technical requirements for the `support.java` project.
   attributes, published to GitHub Packages.
 - Code Standards: 2-space indentation, UTF-8 encoding, LF line endings, US English.
 - Versioning: [Semantic Versioning](https://semver.org/); backward-incompatible changes bump the major version
-  and get an explicit breaking-change note in `CHANGELOG.md`.
+  and get an explicit `**[breaking]**` note in `CHANGELOG.md`.
+- Releases: one command (`python scripts/devops.py release`, backed by the Gradle `doFullRelease` pipeline) publishes
+  to GitHub Packages, tags, pushes, creates the GitHub Release, and opens the next `-pre` version.
+- Dependencies: versions are declared once in [libs.versions.toml](../gradle/libs.versions.toml), with no dynamic version ranges.

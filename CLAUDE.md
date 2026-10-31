@@ -9,7 +9,6 @@ Change `PLAN.md` and task frontmatter only through `plan` commands.
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## What this is
-
 `support.java` is a general-purpose Java support library (group `com.pellicciotta`), published as a Maven package
 and consumed by several other single-process apps with an embedded HTTP server: `pellicciotta-counters`,
 `pellicciotta-auth`, `pellicciotta-todos`. Java 25 toolchain, Gradle wrapper 9.7.0. `gradle/gradle-daemon-jvm.properties`
@@ -22,10 +21,11 @@ consumer compatibility) or let it float with the toolchain (another bytecode-ver
 the semver rule under Conventions.
 
 ## Commands
-
 All commands use the Gradle wrapper (`gradlew` / `gradlew.bat` — use `gradlew.bat` on Windows PowerShell, `./gradlew`
 under the Bash tool).
 
+- Bootstrap a fresh checkout: `python scripts/bootstrap-dev-environment.py`
+- Run every CI validation step: `python scripts/devops.py check` (same as `gradlew build`: Spotless, tests, jars)
 - Build: `gradlew build`
 - Run all tests: `gradlew test`
 - Run a single test class: `gradlew test --tests "com.pellicciotta.support.text.TokenizerTest"`
@@ -33,10 +33,11 @@ under the Bash tool).
 - Test output streams to stdout live (`testLogging.showStandardStreams = true` in `build.gradle`) — no need to dig
   through XML reports to see what a failing test printed.
 - Javadoc jar / sources jar are always generated (`withJavadocJar()` / `withSourcesJar()` in `build.gradle`).
-- Publish to GitHub Packages: `gradle publishMavenPublicationToGithubPackagesRepository` (needs
-  `github.username`/`github.token` in `${user.home}/.gradle/gradle.properties`, which is deliberately outside
-  version control — see `docs/devops.md`). **Never run this unless the user explicitly asks** — it's a
-  publish to a shared repository that other repos depend on.
+- Release: `python scripts/devops.py release` runs the Gradle `doFullRelease` pipeline (publish to GitHub
+  Packages, tag, push, GitHub Release, open the next `-pre` version); preview it with `--dry-run`. Credentials
+  (`github.username`/`github.token` in `${user.home}/.gradle/gradle.properties`, or `GITHUB_USERNAME`/`GITHUB_TOKEN`)
+  stay outside version control — see [devops.md](docs/devops.md). **Never run a release or publish unless the
+  user explicitly asks** — it publishes to a shared repository that other repos depend on.
 
 Testing uses JUnit 6 (`org.junit.jupiter:junit-jupiter-*`, `org.junit.platform:junit-platform-launcher`) — plain
 `org.junit.jupiter.api` style (`@Test`/`@BeforeEach`/`@BeforeAll`/`Assertions`/etc.), no parameterized-test
@@ -45,7 +46,6 @@ it's gone). `SqlPagingTest` is the one exception to "no custom extensions": it u
 `@Testcontainers`/`@Container` to run a real MariaDB in Docker — see `docs/devops.md` for details.
 
 ## Architecture
-
 Everything lives under `com.pellicciotta.support`, organized as one package per concern. Each package generally has an
 API half (what consuming code calls) and an SPI half (how to extend/back it) — read the `package-info.java` in a
 package before working in it; several (`logging`, `config`) have detailed design notes there.
@@ -97,26 +97,26 @@ package before working in it; several (`logging`, `config`) have detailed design
   `@ConfigGroup`/`@ConfigSetting` (`config`), `@WebRoute`/`@WebRoutes` (`http`).
 
 ## Development Guidelines
-
-This project follows the cross-project [dev-guidelines](https://github.com/gpellicciotta/dev-guidelines):
-- Standard root files (`LICENSE.md`, `CHANGELOG.md`, `TODO.md`, `README.md`) plus `docs/index.md`,
-  `docs/requirements.md`, `docs/devops.md` — see `docs/index.md` for the full documentation index.
-- Task coordination follows the Tnnnn task-ID/worktree protocol in
-  [coordinating-work-guidelines.md](https://github.com/gpellicciotta/dev-guidelines/blob/main/guidelines/coordinating-work-guidelines.md):
-  claim a task in `TODO.md`, work in `./work/Tnnnn-slug` on branch `task/Tnnnn-slug`, detail it in
-  `tasks/Tnnnn-slug.md`.
+This project follows the cross-project [dev-guidelines](https://github.com/gpellicciotta/dev-guidelines) and
+started from [java-project-template](https://github.com/gpellicciotta/java-project-template):
+- Standard root files (`LICENSE.md`, `CHANGELOG.md`, `PLAN.md`, `README.md`) plus `docs/index.md`,
+  `docs/requirements.md`, `docs/devops.md` — see [index.md](docs/index.md) for the full documentation index.
+- Tasks live in `PLAN.md` and `.plan/tasks/` and are managed only through the `plan` CLI (see the block at the
+  top of this file).
+- Commit messages are one past-tense sentence of at most 20 words, with no prefixes or attribution trailers.
 
 ## Conventions
-
 - Every source file starts with `// Copyright (c) Giovanni Pellicciotta`.
 - Packages with non-trivial design decisions document them in `package-info.java` (see `logging`, `config`) —
   update these when the design changes, don't just leave them describing the old shape.
 - Versioning/release process: `gradle.properties` (`version=`) drives what actually gets published; keep
-  `CHANGELOG.md`'s newest heading matching it exactly. The history starts at `1.0.0`; `gradle.properties` is ground truth for the numbering.
+  `CHANGELOG.md`'s newest heading matching it exactly (`python scripts/devops.py versions` checks this). Versions
+  carry a `-pre` suffix while in development; `doFullRelease` strips it, publishes, and opens the next patch.
 - **Semver discipline (applies to every change, not just this file):** any backward-incompatible change — a
   public API removal/signature change, a behavior change existing callers could depend on, or a
   minimum-runtime-version bump that breaks previously-working consumers — bumps the **major** version number and
-  gets an explicit, clearly-labeled breaking-change note in `CHANGELOG.md`'s entry for that version Don't bundle a breaking change into a minor/patch bump even if it started as an
-  unrelated task (e.g. "just match another repo's Gradle/JDK version").
-- When adding a feature, add a corresponding entry to `CHANGELOG.md` in the existing style (version heading,
-  date, bullet list of changes).
+  gets an explicit `**[breaking]**` note in `CHANGELOG.md`'s entry for that version. Don't bundle a breaking
+  change into a minor/patch bump even if it started as an unrelated task (e.g. "just match another repo's
+  Gradle/JDK version").
+- Changelog bullets are one sentence of at most 20 words in the form `Area: Past-tense verb outcome` (areas such
+  as `BackEnd`, `DevEx`, `Build`, `Docs`, `CLI`); add one under the active `-pre` heading with every user-visible change.

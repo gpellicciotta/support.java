@@ -4,31 +4,29 @@ A summarized overview of all changes, per version of this project.
 
 > Entries are in reverse chronological order, most recent at the top.
 >
-> A version actively being developed carries a `-pre` SemVer pre-release suffix on its heading (e.g.
-> `## v5.0.0-pre`) instead of a status tag. Status codes used once a version leaves that state are:
+> An active in-development version carries a `-pre` suffix (e.g. `v1.0.0-pre`) on both this heading and
+> `gradle.properties`'s `version`. On release, the suffix is replaced with a status tag:
 > - `[{{date}}]` - frozen/finalized on {{date}}
 > - `[released: {{date}}]` - released to package manager or production on {{date}}
-> - `[broken]` - considered broken and not be used
+> - `[broken]` - considered broken and not to be used
 
 ## Package Repository
-
-All releases are available on:
-- https://github.com/gpellicciotta/support.java/packages/
+All releases are available on [GitHub Packages](https://github.com/gpellicciotta/support.java/packages).
 
 ---
 
 ## v1.0.0-pre
-
-- Initial release of the general-purpose Java support library (`com.pellicciotta:support.java`); requires JDK 25 or later.
-- `logging`: `LogService` front-end handing out `Log` instances backed by `jul`, `stdout`, `file`, and `noop` back-ends and a `gcp` structured-log formatter; `Span` for hierarchical, timed operations with `ContextData`.
-- `config`: `SettingsFactory` builds a tree of described, defaulted settings with JSON/XML/Map/properties/command-line (de)serialization; command line overrides environment variables, which override the config file.
-- `codecs`: encode/decode pairs between string, XML, and property representations.
-- `app`: `BasicApp` template for CLI apps with config loading, logging setup, and `@CommandLineAction` dispatch, plus bundled `charsets`, `diff`, `timezones`, and `httpd` tools behind `ToolDispatcher`.
-- `http`: server-agnostic `Request`/`Response` API with routing (`@WebRoute`/`@WebRoutes`), a JDK `HttpServer`-based `WebServer`, and `StaticFileHandler` for file system and classpath resources, including `Last-Modified`/`If-Modified-Since` support.
-- `sql`: JDBC helpers with `SqlExecutor`, dialect-aware `SqlGenerator`, paging, a hand-written SQL tokenizer/parser, and versioned statements for schema migrations.
-- `mail`: `MailService` over JavaMail with a dummy back-end for tests.
-- `diff`: Myers (greedy, linear-space, reverse-greedy), histogram, and patience diff algorithms behind one interface.
-- `text`: tokenizer, syntax tree, and text/HTML builders.
-- `utils`, `cache`, `io`, `exceptions`, `annotations`: general helpers, caches and resource pools, CSV and stream I/O, shared exception types, and declarative markers.
+- BackEnd: Added `logging` with `jul`, `stdout`, `file`, `noop`, and `gcp` back-ends plus hierarchical, timed `Span` operations.
+- Config: Added `config`, a typed settings tree loaded from command line, environment, and file with JSON, XML, and properties serialization.
+- Config: Added `codecs` for encoding settings between string, XML, and property representations.
+- CLI: Added `BasicApp` for command-line apps and bundled `charsets`, `diff`, `timezones`, and `httpd` tools behind `ToolDispatcher`.
+- BackEnd: Added a server-agnostic `http` layer on the JDK `HttpServer` with routing and `StaticFileHandler` serving files and classpath resources.
+- BackEnd: Added `sql` helpers: `SqlExecutor`, dialect-aware generation, paging, a SQL tokenizer and parser, and versioned migrations.
+- BackEnd: Added `mail`, a `MailService` over JavaMail with a dummy back-end for tests.
+- BackEnd: Added `diff` with Myers (greedy, linear-space, reverse), histogram, and patience algorithms behind one interface.
+- BackEnd: Added `text` with a tokenizer, syntax tree, and text and HTML builders.
+- BackEnd: Added `utils`, `cache`, `io`, `exceptions`, and `annotations` with shared helpers, caches, CSV I/O, and declarative markers.
+- Build: Added a Gradle build with a JDK 25 toolchain, Spotless, JUnit 6, Testcontainers, and publishing to GitHub Packages.
+- DevEx: Added `devops.py` and the `doFullRelease` pipeline for CI-equivalent checks and one-command releases.
 
 ---
