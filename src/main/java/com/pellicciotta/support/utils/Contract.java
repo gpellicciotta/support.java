@@ -712,63 +712,67 @@ public final class Contract {
   }
 
   /**
-   * Verifies that an argument is not equal to any of the given values.
+   * Verifies that an argument equals one of the given values.
    *
    * @param arg The argument to check.
-   * @param invalidValues The values {@code arg} must not equal.
-   * @throws IllegalArgumentException if {@code arg} equals one of the values.
+   * @param validValues The values {@code arg} must equal one of; an empty array accepts nothing.
+   * @throws IllegalArgumentException if {@code arg} equals none of the values.
    */
-  public static void isIn(char arg, char... invalidValues) {
-    for (char iv : invalidValues) {
-      if (arg == iv) {
-        throw new IllegalArgumentException("Argument value must not be equal to " + iv);
+  public static void isIn(char arg, char... validValues) {
+    for (char v : validValues) {
+      if (arg == v) {
+        return;
       }
     }
+    throw new IllegalArgumentException("Argument value " + arg + " must be one of " + java.util.Arrays.toString(validValues));
   }
 
   /**
-   * Verifies that an argument is not equal to any of the given values.
+   * Verifies that an argument equals one of the given values.
    *
    * @param arg The argument to check.
-   * @param invalidValues The values {@code arg} must not equal.
-   * @throws IllegalArgumentException if {@code arg} equals one of the values.
+   * @param validValues The values {@code arg} must equal one of; an empty array accepts nothing.
+   * @throws IllegalArgumentException if {@code arg} equals none of the values.
    */
-  public static void isIn(int arg, int... invalidValues) {
-    for (int iv : invalidValues) {
-      if (arg == iv) {
-        throw new IllegalArgumentException("Argument must not be equal to " + iv);
+  public static void isIn(int arg, int... validValues) {
+    for (int v : validValues) {
+      if (arg == v) {
+        return;
       }
     }
+    throw new IllegalArgumentException("Argument value " + arg + " must be one of " + java.util.Arrays.toString(validValues));
   }
 
   /**
-   * Verifies that an argument is not equal to any of the given values.
+   * Verifies that an argument equals one of the given values.
    *
    * @param arg The argument to check.
-   * @param invalidValues The values {@code arg} must not equal.
-   * @throws IllegalArgumentException if {@code arg} equals one of the values.
+   * @param validValues The values {@code arg} must equal one of; an empty array accepts nothing.
+   * @throws IllegalArgumentException if {@code arg} equals none of the values.
    */
-  public static void isIn(long arg, long... invalidValues) {
-    for (long iv : invalidValues) {
-      if (arg == iv) {
-        throw new IllegalArgumentException("Argument must not be equal to " + iv);
+  public static void isIn(long arg, long... validValues) {
+    for (long v : validValues) {
+      if (arg == v) {
+        return;
       }
     }
+    throw new IllegalArgumentException("Argument value " + arg + " must be one of " + java.util.Arrays.toString(validValues));
   }
 
   /**
-   * Verifies that an argument is not equal to any of the given values.
+   * Verifies that an argument equals one of the given values.
    *
    * @param arg The argument to check.
-   * @param invalidValues The values {@code arg} must not equal.
-   * @throws IllegalArgumentException if {@code arg} equals one of the values.
+   * @param validValues The values {@code arg} must equal one of; an empty array accepts nothing.
+   * @throws IllegalArgumentException if {@code arg} equals none of the values.
    */
-  public static void isIn(double arg, double... invalidValues) {
-    for (double iv : invalidValues) {
-      if (arg == iv) {
-        throw new IllegalArgumentException("Argument must not be equal to " + iv);
+  public static void isIn(double arg, double... validValues) {
+    for (double v : validValues) {
+      if (arg == v) {
+        return;
       }
     }
+    throw new IllegalArgumentException("Argument value " + arg + " must be one of " + java.util.Arrays.toString(validValues));
   }
 
   /**

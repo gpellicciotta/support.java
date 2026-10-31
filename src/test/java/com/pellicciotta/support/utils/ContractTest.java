@@ -22,4 +22,23 @@ public class ContractTest {
     assertEquals("Condition 'x is empty' must be false", e.getMessage());
     assertDoesNotThrow(() -> Contract.isFalse("x is empty", false));
   }
+
+  // The primitive overloads are ambiguous with the generic one for inline varargs, so arrays are passed explicitly.
+  @Test
+  public void isInAcceptsPrimitivesEqualToOneOfTheValues() {
+    assertDoesNotThrow(() -> Contract.isIn('b', new char[] {'a', 'b'}));
+    assertDoesNotThrow(() -> Contract.isIn(3, new int[] {1, 2, 3}));
+    assertDoesNotThrow(() -> Contract.isIn(3L, new long[] {1L, 3L}));
+    assertDoesNotThrow(() -> Contract.isIn(2.5, new double[] {1.0, 2.5}));
+  }
+
+  @Test
+  public void isInRejectsPrimitivesNotEqualToAnyValue() {
+    assertThrows(IllegalArgumentException.class, () -> Contract.isIn('z', new char[] {'a', 'b'}));
+    IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> Contract.isIn(5, new int[] {1, 2, 3}));
+    assertEquals("Argument value 5 must be one of [1, 2, 3]", e.getMessage());
+    assertThrows(IllegalArgumentException.class, () -> Contract.isIn(5L, new long[] {1L, 2L}));
+    assertThrows(IllegalArgumentException.class, () -> Contract.isIn(5.5, new double[] {1.0, 2.0}));
+    assertThrows(IllegalArgumentException.class, () -> Contract.isIn(1, new int[0]));
+  }
 }
