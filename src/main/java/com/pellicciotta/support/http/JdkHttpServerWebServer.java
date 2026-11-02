@@ -117,7 +117,7 @@ public final class JdkHttpServerWebServer implements WebServer {
   private void dispatch(HttpExchange exchange) {
     long startTime = System.currentTimeMillis();
     Request request = new HttpExchangeRequest(exchange);
-    Response response = new HttpExchangeResponse(exchange);
+    HttpExchangeResponse response = new HttpExchangeResponse(exchange);
     try {
       boolean handled = false;
       for (HttpRequestHandler handler : this.handlers) {
@@ -129,6 +129,8 @@ public final class JdkHttpServerWebServer implements WebServer {
       if (!handled) {
         response.sendError(404, "No handler found for " + request.getMethod() + " " + request.getRequestURI());
       }
+      // A handler may only set a status; closing the exchange before the headers went out would drop the connection
+      response.finish();
     }
     catch (Exception e) {
       this.log.error("Failed to handle %s %s: %s", request.getMethod(), request.getRequestURI(), e);

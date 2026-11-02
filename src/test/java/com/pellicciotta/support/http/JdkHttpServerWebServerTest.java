@@ -222,6 +222,48 @@ public class JdkHttpServerWebServerTest {
   }
 
   @Test
+  public void testMatchingIfModifiedSinceForAStaticFileGets304() throws Exception {
+    Files.writeString(this.files.resolve("index.html"), "<p>Hello</p>", StandardCharsets.UTF_8);
+    this.server = new JdkHttpServerWebServer(this.port);
+    this.server.add(new StaticFileHandler(this.files.toString()));
+    this.server.start();
+
+    HttpResponse<String> first = this.get("/index.html");
+    String lastModified = first.headers().firstValue("Last-Modified").orElseThrow();
+    HttpRequest request = HttpRequest.newBuilder(URI.create("http://localhost:" + this.port + "/index.html"))
+        .timeout(Duration.ofSeconds(5))
+        .header("If-Modified-Since", lastModified)
+        .GET()
+        .build();
+    HttpResponse<String> second = this.client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    Assertions.assertEquals(304, second.statusCode());
+    Assertions.assertEquals("", second.body());
+    Assertions.assertEquals(lastModified, second.headers().firstValue("Last-Modified").orElse(null));
+    Assertions.assertEquals(List.of(), this.noBodyWarnings, "The JDK server is told the 304 answer has no body");
+  }
+
+  @Test
+  public void testAHandlerThatOnlySetsAStatusIsAnswered() throws Exception {
+    for (int status : new int[] {304, 204, 200}) {
+      this.server = new JdkHttpServerWebServer(this.port);
+      this.server.add((req, resp) -> {
+        resp.setStatus(status);
+        return true;
+      });
+      this.server.start();
+
+      HttpResponse<String> response = this.get("/page");
+
+      Assertions.assertEquals(status, response.statusCode());
+      Assertions.assertEquals("", response.body());
+      Assertions.assertEquals(List.of(), this.noBodyWarnings, "The JDK server is told the " + status + " answer has no body");
+      this.server.shutDown();
+      this.findFreePort();
+    }
+  }
+
+  @Test
   public void testHandlerRespondsToRealRequest() throws Exception {
     this.server = new JdkHttpServerWebServer(this.port);
     this.server.add((req, resp) -> {

@@ -14,7 +14,8 @@ import com.sun.net.httpserver.HttpExchange;
  *  {@code HttpExchange} requires headers to be sent (via {@code sendResponseHeaders}) before the response body
  *  can be written, and the exact body length must be decided at that point — this class defers that call to the
  *  first access of the body ({@link #getOutputStream()}), using chunked transfer-encoding unless
- *  {@link #setContentLength} was called first.</p>
+ *  {@link #setContentLength} was called first. A handled request whose body was never accessed gets its headers
+ *  from {@link #finish()} instead.</p>
  *  <p>
  *  Answers to a {@code HEAD} request, and {@code 1xx}, {@code 204}, and {@code 304} answers, carry no body: their headers go out
  *  with the JDK's no-body length, and whatever a handler writes is dropped, so handlers need no special case.</p>
@@ -68,6 +69,11 @@ final class HttpExchangeResponse implements Response {
     try (OutputStream os = this.getOutputStream()) {
       os.write(bytes);
     }
+  }
+
+  /** Sends the headers if no handler did, so an answer that never touched its body still reaches the client. */
+  void finish() throws IOException {
+    this.ensureHeadersSent();
   }
 
   /**
