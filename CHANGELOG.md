@@ -15,7 +15,7 @@ All releases are available on [GitHub Packages](https://github.com/gpellicciotta
 
 ---
 
-## v1.0.1-pre
+## v1.0.1 [released: 2026-11-03]
 - BackEnd: Fixed dropped connections when a handler only set a status, including `StaticFileHandler` 304 answers.
 
 ---
