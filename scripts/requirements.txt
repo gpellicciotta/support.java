@@ -1,0 +1,2 @@
+# Libraries imported by scripts/devops.py and scripts/tests; bootstrap-dev-environment.py installs them into .venv.
+support-python @ git+https://github.com/gpellicciotta/support.python.git@v2.0.0

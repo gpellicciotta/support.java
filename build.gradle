@@ -56,9 +56,30 @@ checkstyle {
   maxWarnings = 0
 }
 
+// Fast suite: `test` skips tests tagged "slow" (Docker-backed integration tests) and runs the rest.
 test {
-  useJUnitPlatform()
+  useJUnitPlatform {
+    excludeTags 'slow'
+  }
   testLogging.showStandardStreams = true
+  systemProperty 'junit.jupiter.execution.timeout.default', '30 s'
+}
+
+// Slow suite: tests tagged "slow"; `check` and CI run it after the fast suite.
+tasks.register('slowTest', Test) {
+  description = 'Runs the tests tagged slow, such as the Testcontainers-backed database tests.'
+  group = 'verification'
+  testClassesDirs = sourceSets.test.output.classesDirs
+  classpath = sourceSets.test.runtimeClasspath
+  useJUnitPlatform {
+    includeTags 'slow'
+  }
+  testLogging.showStandardStreams = true
+  systemProperty 'junit.jupiter.execution.timeout.default', '120 s'
+}
+
+tasks.named('check') {
+  dependsOn 'slowTest'
 }
 
 // Formatting: normalizes whitespace only (trailing whitespace, final newline, tabs-to-spaces), deliberately

@@ -1,157 +1,51 @@
 #!/usr/bin/env python3
 # Copyright (c) Giovanni Pellicciotta
-"""Development operations runner for support.java.
+"""Development operations runner for support.java, built on support_python.devops.
 
-Runs the same validation steps locally that CI runs, so local and CI checks cannot drift apart,
-and gives one entry point to the other typical project operations (build, test, versions, release).
-Standard library only.
+Run `python scripts/devops.py help --verbose` for every action. A `.venv` created by
+`scripts/bootstrap-dev-environment.py` holds support-python; this script re-runs itself there when present.
 """
 
-import argparse
-import re
+from __future__ import annotations
+
 import subprocess
 import sys
 from pathlib import Path
 
-TOOL_NAME = "devops"
-COPYRIGHT = "Copyright (c) Giovanni Pellicciotta"
-DESCRIPTION = "Runs the repository validation steps that CI runs, plus build, test, versions, and release operations."
 REPO_ROOT = Path(__file__).resolve().parent.parent
+VENV_DIR = REPO_ROOT / ".venv"
+VENV_PYTHON = VENV_DIR / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
 
-EXIT_OK = 0
-EXIT_ERROR = 1
-EXIT_USAGE = 2
+if __name__ == "__main__" and VENV_PYTHON.is_file() and Path(sys.prefix).resolve() != VENV_DIR.resolve():
+    sys.exit(subprocess.run([str(VENV_PYTHON), str(Path(__file__).resolve()), *sys.argv[1:]], check=False).returncode)
 
-ACTIONS = {
-    "check": "run every CI validation step: Spotless, Checkstyle, tests, and jar assembly (gradlew build)",
-    "build": "compile, test, and assemble the jar, sources jar, and Javadoc jar (gradlew build)",
-    "test": "run the unit tests only, optionally narrowed with --tests",
-    "clean": "delete Gradle build output (gradlew clean)",
-    "versions": "show gradle.properties and CHANGELOG.md versions and fail when they drift apart",
-    "release": "cut a release with the Gradle doFullRelease pipeline (publishes and pushes)",
-    "version": "show version information",
-    "help": "show this help; add --verbose for details on every action",
-}
-
-EXIT_CODES = [
-    (EXIT_OK, "Success"),
-    (EXIT_ERROR, "A step failed or a precondition was not met"),
-    (EXIT_USAGE, "Invalid arguments"),
-]
+try:
+    from support_python.devops import DevopsCli, GradleProject
+    from support_python.devops.steps import resolve_executable
+except ImportError as exc:
+    sys.exit(f"**[ERROR]** support-python v2 is missing ({exc}); run `python scripts/bootstrap-dev-environment.py` first.")
 
 
-def read_property(name: str) -> str:
-    text = (REPO_ROOT / "gradle.properties").read_text(encoding="utf-8")
-    m = re.search(rf"^{re.escape(name)}\s*=\s*(.+?)\s*$", text, re.MULTILINE)
-    return m.group(1) if m else ""
+class SupportJavaProject(GradleProject):
+    """Gradle project whose `lint` and `check` also run `lint-markdown check`, stopping at the first failure."""
+
+    def lint(self) -> bool:
+        return self.lint_markdown() and super().lint()
+
+    def check(self) -> bool:
+        return self.lint_markdown() and super().check()
+
+    def lint_markdown(self) -> bool:
+        """Lint every Markdown file in the repository, honoring `.lint-markdown.json`."""
+        return self.run_command([resolve_executable("lint-markdown") or "lint-markdown", "check"])
 
 
-def tool_version() -> str:
-    return read_property("version") or "0.0.0+unknown"
-
-
-def print_version() -> None:
-    print(f"{TOOL_NAME} v{tool_version()} - {COPYRIGHT}")
-
-
-def gradlew() -> str:
-    return str(REPO_ROOT / ("gradlew.bat" if sys.platform == "win32" else "gradlew"))
-
-
-def run(argv: list[str]) -> int:
-    print(f"$ {' '.join(argv)}")
-    return subprocess.run(argv, cwd=REPO_ROOT, check=False).returncode
-
-
-def changelog_top_version() -> str:
-    text = (REPO_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
-    m = re.search(r"^## v(\S+)", text, re.MULTILINE)
-    return m.group(1) if m else ""
-
-
-def action_versions(_: argparse.Namespace) -> int:
-    props = read_property("version")
-    changelog = changelog_top_version()
-    print(f"gradle.properties : {props}")
-    print(f"CHANGELOG.md top  : {changelog}")
-    if props != changelog:
-        print("**[ERROR]**: versions have drifted apart; they must match exactly, -pre suffix included", file=sys.stderr)
-        return EXIT_ERROR
-    return EXIT_OK
-
-
-def action_release(args: argparse.Namespace) -> int:
-    version = read_property("version")
-    if args.dry_run:
-        return run([gradlew(), "doFullRelease", "--dry-run", "--console=plain"])
-    if not version.endswith("-pre"):
-        print(f"**[ERROR]**: version {version} has no -pre suffix; nothing to release", file=sys.stderr)
-        return EXIT_ERROR
-    released = version.removesuffix("-pre")
-    print(f"OUTBOUND: releases v{released}: publishes to GitHub Packages, pushes main and the tag, creates a GitHub Release.")
-    if not args.yes and input(f"Type 'release v{released}' to proceed: ").strip() != f"release v{released}":
-        print("aborted", file=sys.stderr)
-        return EXIT_ERROR
-    return run([gradlew(), "doFullRelease", "-PreleaseConfirmed=yes", "--console=plain"])
-
-
-def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog=TOOL_NAME, add_help=False, description=DESCRIPTION)
-    parser.add_argument("action", nargs="?", default="help", choices=list(ACTIONS))
-    parser.add_argument("-h", "--help", action="store_true")
-    parser.add_argument("--version", action="store_true")
-    parser.add_argument("-v", "--verbose", action="store_true", help="with help: describe every action")
-    parser.add_argument("--tests", help="test: Gradle --tests filter, e.g. com.pellicciotta.support.text.TokenizerTest")
-    parser.add_argument("--dry-run", action="store_true", help="release: only list the Gradle tasks the pipeline would run")
-    parser.add_argument("--yes", action="store_true", help="release: skip the typed confirmation")
-    return parser
-
-
-def print_help(verbose: bool) -> None:
-    print_version()
-    print(f"\n{DESCRIPTION}\n")
-    print(f"Usage:\n  {TOOL_NAME} <action> [options]\n\nActions:")
-    for name, text in ACTIONS.items():
-        print(f"  {name:<10} {text}")
-    print("\nOptions:\n  -h, --help       show this help\n  --version        show version\n  -v, --verbose    with help: details per action")
-    print("  --tests FILTER   test: narrow the run to a class or method\n  --dry-run        release: preview only\n  --yes            release: skip the confirmation")
-    if verbose:
-        print("\nDetails:")
-        print("  check/build  Gradle's build runs spotlessCheck, checkstyle, tests, javadoc, and jar tasks - exactly what CI runs.")
-        print("  release      Needs a clean main pushed to origin with green CI, the gh CLI logged in, and GitHub Packages")
-        print("               credentials (github.username/github.token in ~/.gradle/gradle.properties or GITHUB_USERNAME/GITHUB_TOKEN).")
-        print("               Steps: build, verify, mark released, publish, tag, push, GitHub Release, open the next -pre version.")
-    print("\nExit codes:")
-    for code, meaning in EXIT_CODES:
-        print(f"  {code}  {meaning}")
-
-
-def main(argv: list[str]) -> int:
-    try:
-        args = build_parser().parse_args(argv)
-    except SystemExit:
-        return EXIT_USAGE
-    if args.version or args.action == "version":
-        print_version()
-        return EXIT_OK
-    if args.help or args.action == "help":
-        print_help(args.verbose)
-        return EXIT_OK
-    if args.action in ("check", "build"):
-        return run([gradlew(), "build", "--console=plain"])
-    if args.action == "test":
-        cmd = [gradlew(), "test", "--console=plain"]
-        if args.tests:
-            cmd += ["--tests", args.tests]
-        return run(cmd)
-    if args.action == "clean":
-        return run([gradlew(), "clean", "--console=plain"])
-    if args.action == "versions":
-        return action_versions(args)
-    if args.action == "release":
-        return action_release(args)
-    return EXIT_USAGE
+def build_cli(root: Path = REPO_ROOT) -> DevopsCli:
+    """Return the devops command line; `release` runs the Gradle `doFullRelease` pipeline after a typed confirmation."""
+    cli = DevopsCli(SupportJavaProject(root, release_task="doFullRelease", release_args=["-PreleaseConfirmed=yes"]))
+    cli.harness.set_examples(["devops check", "devops test com.pellicciotta.support.text.TokenizerTest", "devops versions", "devops release --dry-run"])
+    return cli
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
+    sys.exit(build_cli().run())

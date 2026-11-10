@@ -14,6 +14,7 @@ bin/
 # Python
 __pycache__/
 *.pyc
+.venv/
 
 # IDE/editor
 # Shared IntelliJ config is checked in; only volatile per-user/local files are ignored.

@@ -1,34 +1,40 @@
 #!/usr/bin/env python3
 # Copyright (c) Giovanni Pellicciotta
-"""Bootstrap the support.java development environment: init git if needed, build, and test."""
+"""One-shot dev environment bootstrap: init git if needed, install scripts/requirements.txt into .venv, run a full Gradle build.
+
+Standard library only, so it runs on a bare checkout before support-python is installed.
+"""
 
 import subprocess
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent
+VENV_DIR = ROOT / ".venv"
+VENV_PYTHON = VENV_DIR / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
 
 
-def run(args: list[str]) -> None:
-    print(f"$ {' '.join(args)}")
-    subprocess.run(args, cwd=REPO_ROOT, check=True)
+def run(argv: list) -> None:
+    print(f"$ {' '.join(str(arg) for arg in argv)}", flush=True)
+    subprocess.run([str(arg) for arg in argv], cwd=ROOT, check=True)
 
 
 def main() -> int:
-    if not (REPO_ROOT / ".git").exists():
+    if not (ROOT / ".git").exists():
         run(["git", "init"])
 
-    gradlew = REPO_ROOT / ("gradlew.bat" if sys.platform == "win32" else "gradlew")
-    if not gradlew.exists():
-        print(f"error: Gradle wrapper not found at {gradlew}", file=sys.stderr)
-        return 1
+    if not VENV_PYTHON.is_file():
+        run([sys.executable, "-m", "venv", VENV_DIR])
+    run([VENV_PYTHON, "-m", "pip", "install", "--quiet", "--disable-pip-version-check", "-r", ROOT / "scripts" / "requirements.txt"])
 
-    # The toolchain block in build.gradle pins the exact JDK version (auto-provisioned by
-    # Gradle if not already installed) - no separate environment bootstrap step is needed
-    # the way Python's venv requires one.
-    run([str(gradlew), "build"])
+    gradlew = ROOT / ("gradlew.bat" if sys.platform == "win32" else "gradlew")
+    run([gradlew, "build"])
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except subprocess.CalledProcessError as exc:
+        print(f"**[ERROR]** Bootstrap step failed with exit code {exc.returncode}: {' '.join(map(str, exc.cmd))}", file=sys.stderr)
+        sys.exit(1)

@@ -16,6 +16,14 @@ All releases are available on [GitHub Packages](https://github.com/gpellicciotta
 ---
 
 ## v1.0.2-pre
+- DevEx: Replaced `scripts/devops.py` with a thin DevopsCli on support-python v2.0.0, adding `lint` and `format` actions.
+- DevEx: Made the bootstrap script create `.venv` and install the pinned `scripts/requirements.txt`.
+- DevEx: Ran `lint-markdown check` before Gradle in `devops lint` and `devops check`.
+- Build: Split the tests into a fast `test` suite and a `slowTest` suite tagged `slow`, run by `check`.
+- Build: Applied default per-test timeouts of 30 seconds to `test` and 120 seconds to `slowTest`.
+- CI: Installed `scripts/requirements.txt` and ran the devops script tests before `devops check`.
+- Docs: Restructured `AGENTS.md`, made `CLAUDE.md` import it, and reordered `docs/devops.md` per dev-guidelines v2.0.0.
+- Docs: Removed the dead parsing notes link from `docs/index.md` and the `text` package Javadoc.
 
 ---
 

@@ -15,6 +15,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.mariadb.MariaDBContainer;
 import static com.pellicciotta.support.utils.DateTimeUtils.*;
 
+@Tag("slow")
 @Testcontainers(disabledWithoutDocker = true)
 public class SqlPagingTest {
   @Container
