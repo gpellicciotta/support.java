@@ -1,3 +1,4 @@
 {
-  "plan_version": "3.0.266-pre"
+  "plan_version": "3.0.266-pre",
+  "work_size_overrun_factor": 8.0
 }
