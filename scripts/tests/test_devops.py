@@ -56,6 +56,13 @@ def command_names(argv: list[str]) -> list[str]:
 
 
 class DevopsScriptTest(unittest.TestCase):
+    def setUp(self) -> None:
+        """Run every test as on a developer machine; CI sets `CI`, which adds `--offline` to lint-markdown."""
+        patcher = mock.patch.dict(os.environ)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        os.environ.pop("CI", None)
+
     def test_builds_devops_cli_over_gradle_project_at_repo_root(self) -> None:
         cli = load_devops().build_cli()
         self.assertIsInstance(cli, DevopsCli)
