@@ -11,6 +11,10 @@ ended_at: —
 review: agent
 preview: none
 protocol: standard
+usage:
+  worker: {turns: 2, duration_s: 3529.4, input: 557282, output: 180208, cache_read: 16996206}
+review_status: pending
+review_round: 1
 ---
 # T0003: Answer a handler that declares a content length but writes nothing, which now drops the connection
 
@@ -46,4 +50,7 @@ Answer a handler that declares a content length but writes nothing, which now dr
   - Files touched: 4.
   - Lines touched: 393.
   - Reopenings: 0.
+
+- [2026-11-11] **[Review]**
+  Round 1 requested (mode: agent).
 
