@@ -12,12 +12,11 @@ review: agent
 preview: none
 protocol: standard
 usage:
-  worker: {turns: 4, duration_s: 1926.8, input: 443760, output: 84498, cache_read: 11608302}
+  worker: {turns: 6, duration_s: 2545.4, input: 539942, output: 106494, cache_read: 18213230}
   review: {turns: 2, duration_s: 241.6, input: 70736, output: 4756, cache_read: 848896, cache_write: 0}
 work_duration: 1138.3
-review_status: rejected
-review_round: 1
-reviewed_by: "@codex"
+review_status: pending
+review_round: 2
 ---
 # T0002: Pad the day in StaticFileHandler Last-Modified headers, which RFC_1123_DATE_TIME leaves unpadded
 
@@ -73,4 +72,7 @@ Pad the day in StaticFileHandler Last-Modified headers, which RFC_1123_DATE_TIME
   - Files touched: 4.
   - Lines touched: 102.
   - Reopenings: 0.
+
+- [2026-11-11] **[Review]**
+  Round 2 requested (mode: agent).
 
