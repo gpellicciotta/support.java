@@ -13,8 +13,11 @@ preview: none
 protocol: standard
 usage:
   worker: {turns: 2, duration_s: 3529.4, input: 557282, output: 180208, cache_read: 16996206}
-review_status: pending
+  review: {turns: 2, duration_s: 183.4, input: 87886, output: 4308, cache_read: 699392, cache_write: 0}
+review_status: rejected
 review_round: 1
+reviewed_by: "@codex"
+work_duration: 1909.7
 ---
 # T0003: Answer a handler that declares a content length but writes nothing, which now drops the connection
 
@@ -53,4 +56,20 @@ Answer a handler that declares a content length but writes nothing, which now dr
 
 - [2026-11-11] **[Review]**
   Round 1 requested (mode: agent).
+
+- [2026-11-11] **[Review]**
+  Round 1 rejected by @codex: [Decided]** Rejected because the implementation adds an incompatible write restriction without the required major version change.
+  - Findings: [review-findings-1.md](T0003-answer-a-handler-that-declares-a-content-length/review-findings-1.md).
+
+- [2026-11-11] **[Implement]**
+  Preserved chunked streaming when setContentLength(0) precedes non-empty writes and added compatibility regression tests.
+
+- [2026-11-11] **[Doc]**
+  Updated companion specifications and validation proof for Round 1 review rework.
+
+- [2026-11-11] **[Verify]**
+  Verified HTTP unit tests, slow server integration tests, static checks, and updated task outcomes.
+  - Files touched: 4.
+  - Lines touched: 397.
+  - Reopenings: 0.
 
