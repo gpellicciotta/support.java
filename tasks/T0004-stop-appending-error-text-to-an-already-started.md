@@ -1,11 +1,12 @@
 ---
 id: T0004
-owner: ~
+owner: "@gemini"
+session: antigravity-20261111-08aeac
 needs: []
-branch: —
-worktree: —
-status: ready
-started_at: —
+branch: task/T0004-stop-appending-error-text-to-an-already-started
+worktree: .plan/work/T0004-stop-appending-error-text-to-an-already-started
+status: active
+started_at: "2026-11-11T09:26:27Z"
 ended_at: —
 review: agent
 preview: none
@@ -17,11 +18,32 @@ protocol: standard
 Stop appending error text to an already started chunked body when a handler throws mid-response.
 
 ## Task Execution Steps
-- [ ] **[Implement]** Implement required changes for T0004.
-- [ ] **[Verify]**    Verify implementation with automated test suites.
-- [ ] **[Doc]**       Update documentation and CHANGELOG.md.
+- [x] **[Implement]** Author unit and slow server tests for handlers throwing mid-response after chunked writes.
+- [x] **[Verify]**    Run the new tests and capture their failure as red-phase proof.
+- [x] **[Implement]** Reject late error bodies in HttpExchangeResponse and skip error responses after headers are sent.
+- [x] **[Verify]**    Run fast tests, affected slow tests, static checks, and version checks.
+- [x] **[Doc]**       Update Javadoc and CHANGELOG.md, and record validation proof.
 - [ ] **[Review]**    Obtain review approval of the finished work before completion.
 
 ## Execution Log
 - [2026-11-02] **[Doc]**
   Companion task file scaffolded at task creation.
+
+- [2026-11-11] **[Implement]**
+  Authored unit and slow server tests reproducing appended error text when handlers fail after starting chunked bodies.
+
+- [2026-11-11] **[Verify]**
+  Confirmed the three new unit tests and the slow HTTP server test failed before the fix, reproducing appended error text.
+
+- [2026-11-11] **[Implement]**
+  Rejected sendError after response headers are sent in HttpExchangeResponse and skipped fallback error responses in JdkHttpServerWebServer.
+
+- [2026-11-11] **[Doc]**
+  Updated HttpExchangeResponse Javadoc, CHANGELOG.md under v1.0.2-pre, and companion specifications and validation proof.
+
+- [2026-11-11] **[Verify]**
+  Verified fast unit tests, slow HTTP integration test, static checks, Javadoc, version parity, and task outcomes.
+  - Files touched: 5.
+  - Lines touched: 166.
+  - Reopenings: 0.
+
