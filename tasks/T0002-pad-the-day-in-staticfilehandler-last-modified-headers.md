@@ -11,6 +11,9 @@ ended_at: —
 review: agent
 preview: none
 protocol: standard
+usage:
+  worker: {turns: 2, duration_s: 1628.6, input: 405782, output: 76432, cache_read: 9330444}
+work_duration: 831.8
 ---
 # T0002: Pad the day in StaticFileHandler Last-Modified headers, which RFC_1123_DATE_TIME leaves unpadded
 
@@ -30,11 +33,24 @@ Pad the day in StaticFileHandler Last-Modified headers, which RFC_1123_DATE_TIME
   Companion task file scaffolded at task creation.
 
 - [2026-11-11] **[Implement]**
-  Formatted StaticFileHandler Last-Modified headers with an RFC 9110 IMF-fixdate formatter that zero-pads single-digit days.
+  Authored unit and HTTP server integration tests asserting zero-padded single-digit days in `Last-Modified` headers.
 
 - [2026-11-11] **[Verify]**
-  Recorded task outcomes.
+  Confirmed all three new single-digit-day tests failed before the fix and captured red-phase output.
+
+- [2026-11-11] **[Implement]**
+  Formatted `StaticFileHandler` `Last-Modified` headers with an RFC 9110 `IMF-fixdate` formatter that zero-pads single-digit days.
+
+- [2026-11-11] **[Doc]**
+  Updated `CHANGELOG.md` under `v1.0.2-pre` and recorded companion technical specifications and validation proof.
+
+- [2026-11-11] **[Verify]**
+  Verified the full Gradle build, version parity, and task outcomes.
   - Files touched: 4.
   - Lines touched: 100.
   - Reopenings: 0.
+
+- [2026-11-11] **[Verify]**
+  Completion validation found 1 errors; pending fix turn 1 of 2.
+  - TF020.
 
