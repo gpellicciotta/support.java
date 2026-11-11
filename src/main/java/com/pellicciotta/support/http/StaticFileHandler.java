@@ -19,10 +19,15 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 
 /**
@@ -142,7 +147,7 @@ public class StaticFileHandler implements HttpRequestHandler {
     }
     long lastModifiedSeconds = found ? (resource.getLastModified() / 1000) : 0;
     if (lastModifiedSeconds > 0) {
-      response.setHeader("Last-Modified", DateTimeFormatter.RFC_1123_DATE_TIME.format(Instant.ofEpochSecond(lastModifiedSeconds).atZone(ZoneOffset.UTC)));
+      response.setHeader("Last-Modified", HTTP_DATE_FORMATTER.format(Instant.ofEpochSecond(lastModifiedSeconds)));
       if (isNotModifiedSince(request.getHeader("If-Modified-Since"), lastModifiedSeconds)) {
         response.setStatus(304);
         return true;
@@ -159,6 +164,30 @@ public class StaticFileHandler implements HttpRequestHandler {
     }
     return true;
   }
+
+  // RFC 9110 Section 5.6.7 IMF-fixdate: fixed English names and a zero-padded two-digit day (unlike RFC_1123_DATE_TIME).
+  private static final DateTimeFormatter HTTP_DATE_FORMATTER = new DateTimeFormatterBuilder()
+      .appendText(ChronoField.DAY_OF_WEEK, Map.of(
+          1L, "Mon", 2L, "Tue", 3L, "Wed", 4L, "Thu", 5L, "Fri", 6L, "Sat", 7L, "Sun"))
+      .appendLiteral(", ")
+      .appendValue(ChronoField.DAY_OF_MONTH, 2)
+      .appendLiteral(' ')
+      .appendText(ChronoField.MONTH_OF_YEAR, Map.ofEntries(
+          Map.entry(1L, "Jan"), Map.entry(2L, "Feb"), Map.entry(3L, "Mar"), Map.entry(4L, "Apr"),
+          Map.entry(5L, "May"), Map.entry(6L, "Jun"), Map.entry(7L, "Jul"), Map.entry(8L, "Aug"),
+          Map.entry(9L, "Sep"), Map.entry(10L, "Oct"), Map.entry(11L, "Nov"), Map.entry(12L, "Dec")))
+      .appendLiteral(' ')
+      .appendValue(ChronoField.YEAR, 4)
+      .appendLiteral(' ')
+      .appendValue(ChronoField.HOUR_OF_DAY, 2)
+      .appendLiteral(':')
+      .appendValue(ChronoField.MINUTE_OF_HOUR, 2)
+      .appendLiteral(':')
+      .appendValue(ChronoField.SECOND_OF_MINUTE, 2)
+      .appendLiteral(" GMT")
+      .toFormatter(Locale.ROOT)
+      .withChronology(IsoChronology.INSTANCE)
+      .withZone(ZoneOffset.UTC);
 
   /** @return <code>true</code> if <code>ifModifiedSince</code> is a valid HTTP date at or after the resource time; malformed values are ignored. */
   private static boolean isNotModifiedSince(String ifModifiedSince, long lastModifiedSeconds) {

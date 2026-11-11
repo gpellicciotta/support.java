@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -240,6 +241,32 @@ public class JdkHttpServerWebServerTest {
     Assertions.assertEquals(304, second.statusCode());
     Assertions.assertEquals("", second.body());
     Assertions.assertEquals(lastModified, second.headers().firstValue("Last-Modified").orElse(null));
+    Assertions.assertEquals(List.of(), this.noBodyWarnings, "The JDK server is told the 304 answer has no body");
+  }
+
+  @Test
+  @Tag("slow")
+  public void testSingleDigitDayStaticFileServesZeroPaddedLastModifiedAnd304() throws Exception {
+    Path index = Files.writeString(this.files.resolve("index.html"), "<p>Hello</p>", StandardCharsets.UTF_8);
+    Files.setLastModifiedTime(index, java.nio.file.attribute.FileTime.from(java.time.Instant.parse("1994-11-06T08:49:37Z")));
+    this.server = new JdkHttpServerWebServer(this.port);
+    this.server.add(new StaticFileHandler(this.files.toString()));
+    this.server.start();
+
+    HttpResponse<String> first = this.get("/index.html");
+    Assertions.assertEquals(200, first.statusCode());
+    Assertions.assertEquals("Sun, 06 Nov 1994 08:49:37 GMT", first.headers().firstValue("Last-Modified").orElse(null));
+
+    HttpRequest conditional = HttpRequest.newBuilder(URI.create("http://localhost:" + this.port + "/index.html"))
+        .timeout(Duration.ofSeconds(5))
+        .header("If-Modified-Since", "Sun, 06 Nov 1994 08:49:37 GMT")
+        .GET()
+        .build();
+    HttpResponse<String> second = this.client.send(conditional, HttpResponse.BodyHandlers.ofString());
+
+    Assertions.assertEquals(304, second.statusCode());
+    Assertions.assertEquals("", second.body());
+    Assertions.assertEquals("Sun, 06 Nov 1994 08:49:37 GMT", second.headers().firstValue("Last-Modified").orElse(null));
     Assertions.assertEquals(List.of(), this.noBodyWarnings, "The JDK server is told the 304 answer has no body");
   }
 

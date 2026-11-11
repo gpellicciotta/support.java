@@ -262,4 +262,47 @@ public class StaticFileHandlerTest {
     Assertions.assertEquals(200, response.getStatusCode());
     Assertions.assertEquals("body {}", response.getBodyAsString());
   }
+
+  private static final long SINGLE_DIGIT_DAY_MILLIS = Instant.parse("1994-11-06T08:49:37Z").toEpochMilli();
+  private static final String SINGLE_DIGIT_DAY_HTTP_DATE = "Sun, 06 Nov 1994 08:49:37 GMT";
+
+  @Test
+  public void testSingleDigitDayInLastModifiedHeaderIsZeroPadded() throws Exception {
+    Path novFile = Files.writeString(this.tempDir.resolve("nov.css"), "body {}");
+    Files.setLastModifiedTime(novFile, java.nio.file.attribute.FileTime.fromMillis(SINGLE_DIGIT_DAY_MILLIS + 456));
+    Path sepFile = Files.writeString(this.tempDir.resolve("sep.css"), "body {}");
+    Files.setLastModifiedTime(sepFile, java.nio.file.attribute.FileTime.from(Instant.parse("2023-09-05T08:49:37Z")));
+    StaticFileHandler handler = new StaticFileHandler(this.tempDir.toString());
+
+    FakeResponse novResponse = new FakeResponse();
+    Assertions.assertTrue(handler.handle(new FakeRequest("GET", "/nov.css"), novResponse));
+    Assertions.assertEquals(200, novResponse.getStatusCode());
+    Assertions.assertEquals(SINGLE_DIGIT_DAY_HTTP_DATE, novResponse.getHeader("Last-Modified"));
+
+    FakeResponse sepResponse = new FakeResponse();
+    Assertions.assertTrue(handler.handle(new FakeRequest("GET", "/sep.css"), sepResponse));
+    Assertions.assertEquals(200, sepResponse.getStatusCode());
+    Assertions.assertEquals("Tue, 05 Sep 2023 08:49:37 GMT", sepResponse.getHeader("Last-Modified"));
+  }
+
+  @Test
+  public void testSingleDigitDayIfModifiedSinceMatchesPaddedAndUnpaddedDates() throws Exception {
+    Path file = Files.writeString(this.tempDir.resolve("style.css"), "body {}");
+    Files.setLastModifiedTime(file, java.nio.file.attribute.FileTime.fromMillis(SINGLE_DIGIT_DAY_MILLIS + 456));
+    StaticFileHandler handler = new StaticFileHandler(this.tempDir.toString());
+
+    FakeRequest paddedRequest = new FakeRequest("GET", "/style.css").withHeader("If-Modified-Since", SINGLE_DIGIT_DAY_HTTP_DATE);
+    FakeResponse paddedResponse = new FakeResponse();
+    Assertions.assertTrue(handler.handle(paddedRequest, paddedResponse));
+    Assertions.assertEquals(304, paddedResponse.getStatusCode());
+    Assertions.assertEquals("", paddedResponse.getBodyAsString());
+    Assertions.assertEquals(SINGLE_DIGIT_DAY_HTTP_DATE, paddedResponse.getHeader("Last-Modified"));
+
+    FakeRequest unpaddedRequest = new FakeRequest("GET", "/style.css").withHeader("If-Modified-Since", "Sun, 6 Nov 1994 08:49:37 GMT");
+    FakeResponse unpaddedResponse = new FakeResponse();
+    Assertions.assertTrue(handler.handle(unpaddedRequest, unpaddedResponse));
+    Assertions.assertEquals(304, unpaddedResponse.getStatusCode());
+    Assertions.assertEquals("", unpaddedResponse.getBodyAsString());
+    Assertions.assertEquals(SINGLE_DIGIT_DAY_HTTP_DATE, unpaddedResponse.getHeader("Last-Modified"));
+  }
 }
