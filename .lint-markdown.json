@@ -1,3 +1,4 @@
 {
-  "exclude": ["CHANGELOG.md"]
+  "exclude": ["CHANGELOG.md"],
+  "github-owners": ["gpellicciotta"]
 }
