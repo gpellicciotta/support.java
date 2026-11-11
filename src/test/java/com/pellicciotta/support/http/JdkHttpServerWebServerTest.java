@@ -291,6 +291,86 @@ public class JdkHttpServerWebServerTest {
   }
 
   @Test
+  @Tag("slow")
+  public void testHandlerDeclaringContentLengthWithoutWritingBodyIsAnswered() throws Exception {
+    this.server = new JdkHttpServerWebServer(this.port);
+    this.server.add((req, resp) -> {
+      switch (req.getRequestURI()) {
+        case "/no-stream-200":
+          resp.setStatus(200);
+          resp.setContentLength(5);
+          return true;
+        case "/no-stream-204":
+          resp.setStatus(204);
+          resp.setContentLength(5);
+          return true;
+        case "/no-stream-304":
+          resp.setStatus(304);
+          resp.setContentLength(5);
+          return true;
+        case "/closed-empty-stream":
+          resp.setStatus(200);
+          resp.setContentLength(5);
+          try (OutputStream os = resp.getOutputStream()) {
+            os.write(new byte[0]);
+          }
+          return true;
+        case "/open-empty-writer":
+          resp.setStatus(200);
+          resp.setContentLength(5);
+          Writer writer = resp.getWriter();
+          writer.write("");
+          writer.flush();
+          return true;
+        case "/zero-length":
+          resp.setStatus(200);
+          resp.setContentLength(0);
+          return true;
+        case "/zero-length-written":
+          resp.setStatus(200);
+          resp.setContentType("text/plain");
+          resp.setContentLength(0);
+          resp.getOutputStream().write('x');
+          return true;
+        case "/normal":
+          byte[] ok = "ok".getBytes(StandardCharsets.UTF_8);
+          resp.setStatus(200);
+          resp.setContentType("text/plain");
+          resp.setContentLength(ok.length);
+          try (OutputStream os = resp.getOutputStream()) {
+            os.write(ok);
+          }
+          return true;
+        default:
+          return false;
+      }
+    });
+    this.server.start();
+
+    for (String path : List.of("/no-stream-200", "/closed-empty-stream", "/open-empty-writer", "/zero-length")) {
+      HttpResponse<String> empty = this.get(path);
+      Assertions.assertEquals(200, empty.statusCode(), path);
+      Assertions.assertEquals("", empty.body(), path);
+      Assertions.assertEquals("0", empty.headers().firstValue("Content-Length").orElse(null), path);
+      Assertions.assertTrue(empty.headers().firstValue("Transfer-Encoding").isEmpty(), path);
+    }
+    for (int status : new int[] {204, 304}) {
+      HttpResponse<String> noBody = this.get("/no-stream-" + status);
+      Assertions.assertEquals(status, noBody.statusCode());
+      Assertions.assertEquals("", noBody.body());
+    }
+    HttpResponse<String> zeroLengthWritten = this.get("/zero-length-written");
+    Assertions.assertEquals(200, zeroLengthWritten.statusCode());
+    Assertions.assertEquals("x", zeroLengthWritten.body());
+
+    HttpResponse<String> normal = this.get("/normal");
+    Assertions.assertEquals(200, normal.statusCode());
+    Assertions.assertEquals("ok", normal.body());
+    Assertions.assertEquals("2", normal.headers().firstValue("Content-Length").orElse(null));
+    Assertions.assertEquals(List.of(), this.noBodyWarnings);
+  }
+
+  @Test
   public void testHandlerRespondsToRealRequest() throws Exception {
     this.server = new JdkHttpServerWebServer(this.port);
     this.server.add((req, resp) -> {
