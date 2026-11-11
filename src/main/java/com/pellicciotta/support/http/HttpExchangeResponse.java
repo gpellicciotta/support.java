@@ -17,7 +17,8 @@ import com.sun.net.httpserver.HttpExchange;
  *  first byte written to {@link #getOutputStream()}, using chunked transfer-encoding unless
  *  {@link #setContentLength} was called first. A handled request that writes nothing — even if it declared a
  *  content length or opened the stream — gets a body-less header response from {@link OutputStream#close()} or
- *  {@link #finish()} instead.</p>
+ *  {@link #finish()} instead. Once headers are sent, {@link #sendError} throws {@link IOException} instead of
+ *  appending error text to the body.</p>
  *  <p>
  *  Answers to a {@code HEAD} request, and {@code 1xx}, {@code 204}, and {@code 304} answers, carry no body: their headers go out
  *  with the JDK's no-body length, and whatever a handler writes is dropped, so handlers need no special case.</p>
@@ -74,6 +75,9 @@ final class HttpExchangeResponse implements Response {
 
   @Override
   public void sendError(int statusCode, String message) throws IOException {
+    if (this.headersSent) {
+      throw new IOException("Response headers already sent");
+    }
     this.statusCode = statusCode;
     byte[] bytes = (message != null ? message : "").getBytes(StandardCharsets.UTF_8);
     this.setContentType("text/plain; charset=UTF-8");
@@ -81,6 +85,11 @@ final class HttpExchangeResponse implements Response {
     try (OutputStream os = this.getOutputStream()) {
       os.write(bytes);
     }
+  }
+
+  /** @return {@code true} once the status code and response headers have been sent to the underlying exchange. */
+  boolean headersSent() {
+    return this.headersSent;
   }
 
   /** Sends the headers if no body was written, so an answer that wrote nothing still reaches the client. */

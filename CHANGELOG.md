@@ -16,6 +16,7 @@ All releases are available on [GitHub Packages](https://github.com/gpellicciotta
 ---
 
 ## v1.0.2-pre
+- BackEnd: Stopped `JdkHttpServerWebServer` and `Response.sendError` from appending error text to already started response bodies.
 - BackEnd: Fixed dropped connections when a handler called `Response.setContentLength` without writing a response body.
 - BackEnd: Zero-padded single-digit days in `StaticFileHandler` `Last-Modified` headers per RFC 9110 `IMF-fixdate`.
 - DevEx: Replaced `scripts/devops.py` with a thin DevopsCli on support-python v3.1.0, adding `lint` and `format` actions.

@@ -414,6 +414,89 @@ public class JdkHttpServerWebServerTest {
   }
 
   @Test
+  @Tag("slow")
+  public void testHandlerThrowingMidChunkedResponseDoesNotAppendErrorText() throws Exception {
+    this.server = new JdkHttpServerWebServer(this.port);
+    this.server.add((req, resp) -> {
+      switch (req.getRequestURI()) {
+        case "/flushed-writer":
+          resp.setStatus(200);
+          resp.setContentType("application/json");
+          Writer writer = resp.getWriter();
+          writer.write("{\"items\":[");
+          writer.flush();
+          throw new RuntimeException("boom");
+        case "/written-stream":
+          resp.setStatus(200);
+          resp.setContentType("text/plain");
+          OutputStream os = resp.getOutputStream();
+          os.write("partial".getBytes(StandardCharsets.UTF_8));
+          throw new RuntimeException("boom");
+        case "/closed-writer-then-throw":
+          resp.setStatus(200);
+          resp.setContentType("text/plain");
+          try (Writer closeableWriter = resp.getWriter()) {
+            closeableWriter.write("done");
+          }
+          throw new RuntimeException("boom");
+        case "/unflushed-writer-then-throw":
+          resp.setStatus(200);
+          resp.setContentType("application/json");
+          Writer bufferedWriter = resp.getWriter();
+          bufferedWriter.write("buffered");
+          throw new RuntimeException("boom");
+        case "/unhandled-after-chunked-write":
+          resp.setStatus(200);
+          resp.setContentType("text/plain");
+          Writer unhandledWriter = resp.getWriter();
+          unhandledWriter.write("started");
+          unhandledWriter.flush();
+          return false;
+        case "/healthy":
+          resp.setStatus(200);
+          resp.setContentType("text/plain");
+          try (Writer healthyWriter = resp.getWriter()) {
+            healthyWriter.write("ok");
+          }
+          return true;
+        default:
+          return false;
+      }
+    });
+    this.server.start();
+
+    HttpResponse<String> flushed = this.get("/flushed-writer");
+    Assertions.assertEquals(200, flushed.statusCode());
+    Assertions.assertEquals("application/json", flushed.headers().firstValue("Content-Type").orElse(null));
+    Assertions.assertEquals("chunked", flushed.headers().firstValue("Transfer-Encoding").orElse(null));
+    Assertions.assertEquals("{\"items\":[", flushed.body());
+
+    HttpResponse<String> written = this.get("/written-stream");
+    Assertions.assertEquals(200, written.statusCode());
+    Assertions.assertEquals("text/plain", written.headers().firstValue("Content-Type").orElse(null));
+    Assertions.assertEquals("chunked", written.headers().firstValue("Transfer-Encoding").orElse(null));
+    Assertions.assertEquals("partial", written.body());
+
+    HttpResponse<String> closedThenThrow = this.get("/closed-writer-then-throw");
+    Assertions.assertEquals(200, closedThenThrow.statusCode());
+    Assertions.assertEquals("done", closedThenThrow.body());
+
+    HttpResponse<String> unflushed = this.get("/unflushed-writer-then-throw");
+    Assertions.assertEquals(500, unflushed.statusCode());
+    Assertions.assertEquals("text/plain; charset=UTF-8", unflushed.headers().firstValue("Content-Type").orElse(null));
+    Assertions.assertEquals("Internal server error", unflushed.body());
+
+    HttpResponse<String> unhandledAfterWrite = this.get("/unhandled-after-chunked-write");
+    Assertions.assertEquals(200, unhandledAfterWrite.statusCode());
+    Assertions.assertEquals("started", unhandledAfterWrite.body());
+
+    HttpResponse<String> healthy = this.get("/healthy");
+    Assertions.assertEquals(200, healthy.statusCode());
+    Assertions.assertEquals("ok", healthy.body());
+    Assertions.assertEquals(List.of(), this.noBodyWarnings);
+  }
+
+  @Test
   public void testFirstMatchingHandlerWins() throws Exception {
     this.server = new JdkHttpServerWebServer(this.port);
     this.server.add((req, resp) -> false);

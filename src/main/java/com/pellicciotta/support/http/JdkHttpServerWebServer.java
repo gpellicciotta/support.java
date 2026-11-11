@@ -126,7 +126,7 @@ public final class JdkHttpServerWebServer implements WebServer {
           break;
         }
       }
-      if (!handled) {
+      if (!handled && !response.headersSent()) {
         response.sendError(404, "No handler found for " + request.getMethod() + " " + request.getRequestURI());
       }
       // A handler may only set a status; closing the exchange before the headers went out would drop the connection
@@ -134,11 +134,13 @@ public final class JdkHttpServerWebServer implements WebServer {
     }
     catch (Exception e) {
       this.log.error("Failed to handle %s %s: %s", request.getMethod(), request.getRequestURI(), e);
-      try {
-        response.sendError(500, "Internal server error");
-      }
-      catch (IOException ignored) {
-        // Best effort only - the connection may already be broken
+      if (!response.headersSent()) {
+        try {
+          response.sendError(500, "Internal server error");
+        }
+        catch (IOException ignored) {
+          // Best effort only - the connection may already be broken
+        }
       }
     }
     finally {

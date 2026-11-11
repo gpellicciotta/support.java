@@ -96,6 +96,63 @@ public class HttpExchangeResponseTest {
     assertSent(exchange, 200, 0L, "hello");
   }
 
+  @Test
+  public void testSendErrorAfterFlushedChunkedWriterThrowsAndLeavesStartedBodyUntouched() throws Exception {
+    StubHttpExchange exchange = new StubHttpExchange("GET");
+    HttpExchangeResponse response = new HttpExchangeResponse(exchange);
+    response.setStatus(200);
+    response.setContentType("application/json");
+    Writer writer = response.getWriter();
+    writer.write("{\"ok\":");
+    writer.flush();
+
+    Assertions.assertThrows(IOException.class, () -> response.sendError(500, "Internal server error"));
+
+    assertSent(exchange, 200, 0L, "{\"ok\":");
+    Assertions.assertEquals("application/json", exchange.getResponseHeaders().getFirst("Content-Type"));
+  }
+
+  @Test
+  public void testSendErrorAfterUnflushedChunkedStreamWriteThrowsAndLeavesStartedBodyUntouched() throws Exception {
+    StubHttpExchange exchange = new StubHttpExchange("GET");
+    HttpExchangeResponse response = new HttpExchangeResponse(exchange);
+    response.setStatus(200);
+    OutputStream os = response.getOutputStream();
+    os.write("partial".getBytes(StandardCharsets.UTF_8));
+
+    Assertions.assertThrows(IOException.class, () -> response.sendError(500, "Internal server error"));
+
+    assertSent(exchange, 200, 0L, "partial");
+  }
+
+  @Test
+  public void testSendErrorAfterPartialFixedLengthWriteThrowsAndLeavesStartedBodyUntouched() throws Exception {
+    StubHttpExchange exchange = new StubHttpExchange("GET");
+    HttpExchangeResponse response = newResponse(exchange, 200, 100);
+    response.setContentType("text/plain");
+    OutputStream os = response.getOutputStream();
+    os.write("partial".getBytes(StandardCharsets.UTF_8));
+
+    Assertions.assertThrows(IOException.class, () -> response.sendError(500, "Internal server error"));
+
+    assertSent(exchange, 200, 100L, "partial");
+    Assertions.assertEquals("text/plain", exchange.getResponseHeaders().getFirst("Content-Type"));
+  }
+
+  @Test
+  public void testSendErrorBeforeBytesWrittenReplacesStatusHeadersAndSendsErrorBody() throws Exception {
+    StubHttpExchange exchange = new StubHttpExchange("GET");
+    HttpExchangeResponse response = newResponse(exchange, 200, 100);
+    response.setContentType("application/json");
+    OutputStream os = response.getOutputStream();
+    os.write(new byte[0]);
+
+    response.sendError(500, "Internal server error");
+
+    assertSent(exchange, 500, 21L, "Internal server error");
+    Assertions.assertEquals("text/plain; charset=UTF-8", exchange.getResponseHeaders().getFirst("Content-Type"));
+  }
+
   private static HttpExchangeResponse newResponse(StubHttpExchange exchange, int status, int contentLength) {
     HttpExchangeResponse response = new HttpExchangeResponse(exchange);
     response.setStatus(status);
