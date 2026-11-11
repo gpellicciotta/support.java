@@ -12,11 +12,10 @@ review: agent
 preview: none
 protocol: standard
 usage:
-  worker: {turns: 2, duration_s: 3529.4, input: 557282, output: 180208, cache_read: 16996206}
+  worker: {turns: 4, duration_s: 4818.0, input: 1286400, output: 226320, cache_read: 23332318}
   review: {turns: 2, duration_s: 183.4, input: 87886, output: 4308, cache_read: 699392, cache_write: 0}
-review_status: rejected
-review_round: 1
-reviewed_by: "@codex"
+review_status: pending
+review_round: 2
 work_duration: 1909.7
 ---
 # T0003: Answer a handler that declares a content length but writes nothing, which now drops the connection
@@ -72,4 +71,7 @@ Answer a handler that declares a content length but writes nothing, which now dr
   - Files touched: 4.
   - Lines touched: 397.
   - Reopenings: 0.
+
+- [2026-11-11] **[Review]**
+  Round 2 requested (mode: agent).
 
