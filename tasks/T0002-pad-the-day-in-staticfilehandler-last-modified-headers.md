@@ -13,9 +13,11 @@ preview: none
 protocol: standard
 usage:
   worker: {turns: 4, duration_s: 1926.8, input: 443760, output: 84498, cache_read: 11608302}
-work_duration: 831.8
-review_status: pending
+  review: {turns: 2, duration_s: 241.6, input: 70736, output: 4756, cache_read: 848896, cache_write: 0}
+work_duration: 1138.3
+review_status: rejected
 review_round: 1
+reviewed_by: "@codex"
 ---
 # T0002: Pad the day in StaticFileHandler Last-Modified headers, which RFC_1123_DATE_TIME leaves unpadded
 
@@ -58,4 +60,17 @@ Pad the day in StaticFileHandler Last-Modified headers, which RFC_1123_DATE_TIME
 
 - [2026-11-11] **[Review]**
   Round 1 requested (mode: agent).
+
+- [2026-11-11] **[Review]**
+  Round 1 rejected by @codex: [Decided]** Rejected for the test-suite classification gap below.
+  - Findings: [review-findings-1.md](T0002-pad-the-day-in-staticfilehandler-last-modified-headers/review-findings-1.md).
+
+- [2026-11-11] **[Implement]**
+  Added @Tag(slow) to testSingleDigitDayStaticFileServesZeroPaddedLastModifiedAnd304 per round 1 review feedback.
+
+- [2026-11-11] **[Verify]**
+  Verified slowTest execution of the new integration test, fast suite exclusion, and updated task outcomes.
+  - Files touched: 4.
+  - Lines touched: 102.
+  - Reopenings: 0.
 

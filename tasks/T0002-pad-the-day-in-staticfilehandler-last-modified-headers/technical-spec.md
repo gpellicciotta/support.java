@@ -19,6 +19,6 @@ Size estimate: 4 files, 75 lines
 
 ### Tests
 - Unit: `StaticFileHandlerTest` verifies single-digit-day `Last-Modified` formatting (`Sun, 06 Nov 1994 08:49:37 GMT`) and 304 matching for padded and unpadded `If-Modified-Since`.
-- Integration: `JdkHttpServerWebServerTest` serves a single-digit-day static file over HTTP, verifying padded `Last-Modified` and 304 conditional GET round-trip.
+- Integration: `JdkHttpServerWebServerTest` (`@Tag("slow")`, executed via `slowTest`) serves a single-digit-day static file over HTTP, verifying padded `Last-Modified` and 304 conditional GET round-trip.
 
 Completion check: .\gradlew.bat build --console=plain
