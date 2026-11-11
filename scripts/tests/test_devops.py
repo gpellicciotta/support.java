@@ -7,11 +7,13 @@ import contextlib
 import importlib.util
 import io
 import json
+import os
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from support_python.devops import DevopsCli, GradleProject
 
@@ -76,6 +78,13 @@ class DevopsScriptTest(unittest.TestCase):
         self.assertTrue(project.check())
         self.assertEqual(["lint-markdown", "check"], command_names(calls[0]))
         self.assertEqual(["build"], calls[1][-1:])
+
+    def test_lint_markdown_skips_external_link_checks_only_in_ci(self) -> None:
+        for ci, expected in (("true", ["lint-markdown", "check", "--offline"]), ("", ["lint-markdown", "check"])):
+            with self.subTest(ci=ci), mock.patch.dict(os.environ, {"CI": ci}):
+                calls, project = recording_project(self)
+                self.assertTrue(project.lint_markdown())
+                self.assertEqual(expected, command_names(calls[0]))
 
     def test_check_skips_gradle_build_when_lint_markdown_fails(self) -> None:
         calls, project = recording_project(self, failing="lint-markdown")

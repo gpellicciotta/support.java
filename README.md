@@ -47,4 +47,4 @@ produces the jars in `build/libs/`. Day-to-day operations go through `python scr
 See also:
 - [CHANGELOG](CHANGELOG.md)
 - [Documentation index](docs/index.md)
-- [PLAN](PLAN.md)
+- Tasks: `PLAN.md`, managed with `plan`

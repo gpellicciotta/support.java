@@ -139,7 +139,7 @@ Docker must be running; otherwise `@Testcontainers(disabledWithoutDocker = true)
 Run it alone with `.\gradlew.bat slowTest --tests "com.pellicciotta.support.sql.SqlPagingTest"`.
 
 ### Task Tracking
-Tasks live in [PLAN.md](../PLAN.md) and `.plan/tasks/` and are managed only through the `plan` CLI (`plan help`).
+Tasks live in `PLAN.md` and `.plan/tasks/` and are managed only through the `plan` CLI (`plan help`).
 Never edit `PLAN.md` or task frontmatter by hand.
 
 ---

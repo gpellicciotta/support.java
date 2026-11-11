@@ -19,6 +19,7 @@ All releases are available on [GitHub Packages](https://github.com/gpellicciotta
 - BackEnd: Stopped `JdkHttpServerWebServer` and `Response.sendError` from appending error text to already started response bodies.
 - BackEnd: Fixed dropped connections when a handler called `Response.setContentLength` without writing a response body.
 - BackEnd: Zero-padded single-digit days in `StaticFileHandler` `Last-Modified` headers per RFC 9110 `IMF-fixdate`.
+- CI: Skipped external Markdown link checks under `CI` and replaced links to the untracked `PLAN.md` with code spans.
 - DevEx: Replaced `scripts/devops.py` with a thin DevopsCli on support-python v3.1.0, adding `lint` and `format` actions.
 - DevEx: Made the bootstrap script create `.venv` and install the pinned `scripts/requirements.txt`.
 - DevEx: Ran `lint-markdown check` before Gradle in `devops lint` and `devops check`.

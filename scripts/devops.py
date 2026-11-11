@@ -8,6 +8,7 @@ Run `python scripts/devops.py help --verbose` for every action. A `.venv` create
 
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -36,8 +37,15 @@ class SupportJavaProject(GradleProject):
         return self.lint_markdown() and super().check()
 
     def lint_markdown(self) -> bool:
-        """Lint every Markdown file in the repository, honoring `.lint-markdown.json`."""
-        return self.run_command([resolve_executable("lint-markdown") or "lint-markdown", "check"])
+        """Lint every Markdown file in the repository, honoring `.lint-markdown.json`.
+
+        CI cannot reach the private dev-guidelines repository, and GitHub rate-limits anonymous link checks,
+        so under `CI` the external link checks (MD018) are skipped; local runs still check them.
+        """
+        command = [resolve_executable("lint-markdown") or "lint-markdown", "check"]
+        if os.environ.get("CI"):
+            command.append("--offline")
+        return self.run_command(command)
 
 
 def build_cli(root: Path = REPO_ROOT) -> DevopsCli:
