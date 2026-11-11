@@ -11,6 +11,10 @@ ended_at: —
 review: agent
 preview: none
 protocol: standard
+usage:
+  worker: {turns: 2, duration_s: 2833.8, input: 528606, output: 164662, cache_read: 15929814}
+review_status: pending
+review_round: 1
 ---
 # T0004: Stop appending error text to an already started chunked body when a handler throws mid-response
 
@@ -46,4 +50,7 @@ Stop appending error text to an already started chunked body when a handler thro
   - Files touched: 5.
   - Lines touched: 166.
   - Reopenings: 0.
+
+- [2026-11-11] **[Review]**
+  Round 1 requested (mode: agent).
 
